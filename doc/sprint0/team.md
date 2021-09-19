@@ -13,4 +13,4 @@
 | | | | | |
 |
 ---
-**Discord Chat/Server Invite :** https://discord.gg/bZjTadYd
+**Discord Chat/Server Invite :** https://discord.gg/gZXtrY2bQM
