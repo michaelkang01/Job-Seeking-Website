@@ -27,3 +27,8 @@
 - As a recruiter, I want to be able to accept or reject applications.
 - As a recruiter, I want to be able to schedule interviews to successful applicants.
 - As a recruiter, I want to be able to send and receive messages to my applicants.
+
+### Persona: Alex (Professional Career Expert)
+- As a professional career expert, I want to advertise my services on the platform.
+- As a professional career expert, I want to be able to run online workshops.
+- As a professional career expert, I want to be able to schedule one on one meetings with clients.
