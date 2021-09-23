@@ -1,4 +1,4 @@
-# Features to be implemented (Tentative)
+# Features to be implemented
 
 * Users will be able to create a new account and login
 * There will be 3 types of accounts:
