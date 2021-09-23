@@ -6,8 +6,8 @@
   * Employer can create an account which allows them to fulfill their responsbilities (post jobs, view applications, etc.)
   * Professional career experts can create an account that has different functions than employers and job seekers. They can create a profile that allows them to advertise their services.
 * Employers will be able to posts jobs on the integrated job board, which will be visible to job-seeking users who can then apply to those jobs
-* Filter jobs by location and industry
-* Filter jobs by skills required
+* Users can filter jobs by location and industry
+* Users can filter jobs by skills required
 * Job application fields (e.g. name, education, skills, etc.) can be autofilled based on data from the user's profile
 * Users will be able to view all of the applications they've sent to the employer (and make changes prior to the application deadline?)
 * Users will be able to see the status of all of their applications on one page (APPLIED/INTERVIEW/ACCEPTED/REJECTED)
