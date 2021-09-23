@@ -10,7 +10,7 @@ Requirements:
   3. ReactJS
   4. NodeJS
 
-Build-Run:
+Build-Run: npm i && npm start
 
 ## Contributions
   We will be using a Git flow here: https://github.com/UTSCCSCC01/projectf21-Steadfast-Solutions
