@@ -16,15 +16,15 @@ type User = {
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const removeAllUsers = async () => {
-    return axios.post('http://localhost:4000/remove_all_users');
+    return axios.post('http://localhost:8001/remove_all_users');
   }
 
   const createTestUser = async () => {
-    return axios.get('http://localhost:4000/create_test_user');
+    return axios.get('http://localhost:8001/create_test_user');
   }
 
   const getAllUsers = async (setIsLoading: any, setUsers: any) => {
-    return axios.get('http://localhost:4000/users')
+    return axios.get('http://localhost:8001/users')
       .then(res => {
         setIsLoading(false);
         const user_list = [] as User[];

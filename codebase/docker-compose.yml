@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  nodejs:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: easyapply-frontend
+    container_name: easyapply-frontend-ctr
+    restart: unless-stopped
+    ports:
+      - "8000:${FRONTEND_PORT}"
+    volumes:
+      - ./frontend:/app
+    command: npm run serve
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: easyapply-backend
+    container_name: easyapply-backend-ctr
+    restart: unless-stopped
+    ports:
+      - "8001:${API_PORT}"
+    volumes:
+      - ./backend:/app
+    command: npm start
