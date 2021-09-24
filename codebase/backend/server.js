@@ -2,9 +2,14 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 
 const API_PORT = process.env.API_PORT || 3000;
+
+app.use(cors({
+    origin: 'http://localhost:8000',
+}));
 
 app.listen(API_PORT, () => {
 	console.log(`Listening on port ${API_PORT}`);
