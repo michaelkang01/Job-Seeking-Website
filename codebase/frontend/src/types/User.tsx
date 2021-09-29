@@ -1,17 +1,8 @@
 type User = {
-    createdAt: string,
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    hashed_password: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    metadata: any,
-    updatedAt: string
+    email: String,
+    id: String,
+    metadata: Array<any>,
+    updatedAt: Number
 }
 
 export default User;
