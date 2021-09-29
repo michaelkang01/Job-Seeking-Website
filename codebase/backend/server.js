@@ -83,7 +83,8 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 
 			return res.status(200).json({
 				message: 'Login successful',
-				token: token
+				token: token,
+				authData: jwt.decode(token, { json: true, complete: true })
 			});
 		})(req, res, next);
 	});
@@ -94,7 +95,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 				return next(err);
 			}
 			if (!user) {
-				return res.status(401).json({
+				return res.status(409).json({
 					message: info.message
 				});
 			}

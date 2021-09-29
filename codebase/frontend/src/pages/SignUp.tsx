@@ -2,12 +2,12 @@ import React from "react";
 import { useState } from "react";
 import "tailwindcss/tailwind.css";
 import axios from "axios";
-import { Redirect } from "react-router";
 import { useAuth } from "../context/AuthContext";
+import { Redirect } from "react-router-dom";
 
-const SignIn = () => {
+const SignUp = () => {
   const [message, setMessage] = useState("");
-  const [signedIn, setSignedIn] = useState(false);
+  const [signedUp, setSignedUp] = useState(false);
   const auth = useAuth();
 
   const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
@@ -15,7 +15,7 @@ const SignIn = () => {
     const form = event.target as HTMLFormElement;
     axios({
       method: "post",
-      url: "http://localhost:8001/api/user/authenticate",
+      url: "http://localhost:8001/api/user/create",
       headers: {
         "Content-Type": "application/json",
       },
@@ -25,29 +25,26 @@ const SignIn = () => {
       },
     })
       .then((res) => {
-        setMessage("Signed in successfully");
-        setSignedIn(true);
-        auth.updateData({
-          authData: JSON.stringify(res.data.authData),
-          authToken: res.data.token,
-        });
+        console.log(res.data);
+        setMessage("Signed up successfully");
+        setSignedUp(true);
       })
       .catch((err) => {
-        setMessage("Invalid email or password");
+        setMessage("Error signing up: " + err.response.data.message);
       });
   };
 
-  if (auth.authToken || signedIn) {
+  if (auth.authToken || signedUp) {
     return (
       <>
-        <Redirect to="/" />
+        <Redirect to="/signin" />
       </>
     );
   }
 
   return (
     <div className="p-8">
-      <h1 className="text-4xl">Sign in</h1>
+      <h1 className="text-4xl">Create account</h1>
       <br />
       <div
         className={`${
@@ -57,7 +54,7 @@ const SignIn = () => {
         {message}
       </div>
       <form
-        action="http://localhost:8001/signin"
+        action="http://localhost:8001/signup"
         method="POST"
         onSubmit={(e) => {
           submitForm(e);
@@ -84,11 +81,10 @@ const SignIn = () => {
         <input
           type="submit"
           className="cursor-pointer hover:bg-gray-500 py-2 px-4 w-full md:w-auto md:float-right bg-black text-white"
-          value="Sign in"
+          value="Sign up"
         />
       </form>
     </div>
   );
 };
-
-export default SignIn;
+export default SignUp;
