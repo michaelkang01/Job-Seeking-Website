@@ -13,8 +13,10 @@ const Navbar = () => {
     setMobileNavShown(!mobileNavShown);
   };
 
+  const signedIn = auth.getAuthData().authToken.length > 0;
+
   return (
-    <nav className="flex flex-wrap items-center justify-between p-5 bg-blue-200">
+    <nav className="flex flex-wrap items-center justify-between p-5 bg-blue-200 absolute left-0 right-0">
       <div className="flex md:hidden">
         <button id="hamburger" onClick={navBarToggle}>
           <svg
@@ -43,7 +45,7 @@ const Navbar = () => {
         >
           Home
         </Link>
-        {(!auth.authToken && (
+        {(!signedIn && (
           <Link
             to="/signin"
             className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
@@ -53,18 +55,18 @@ const Navbar = () => {
         )) || (
           <button
             onClick={auth.signOut}
-            className="cursor-pointer block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+            className="block w-full text-right md:text-left md:w-auto md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
           >
             Sign out
           </button>
         )}
       </div>
-      {!auth.authToken && (
+      {!signedIn && (
         <Link
           to="/signup"
           className={`${
             mobileNavShown ? "block" : "hidden"
-          } md:flex w-full md:w-auto px-4 py-2 text-right bg-blue-900 hover:bg-blue-500 text-white md:rounded`}
+          } md:flex w-full md:w-auto px-4 py-2 text-right bg-blue-900 hover:bg-blue-500 text-white md:rounded-md`}
         >
           Create Account
         </Link>

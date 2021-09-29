@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
+import SignInCallback from "./pages/SignInCallback";
 
 const App = () => {
   const main = (
@@ -14,6 +15,9 @@ const App = () => {
       {/* A <Switch> looks through its children <Route>s and
         renders the first one that matches the current URL. */}
       <Switch>
+        <Route path="/signin/callback">
+          <SignInCallback />
+        </Route>
         <Route path="/signin">
           <SignIn />
         </Route>

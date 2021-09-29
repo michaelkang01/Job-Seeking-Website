@@ -2,28 +2,81 @@ import React from "react";
 import { useState } from "react";
 import "tailwindcss/tailwind.css";
 
+/**
+ * AuthContext
+ */
 const AuthContext = React.createContext({
-  authToken: "",
-  authData: "",
+  getAuthData: (): AuthData => ({ authToken: "", authData: "" }),
   setAuthToken: (val: string) => {},
   setAuthData: (val: string) => {},
   signOut: () => {},
-  updateData: (val: UpdateData) => {},
+  updateData: (val: AuthData) => {},
 });
 
+/**
+ * AuthProps
+ */
 type AuthProps = {
   children: JSX.Element;
 };
 
-export type UpdateData = {
+/**
+ * AuthData type
+ */
+export type AuthData = {
   authToken: string;
   authData: string;
 };
 
+/**
+ * AuthProvider
+ * 
+ * @param AuthProps
+ * @returns React.FunctionComponent
+ */
 const AuthProvider = ({ children }: AuthProps) => {
   const [authToken, setAuthToken] = useState("");
   const [authData, setAuthData] = useState("");
 
+  /**
+   * Get authentication and user data.
+   * 
+   * @returns AuthData
+   */
+  const getAuthData = () => {
+    // {"header":{"alg":"HS256","typ":"JWT"},"payload":{"email":"akyle2001@gmail.com","firstName":"Andrew","lastName":"Hong","role":"user","id":"61549a053a2836dfe1da37f3","metadata":[],"iat":1632935449,"exp":1632939049},"signature":"QHgFbGiGE3hswtfBJGe1rXaubwOiI20sa0qIEc7ihAI"}
+    const authTokenFromStorage = localStorage.getItem("authToken");
+    const authDataFromStorage = localStorage.getItem("authData");
+
+    if (
+      !authData &&
+      authTokenFromStorage != null &&
+      authDataFromStorage != null
+    ) {
+      setAuthToken(authTokenFromStorage);
+      setAuthData(authDataFromStorage);
+    }
+
+    if (authData) {
+      const data = JSON.parse(authData);
+      if (
+        data.payload &&
+        data.payload.exp &&
+        data.payload.exp < Date.now() / 1000
+      ) {
+        setAuthData("");
+        setAuthToken("");
+      }
+    }
+
+    return { authToken, authData };
+  };
+
+  /**
+   * Sign out (clear authentication token and data)
+   * 
+   * @returns void
+   */
   const signOut = () => {
     setAuthToken("");
     setAuthData("");
@@ -31,18 +84,23 @@ const AuthProvider = ({ children }: AuthProps) => {
     localStorage.setItem("authData", "");
   };
 
-  const updateData = ({ authToken, authData }: UpdateData) => {
-    setAuthToken(authToken);
-    setAuthData(authData);
+  /**
+   * Update authentication data. Use this to update the authentication token and data, particularly within a user login, etc.
+   * 
+   * @param AuthData data
+   * @return void
+   */
+  const updateData = ({ authToken, authData }: AuthData) => {
     localStorage.setItem("authToken", authToken);
     localStorage.setItem("authData", authData);
+    setAuthToken(authToken);
+    setAuthData(authData);
   };
 
   return (
     <AuthContext.Provider
       value={{
-        authToken: authToken,
-        authData: authData,
+        getAuthData,
         setAuthToken,
         setAuthData,
         signOut,

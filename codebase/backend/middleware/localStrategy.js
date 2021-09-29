@@ -33,6 +33,7 @@ module.exports = async (UserModel, passport) => {
                 return done(null, false, { message: 'That email is already taken.' });
             }
             req.body.password = bcrypt.hashSync(req.body.password, 10);
+            req.body.role = 'user';
             const newUser = new UserModel(req.body);
             await newUser.save();
             return done(null, newUser);

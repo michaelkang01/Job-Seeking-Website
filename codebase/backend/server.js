@@ -29,6 +29,20 @@ app.listen(API_PORT, () => {
 	console.log(`Listening on port ${API_PORT}`);
 })
 
+const signJwt = (user) => {
+	const token = jwt.sign({
+		email: user.email,
+		firstName: user.firstName,
+		lastName: user.lastName,
+		role: user.role,
+		id: user._id,
+		metadata: user.metadata
+	}, jwtSecret, {
+		expiresIn: '3h'
+	});
+	return token;
+}
+
 // Connect to MongoDB using Mongoose
 mongoose.connect(process.env.MONGO_URI).then(db => {
 	const User = require('./models/User')(db);
@@ -49,6 +63,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 
 	// Initialize passport strategies
 	require('./middleware/localStrategy')(User, passport);
+	require('./middleware/googleStrategy')(User, passport);
 
 	// Verify JWT endpoint
 	app.get(`${BASE_URL}/user/verify_header`, (req, res, next) => {
@@ -62,6 +77,32 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 		});
 	})
 
+	// Google OAuth2 endpoint callback
+	app.get(`${BASE_URL}/user/auth/google_callback`, (req, res, next) => {
+		passport.authenticate('google-login', { session: false }, (err, user, info) => {
+			if (err) {
+				return next(err);
+			}
+			if (!user) {
+				res.redirect(`${process.env.BASE_URL}:${process.env.FRONTEND_PORT}/signin`);
+			} else {
+				const token = signJwt(user);
+				const returnData = Buffer.from(JSON.stringify({
+					token: token,
+					authData: jwt.decode(token, { json: true, complete: true })
+				})).toString('base64');
+				res.redirect(`${process.env.BASE_URL}:${process.env.FRONTEND_PORT}/signin/callback/?d=${returnData}`);
+			}
+		})(req, res, next);
+	});
+
+	app.get(`${BASE_URL}/user/auth/google`,
+		passport.authenticate('google-login', {
+			scope:
+				['email', 'profile']
+		})
+	);
+
 	// Login route with Passport
 	app.post(`${BASE_URL}/user/authenticate`, (req, res, next) => {
 		passport.authenticate('local-signin', (err, user, info) => {
@@ -73,13 +114,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 					message: 'Login failed.'
 				});
 			}
-			const token = jwt.sign({
-				email: user.email,
-				id: user._id,
-				metadata: user.metadata
-			}, jwtSecret, {
-				expiresIn: '1h'
-			});
+			const token = signJwt(user);
 
 			return res.status(200).json({
 				message: 'Login successful',

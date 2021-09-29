@@ -1,0 +1,9 @@
+@media (min-width: 768px) {
+    .signin-background {
+        width: 100%;
+        background-image: url('../assets/backdrop.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}
