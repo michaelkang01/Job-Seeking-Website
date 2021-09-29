@@ -4,52 +4,83 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
+const passport = require('passport');
+const router = express.Router();
+const jwtSecret = require('./jwtConfig').secret;
+const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
 
 const API_PORT = process.env.API_PORT || 3000;
+const BASE_URL = '/api';
 
 app.use(cors({
-    origin: 'http://localhost:8000',
+	origin: 'http://localhost:8000',
+}));
+
+app.use(cors({
+	origin: 'http://localhost:3000',
 }));
 
 app.listen(API_PORT, () => {
 	console.log(`Listening on port ${API_PORT}`);
 })
 
+
 mongoose.connect(process.env.MONGO_URI).then(db => {
 	const User = require('./models/User')(db);
-	app.get("/", (req, res) => {
+
+	app.get(`${BASE_URL}`, (req, res) => {
 		res.send("Hello, world!");
 	});
-	app.get("/users", (req, res) => {
-		User.find().then(ret => {
-			res.json(ret);
-		});
-	});
-	app.get("/create_test_user", (req, res) => {
-		let user_object = {
-			"username": "test_user_" + Math.random().toString(36).substr(7),
-			"hashed_password": "none",
-			"salt": "none",
-			"email": "none@ex.com",
-			"metadata": [
-			]
-		};
-		const new_user = new User(user_object);
-		new_user.save((err, user) => {
+
+	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json());
+	app.use(router);
+
+	// Initialize passport
+	app.use(passport.initialize());
+
+	// Initialize passport strategies
+	const localStrategy = require('./middleware/localStrategy')(User, passport);
+
+	// Login route with Passport
+	app.post(`${BASE_URL}/user/authenticate`, (req, res, next) => {
+		passport.authenticate('local-signin', (err, user, info) => {
 			if (err) {
-				res.send(err);
-			} else {
-				res.json(user);
+				return next(err);
 			}
-		});
+			if (!user) {
+				return res.status(401).json({
+					message: 'Login failed.'
+				});
+			}
+			const token = jwt.sign({
+				email: user.email,
+				id: user._id
+			}, jwtSecret, {
+				expiresIn: '1h'
+			});
+
+			return res.status(200).json({
+				message: 'Login successful',
+				token: token
+			});
+		})(req, res, next);
 	});
-	app.post("/remove_all_users", (req, res) => {
-		User.remove({}, (err, ret) => {
+
+	app.post(`${BASE_URL}/user/create`, (req, res, next) => {
+		passport.authenticate('local-signup', (err, user, info) => {
 			if (err) {
-				res.send(err);
-			} else {
-				res.json(ret);
+				return next(err);
 			}
-		});
+			if (!user) {
+				return res.status(401).json({
+					message: info.message
+				});
+			}
+			return res.status(200).json({
+				message: 'Registration successful',
+			});
+		})(req, res, next);
 	});
 });
