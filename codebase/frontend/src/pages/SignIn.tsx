@@ -6,6 +6,10 @@ import { Redirect } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import GoogleIcon from "../assets/google.svg";
 import "../assets/SignIn.css";
+import TextInput from "../components/TextInput";
+import PillButton from "../components/PillButton";
+import { Spacer } from "../components/Spacer";
+import { AlertMessage, AlertType } from "../components/AlertMessage";
 
 const SignIn = () => {
   const [message, setMessage] = useState("");
@@ -18,7 +22,7 @@ const SignIn = () => {
     const form = event.target as HTMLFormElement;
     axios({
       method: "post",
-      url: "http://localhost:8001/api/user/authenticate",
+      url: `${process.env.REACT_APP_API_URL}/api/user/authenticate`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -42,52 +46,39 @@ const SignIn = () => {
 
   if (authToken || signedIn) {
     return (
-      <>
         <Redirect to="/" />
-      </>
     );
   }
 
   return (
-    <div
-      className="px-8 bg-gray-100 md:bg-none pt-24 md:pt-40 h-screen md:bg-none signin-background"
-    >
+    <div className="px-8 bg-gray-100 md:bg-none pt-32 md:pt-56 h-screen md:bg-none signin-background">
       <div className="md:flex md:justify-center">
-        <div className="w-full md:max-w-lg md:bg-white md:rounded-xl md:py-12 md:px-16">
+        <div className="filter drop-shadow-2xl w-full md:max-w-lg md:bg-white md:rounded-xl md:py-12 md:px-16">
           <h1 className="text-3xl text-center">Sign in to your account</h1>
-          <br />
-          <div
-            className={`${
-              !message ? "hidden" : "block"
-            } py-3 px-4 bg-blue-300 mb-4 rounded-md`}
-          >
-            {message}
-          </div>
-          <br />
+          <Spacer height={2} />
+          <AlertMessage message={message} type={AlertType.info} />
+          <Spacer height={1} />
           <form
-            action="http://localhost:8001/signin"
-            method="POST"
             onSubmit={(e) => {
               submitForm(e);
             }}
           >
-            <input
+            <TextInput
               name="email"
               type="email"
-              className="focus:outline-none bg-gray-200 w-full py-2 px-4 focus:bg-gray-100 border-2 border-gray-200 rounded-full"
+              required={true}
+              autoComplete="email"
               placeholder="my@email.net"
             />
-            <br />
-            <br />
-            <input
+            <Spacer height={2} />
+            <TextInput
               name="password"
               type="password"
-              className="focus:outline-none bg-gray-200 w-full py-2 px-4 focus:bg-gray-100 border-2 border-gray-200 rounded-full"
-              placeholder="*********"
+              required={true}
+              autoComplete="current-password"
+              placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
             />
-            <br />
-            <br />
-            <br />
+            <Spacer height={2} />
             <div className="flex flex-col justify-center items-center">
               <input
                 type="submit"
@@ -95,32 +86,29 @@ const SignIn = () => {
                 value="Continue"
               />
             </div>
-            <br />
+            <Spacer height={1} />
             <div className="flex flex-col justify-center items-center">
               <a href="/" className="text-black underline">
                 Forgot your password?
               </a>
             </div>
-            <br />
+            <Spacer height={2} />
             <hr />
-            <br />
+            <Spacer height={2} />
             <p className="text-center">Or, sign in with</p>
-            <br />
+            <Spacer height={1} />
             <div className="flex flex-col justify-center items-center">
-              <a
-                href="http://localhost:8001/api/user/auth/google"
-                className="cursor-pointer py-2 px-4 w-full md:w-auto rounded-md bg-blue-500 text-white rounded-full text-center"
+              <PillButton
+                href={`${process.env.REACT_APP_API_URL}/api/user/auth/google`}
               >
-                <p>
-                  <img
-                    src={GoogleIcon}
-                    alt="Google Sign-in"
-                    style={{ filter: "invert(1)", marginBottom: "1px" }}
-                    className="inline pr-1"
-                  />{" "}
-                  Google
-                </p>
-              </a>
+                <img
+                  src={GoogleIcon}
+                  alt="Google Sign-in"
+                  style={{ filter: "invert(1)", marginBottom: "1px" }}
+                  className="inline pr-1"
+                />{" "}
+                Google
+              </PillButton>
             </div>
           </form>
         </div>

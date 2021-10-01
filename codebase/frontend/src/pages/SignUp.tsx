@@ -4,6 +4,9 @@ import "tailwindcss/tailwind.css";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { Redirect } from "react-router-dom";
+import { AlertMessage, AlertType } from "../components/AlertMessage";
+import { Spacer } from "../components/Spacer";
+import TextInput from "../components/TextInput";
 
 const SignUp = () => {
   const [message, setMessage] = useState("");
@@ -15,7 +18,7 @@ const SignUp = () => {
     const form = event.target as HTMLFormElement;
     axios({
       method: "post",
-      url: "http://localhost:8001/api/user/create",
+      url: `${process.env.REACT_APP_API_URL}/api/user/create`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -27,7 +30,6 @@ const SignUp = () => {
       },
     })
       .then((res) => {
-        console.log(res.data);
         setMessage("Signed up successfully");
         setSignedUp(true);
       })
@@ -37,71 +39,51 @@ const SignUp = () => {
   };
 
   if (authToken || signedUp) {
-    return (
-      <>
-        <Redirect to="/signin" />
-      </>
-    );
+    return <Redirect to="/signin" />;
   }
 
   return (
-    <div className="px-8 bg-gray-100 md:bg-none pt-24 md:pt-40 h-screen md:bg-none signin-background">
+    <div className="px-8 bg-gray-100 md:bg-none pt-24 md:pt-56 h-screen md:bg-none signin-background">
       <div className="md:flex md:justify-center">
-        <div className="w-full md:max-w-lg md:bg-white md:rounded-xl md:py-12 md:px-16">
+        <div className="filter drop-shadow-2xl w-full md:max-w-lg md:bg-white md:rounded-xl md:py-12 md:px-16">
           <h1 className="text-3xl text-center">Create an account</h1>
-          <br />
-          <div
-            className={`${
-              !message ? "hidden" : "block"
-            } py-3 px-4 bg-blue-300 mb-4 rounded-md`}
-          >
-            {message}
-          </div>
-          <br />
+          <Spacer height={2} />
+          <AlertMessage message={message} type={AlertType.info} />
+          <Spacer height={1} />
           <form
-            action="http://localhost:8001/signin"
-            method="POST"
             onSubmit={(e) => {
               submitForm(e);
             }}
           >
             <label className="pl-4">First name</label>
-            <input
+            <TextInput
               name="firstName"
               type="text"
-              className="focus:outline-none bg-gray-200 w-full py-2 px-4 focus:bg-gray-100 border-2 border-gray-200 rounded-full"
               placeholder="John"
+              autoComplete="given-name"
+              required={true}
             />
-            <br />
-            <br />
+            <Spacer height={1.5} />
             <label className="pl-4">Last name</label>
-            <input
+            <TextInput
               name="lastName"
               type="text"
-              className="focus:outline-none bg-gray-200 w-full py-2 px-4 focus:bg-gray-100 border-2 border-gray-200 rounded-full"
               placeholder="Doe"
+              autoComplete="family-name"
+              required={true}
             />
-            <br />
-            <br />
+            <Spacer height={1.5} />
             <label className="pl-4">Email</label>
-            <input
-              name="email"
-              type="email"
-              className="focus:outline-none bg-gray-200 w-full py-2 px-4 focus:bg-gray-100 border-2 border-gray-200 rounded-full"
-              placeholder="my@email.net"
-            />
-            <br />
-            <br />
+            <TextInput name="email" type="email" autoComplete="email" placeholder="my@email.net" />
+            <Spacer height={1.5} />
             <label className="pl-4">Password</label>
-            <input
+            <TextInput
               name="password"
               type="password"
-              className="focus:outline-none bg-gray-200 w-full py-2 px-4 focus:bg-gray-100 border-2 border-gray-200 rounded-full"
-              placeholder="*********"
+              placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+              autoComplete="new-password"
             />
-            <br />
-            <br />
-            <br />
+            <Spacer height={2} />
             <div className="flex flex-col justify-center items-center">
               <input
                 type="submit"

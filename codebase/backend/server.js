@@ -17,11 +17,7 @@ const BASE_URL = '/api';
 const cors = require('cors');
 
 app.use(cors({
-	origin: 'http://localhost:8000',
-}));
-
-app.use(cors({
-	origin: 'http://localhost:3000',
+	origin: `${process.env.BASE_URL}:${process.env.FRONTEND_PORT}`,
 }));
 
 // Set up Express to listen on API_PORT
