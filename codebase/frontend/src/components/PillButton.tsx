@@ -1,21 +1,74 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
-type RoundedButtonProps = {
+type PillButtonProps = {
   children: any;
-  href: string;
+  href?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  externalHref?: boolean;
+  type?: "button" | "submit" | "reset" | undefined;
+  className?: string;
+  disabled?: boolean;
 };
-const RoundedButton = ({
+
+const PillButton = ({
   children,
   href,
-}: RoundedButtonProps) => {
+  externalHref = false,
+  onClick,
+  type = "button",
+  className = "",
+  disabled = false,
+}: PillButtonProps) => {
+  // If href is provided, use it to navigate to the new page
+  const history = useHistory();
+  if (href) {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      // If externalHref is true, navigate to the new page using window.location.href. Otherwise, use history.push for internal navigation.
+      if (!externalHref) {
+        history.push(href || "");
+      } else {
+        window.location.href = href || "";
+      }
+    };
+
+    return (
+      <button
+        onClick={handleClick}
+        className={`${className} py-2 px-4 w-full md:w-auto rounded-md bg-blue-500 text-white rounded-full text-center`}
+        type={type}
+        disabled={disabled}
+      >
+        <p>{children}</p>
+      </button>
+    );
+  }
+
+  // Register onClick handler if available
+  if (onClick) {
+    return (
+      <button
+        onClick={onClick}
+        className={`${className} cursor-pointer py-2 px-4 w-full md:w-auto rounded-md bg-blue-500 text-white rounded-full text-center`}
+        type={type}
+        disabled={disabled}
+      >
+        <p>{children}</p>
+      </button>
+    );
+  }
+
+  // No onClick or href, so just a button
   return (
-    <a
-      href={href}
-      className="cursor-pointer py-2 px-4 w-full md:w-auto rounded-md bg-blue-500 text-white rounded-full text-center"
+    <button
+      className={`${className} cursor-pointer py-2 px-4 w-full md:w-auto rounded-md bg-blue-500 text-white rounded-full text-center`}
+      type={type}
+      disabled={disabled}
     >
       <p>{children}</p>
-    </a>
+    </button>
   );
 };
 
-export default RoundedButton;
+export default PillButton;

@@ -3,49 +3,60 @@ import { useState } from "react";
 import "tailwindcss/tailwind.css";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { AlertMessage, AlertType } from "../components/AlertMessage";
 import { Spacer } from "../components/Spacer";
 import TextInput from "../components/TextInput";
+import SubmitButton from "../components/SubmitButton";
 
 const SignUp = () => {
   const [message, setMessage] = useState("");
+  const [signUpButtonDisabled, setSignUpButtonDisabled] = useState(false);
   const [signedUp, setSignedUp] = useState(false);
-  const auth = useAuth();
-  const authToken = auth.getAuthData().authToken;
+  const history = useHistory();
+
   const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}/api/user/create`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        firstName: form.firstName.value,
-        lastName: form.lastName.value,
-        email: form.email.value,
-        password: form.password.value,
-      },
-    })
-      .then((res) => {
-        setMessage("Signed up successfully");
-        setSignedUp(true);
+    setSignUpButtonDisabled(true);
+    setTimeout(() => {
+      const form = event.target as HTMLFormElement;
+      axios({
+        method: "post",
+        url: `${process.env.REACT_APP_API_URL}/api/user/create`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          firstName: form.firstName.value,
+          lastName: form.lastName.value,
+          email: form.email.value,
+          password: form.password.value,
+        },
       })
-      .catch((err) => {
-        setMessage("Error signing up: " + err.response.data.message);
-      });
+        .then(() => {
+          setSignedUp(true);
+          setTimeout(() => {
+            history.push("/signin");
+          }, 3000);
+        })
+        .catch((err) => {
+          setMessage(
+            "Error signing up: " +
+              (err.response.data.message || "Unspecified error")
+          );
+          setSignUpButtonDisabled(false);
+        });
+    }, 2000);
   };
 
-  if (authToken || signedUp) {
-    return <Redirect to="/signin" />;
+  if (useAuth().getAuthData().authToken) {
+    return <Redirect to="/" />;
   }
 
   return (
-    <div className="px-8 bg-gray-100 md:bg-none pt-24 md:pt-56 h-screen md:bg-none signin-background">
+    <div className="px-8 bg-gray-100 md:bg-none pt-32 md:pt-56 h-screen md:bg-none signin-background">
       <div className="md:flex md:justify-center">
-        <div className="filter drop-shadow-2xl w-full md:max-w-lg md:bg-white md:rounded-xl md:py-12 md:px-16">
+        <div className="md:filter md:drop-shadow-2xl w-full md:max-w-lg md:bg-white md:rounded-xl md:py-12 md:px-16">
           <h1 className="text-3xl text-center">Create an account</h1>
           <Spacer height={2} />
           <AlertMessage message={message} type={AlertType.info} />
@@ -74,7 +85,12 @@ const SignUp = () => {
             />
             <Spacer height={1.5} />
             <label className="pl-4">Email</label>
-            <TextInput name="email" type="email" autoComplete="email" placeholder="my@email.net" />
+            <TextInput
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="my@email.net"
+            />
             <Spacer height={1.5} />
             <label className="pl-4">Password</label>
             <TextInput
@@ -85,10 +101,15 @@ const SignUp = () => {
             />
             <Spacer height={2} />
             <div className="flex flex-col justify-center items-center">
-              <input
-                type="submit"
-                className="cursor-pointer hover:bg-blue-500 py-2 px-6 w-full md:w-auto rounded-md bg-blue-600 text-white rounded-full"
-                value="Sign up"
+              <SubmitButton
+                successText="Success"
+                state={
+                  signedUp // Set button state to 'success' if signup was successful
+                    ? "success"
+                    : signUpButtonDisabled // Set button state to 'loading' if signup is in progress
+                    ? "pending"
+                    : "default" // Set button state to 'default' in all other cases
+                }
               />
             </div>
           </form>

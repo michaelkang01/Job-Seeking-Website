@@ -16,7 +16,7 @@ const Navbar = () => {
   const signedIn = auth.getAuthData().authToken.length > 0;
 
   return (
-    <nav className="flex flex-wrap items-center justify-between p-5 bg-blue-200 absolute left-0 right-0">
+    <nav className="flex flex-wrap items-center justify-between p-5 bg-blue-200 absolute left-0 right-0 z-50">
       <div className="flex md:hidden">
         <button id="hamburger" onClick={navBarToggle}>
           <svg
