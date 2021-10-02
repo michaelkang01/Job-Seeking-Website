@@ -54,12 +54,9 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 		});
 	});
 
-	app.get("/test", (req, res) => {
-		res.send("Test");
-	});
-
 	app.get("/joblistings", (req, res) => {
-		Joblisting.find().then(ret => {
+		req_job_location = "Toronto";
+		Joblisting.find({job_location: req_job_location}).then(ret => {
 			res.json(ret);
 		});
 	});
