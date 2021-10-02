@@ -17,6 +17,7 @@ app.listen(API_PORT, () => {
 
 mongoose.connect(process.env.MONGO_URI).then(db => {
 	const User = require('./models/User')(db);
+	const Joblisting = require('./models/Joblisting')(db);
 	app.get("/", (req, res) => {
 		res.send("Hello, world!");
 	});
@@ -50,6 +51,16 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 			} else {
 				res.json(ret);
 			}
+		});
+	});
+
+	app.get("/test", (req, res) => {
+		res.send("Test");
+	});
+
+	app.get("/joblistings", (req, res) => {
+		Joblisting.find().then(ret => {
+			res.json(ret);
 		});
 	});
 });
