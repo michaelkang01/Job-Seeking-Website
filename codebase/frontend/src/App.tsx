@@ -2,48 +2,24 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import "tailwindcss/tailwind.css"
 import axios from 'axios';
+import SearchBar from './components/SearchBar'
+import Joblisting from './types/Joblisting'
 
-type Joblisting = {
-  listing_id: number,
-  employer_id: String, //should be listingname of the listing poster.
-  job_description: String,
-  job_location: String,
-  job_title: String,
-  date_posted: Date,
-  contact_name: String,
-  contact_title: String,
-  contact_address: String,
-  number_applied: number,
-  metadata: any
-}
+const filterListingLoc = (joblistings: Joblisting[], query: any) => {
+  if (!query) {
+      return joblistings;
+   }
 
+  return joblistings.filter((joblisting: Joblisting) => {
+      const postName = joblisting.job_location.toLowerCase();
+      return postName.includes(query.toLowerCase());
+  });
+};
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [searchParam, setSearchParam] = useState("");
-  
-  const getFilterJoblistings = async (setIsLoading: any, setlistings: any) => {
-    return axios.get('http://localhost:8001/joblistings')
-      .then(res => {
-        setIsLoading(false);
-        const listing_list = [] as Joblisting[];
-        for (const listing of res.data) {
-          listing_list.push({
-            listing_id: listing.listing_id,
-            employer_id: listing.emplyoer_id,
-            job_description: listing.job_description,
-            job_location: listing.job_location,
-            job_title: listing.job_title,
-            date_posted: listing.date_posted,
-            contact_name: listing.contact_name,
-            contact_title: listing.contact_title,
-            contact_address: listing.contact_address,
-            number_applied: listing.number_applied,
-            metadata: listing.metadata
-          });
-        }
-        setlistings(listing_list);
-      });
-  };
+  const { search } = window.location;
+  const params = new URLSearchParams(search).get('location');
+  const [searchQuery, setSearchQuery] = useState(params|| '');
 
   const getAllJoblistings = async (setIsLoading: any, setlistings: any) => {
     return axios.get('http://localhost:8001/joblistings')
@@ -80,14 +56,16 @@ const App = () => {
     }
   }, [isLoading]);
 
+  const filteredListingsLoc = filterListingLoc(joblistings, searchQuery);
   return (
     <div className="">
       <header>
       </header>
       <main className="p-8 top-0">
-        <p>This exists only to show that the connection to the database is working as intended. Every user in the database is listed below.</p>
+        <SearchBar />
+        <p>Testing platform for Joblistings and Search functions. Currently Location functional to exact/inclusive wording.</p>
         {isLoading ? <p>Loading...</p> :
-          joblistings.map((joblisting: Joblisting) => (
+          filteredListingsLoc.map((joblisting: Joblisting) => (
             <div className="mt-2 py-2 px-4 bg-gray-200 rounded-md" key={joblisting.listing_id}>
               <p>Listing_id: {joblisting.listing_id}</p>
               <p>Employer_id: {joblisting.employer_id}</p>

@@ -55,8 +55,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 	});
 
 	app.get("/joblistings", (req, res) => {
-		req_job_location = "Toronto";
-		Joblisting.find({job_location: req_job_location}).then(ret => {
+		Joblisting.find().then(ret => {
 			res.json(ret);
 		});
 	});
