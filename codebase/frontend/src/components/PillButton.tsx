@@ -40,7 +40,7 @@ const PillButton = ({
         type={type}
         disabled={disabled}
       >
-        <p>{children}</p>
+        {children}
       </button>
     );
   }
@@ -54,7 +54,7 @@ const PillButton = ({
         type={type}
         disabled={disabled}
       >
-        <p>{children}</p>
+        {children}
       </button>
     );
   }
@@ -66,7 +66,7 @@ const PillButton = ({
       type={type}
       disabled={disabled}
     >
-      <p>{children}</p>
+      {children}
     </button>
   );
 };

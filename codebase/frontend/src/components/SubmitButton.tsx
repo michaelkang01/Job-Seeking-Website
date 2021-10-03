@@ -38,7 +38,7 @@ const SubmitButton = ({
     >
       {state === "success" ? (
         <div className="flex flex-row text-center">
-          <p className="mr-1">{successText}</p>
+          <div className="mr-1">{successText}</div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-6"
@@ -50,14 +50,14 @@ const SubmitButton = ({
         </div>
       ) : state === "pending" ? (
         <div className="flex flex-row text-center">
-          <p className="mr-3">{pendingText}</p>
+          <div className="mr-3">{pendingText}</div>
           <div
             style={{ borderTopColor: "transparent" }}
             className="w-4 h-4 mt-1 border-4 border-blue-400 border-solid rounded-full animate-spin"
           />
         </div>
       ) : (
-        <p>{ defaultText }</p>
+        <div>{ defaultText }</div>
       )}
     </PillButton>
   );

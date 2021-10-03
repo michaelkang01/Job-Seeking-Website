@@ -69,6 +69,7 @@ const SignIn = () => {
             }}
           >
             <TextInput
+              role="email"
               name="email"
               type="email"
               required={true}
@@ -77,6 +78,7 @@ const SignIn = () => {
             />
             <Spacer height={2} />
             <TextInput
+              role="password"
               name="password"
               type="password"
               required={true}

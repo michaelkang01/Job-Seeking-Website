@@ -8,11 +8,13 @@ type TextInputProps = {
   type?: string;
   required?: boolean;
   className?: string;
+  role?: string;
   autoComplete?: string;
 };
 
 const TextInput = ({
   name,
+  role = "textbox",
   onChange = (event: React.ChangeEvent<HTMLInputElement>) => {},
   placeholder = "",
   value,
@@ -23,6 +25,7 @@ const TextInput = ({
 }: TextInputProps) => {
   return (
     <input
+      role={role}
       type={type}
       name={name}
       className={className}
