@@ -11,15 +11,30 @@ const filterListingLoc = (joblistings: Joblisting[], query: any) => {
    }
 
   return joblistings.filter((joblisting: Joblisting) => {
-      const postName = joblisting.job_location.toLowerCase();
-      return postName.includes(query.toLowerCase());
+      const jobLoc = joblisting.job_location.toLowerCase();
+      const jobDesc = joblisting.job_description.toLowerCase();
+      const locs = query.toLowerCase().split(',')
+      return jobLoc.includes(query.toLowerCase());
   });
 };
+
+const filterListingKeywords = (joblistings: Joblisting[], query: any) => {
+  if (!query) {
+      return joblistings;
+   }
+
+  return joblistings.filter((joblisting: Joblisting) => {
+      const jobDesc = joblisting.job_description.toLowerCase();
+      const jobTitle = joblisting.job_title.toLowerCase();
+      const keywords = query.toLowerCase().split(',')
+      return jobDesc.includes(query.toLowerCase()) || jobTitle.includes(query.toLowerCase());
+  });
+};
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { search } = window.location;
-  const params = new URLSearchParams(search).get('location');
-  const [searchQuery, setSearchQuery] = useState(params|| '');
+  const params = new URLSearchParams(search);
 
   const getAllJoblistings = async (setIsLoading: any, setlistings: any) => {
     return axios.get('http://localhost:8001/joblistings')
@@ -56,21 +71,30 @@ const App = () => {
     }
   }, [isLoading]);
 
-  const filteredListingsLoc = filterListingLoc(joblistings, searchQuery);
+  //Filtering Location
+  const locParam = params.get('location');
+  const [searchLocQuery, setSearchLocQuery] = useState(locParam ||  "");
+  let filteredListings = filterListingLoc(joblistings, searchLocQuery);
+  //Filtering Keywords
+  const wordParam = params.get('keywords');
+  const [searchWordQuery, setSearchWordQuery] = useState(wordParam ||  "");
+  filteredListings = filterListingKeywords(filteredListings, searchWordQuery);
+
   return (
     <div className="">
       <header>
       </header>
       <main className="p-8 top-0">
         <SearchBar />
-        <p>Testing platform for Joblistings and Search functions. Currently Location functional to exact/inclusive wording.</p>
+        <p>Testing platform for Joblistings and Search functions. Keyword/Location working to exact/inclusive and single parameter</p>
         {isLoading ? <p>Loading...</p> :
-          filteredListingsLoc.map((joblisting: Joblisting) => (
+          filteredListings.map((joblisting: Joblisting) => (
             <div className="mt-2 py-2 px-4 bg-gray-200 rounded-md" key={joblisting.listing_id}>
               <p>Listing_id: {joblisting.listing_id}</p>
               <p>Employer_id: {joblisting.employer_id}</p>
+              <p>Job_Title: {joblisting.job_title}</p>
               <p>Job_location: {joblisting.job_location}</p>
-              <p>job_description: {joblisting.job_description}</p>
+              <p>Job_description: {joblisting.job_description}</p>
               <p>Metadata: {joblisting.metadata}</p>
             </div>
           ))

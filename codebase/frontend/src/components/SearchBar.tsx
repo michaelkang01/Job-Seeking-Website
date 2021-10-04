@@ -9,7 +9,7 @@ const SearchBar = () => (
         <input className="rounded-l-auto w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none"
             id="ser-keywords"
             type="text"
-            placeholder="Keywords"
+            placeholder="Keywords (Software Developer, Python, Marketing, etc."
             name="keywords">
         </input>
         <input className="rounded-l-auto w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none"
