@@ -3,7 +3,8 @@ type JobseekerProfile = {
     email: String,
     skills: any,
     address: String,
-    full_name: String,
+    firstName: String,
+    lastName: String,
     metadata: any
 }
 

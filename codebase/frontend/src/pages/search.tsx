@@ -4,6 +4,8 @@ import "tailwindcss/tailwind.css"
 import axios from 'axios';
 import SearchBar from '../components/SearchBar'
 import Joblisting from '../types/Joblisting'
+import { useAuth } from "../context/AuthContext";
+import JobseekerProfile from '../types/JobseekerProfile';
 
 const filterListingLoc = (joblistings: Joblisting[], query: any) => {
   if (!query) {
@@ -31,10 +33,11 @@ const filterListingKeywords = (joblistings: Joblisting[], query: any) => {
 };
 
 const Search = () => {
+  //Aquire state and search parameters
   const [isLoading, setIsLoading] = useState(true);
   const { search } = window.location;
   const params = new URLSearchParams(search);
-
+  //Acquire Job listings
   const getAllJoblistings = async (setIsLoading: any, setlistings: any) => {
     return axios.get('http://localhost:8001/joblistings')
       .then(res => {
@@ -59,7 +62,7 @@ const Search = () => {
       });
   };
 
-
+  //Loading job listings
   const [joblistings, setListings] = useState<Joblisting[]>([]);
 
   useEffect(() => {
@@ -69,6 +72,11 @@ const Search = () => {
       });
     }
   }, [isLoading]);
+
+  //Checking auth/login
+  const auth = useAuth();
+  const authToken = auth.getAuthData().authToken;
+  const authData = auth.getAuthData().authData;
 
   //Filtering Location
   const locParam = params.get('location');
@@ -80,10 +88,17 @@ const Search = () => {
   filteredListings = filterListingKeywords(filteredListings, searchWordQuery);
 
   return (
-    <div className="">
+    <div className="px-8 pt-28 h-screen">
       <header>
       </header>
       <main className="p-8 top-0">
+        {authToken && authData ? (
+          <>
+          <h1 className="text-2xl">Hi There! {JSON.parse(authData).payload.firstName} {JSON.parse(authData).payload.lastName}.</h1>
+          </>
+        ) : (
+          <h1 className="text-2xl">Hi There, if you want to auto-search your data, please sign in!</h1>
+        )}
         <SearchBar />
         <p>Testing platform for Joblistings and Search functions. Keyword/Location working to exact/inclusive and multi-parameter seperated by comma or space</p>
         {isLoading ? <p>Loading...</p> :
