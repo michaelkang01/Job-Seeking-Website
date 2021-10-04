@@ -158,6 +158,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 					message: 'User not found. This probably means the user has already been deleted.'
 				});
 			}
+			
 			user.remove((err) => {
 				if (err) {
 					return next(err);
