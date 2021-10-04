@@ -27,12 +27,15 @@ module.exports = async (UserModel, passport) => {
         passReqToCallback: true,
         session: false
     }, async function (req, email, password, done) {
+        if (!req.body.firstName || !req.body.lastName) {
+            return done(null, false, { message: 'Please enter your first and last name.' });
+        }
         try {
             const user = await UserModel.findOne({ email });
             if (user) {
                 return done(null, false, { message: 'That email is already taken.' });
             }
-            req.body.password = bcrypt.hashSync(req.body.password, 10);
+            req.body.password = bcrypt.hashSync(password, 10);
             req.body.role = 'user';
             const newUser = new UserModel(req.body);
             await newUser.save();

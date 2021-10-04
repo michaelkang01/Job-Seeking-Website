@@ -17,7 +17,7 @@ const PillButton = ({
   externalHref = false,
   onClick,
   type = "button",
-  className = "",
+  className = "bg-blue-500",
   disabled = false,
 }: PillButtonProps) => {
   // If href is provided, use it to navigate to the new page
@@ -36,7 +36,7 @@ const PillButton = ({
     return (
       <button
         onClick={handleClick}
-        className={`${className} py-2 px-4 w-full md:w-auto rounded-md bg-blue-500 text-white rounded-full text-center`}
+        className={`${className} py-2 px-4 w-full md:w-auto rounded-md text-white rounded-full text-center`}
         type={type}
         disabled={disabled}
       >
@@ -50,7 +50,7 @@ const PillButton = ({
     return (
       <button
         onClick={onClick}
-        className={`${className} cursor-pointer py-2 px-4 w-full md:w-auto rounded-md bg-blue-500 text-white rounded-full text-center`}
+        className={`${className} cursor-pointer py-2 px-4 w-full md:w-auto rounded-md text-white rounded-full text-center`}
         type={type}
         disabled={disabled}
       >
@@ -62,7 +62,7 @@ const PillButton = ({
   // No onClick or href, so just a button
   return (
     <button
-      className={`${className} cursor-pointer py-2 px-4 w-full md:w-auto rounded-md bg-blue-500 text-white rounded-full text-center`}
+      className={`${className} cursor-pointer py-2 px-4 w-full md:w-auto rounded-md text-white rounded-full text-center`}
       type={type}
       disabled={disabled}
     >
