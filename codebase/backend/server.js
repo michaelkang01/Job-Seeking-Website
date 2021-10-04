@@ -25,34 +25,49 @@ app.listen(API_PORT, () => {
 	console.log(`Listening on port ${API_PORT}`);
 })
 
-const signJwt = (user) => {
-	const token = jwt.sign({
-		email: user.email,
-		firstName: user.firstName,
-		lastName: user.lastName,
-		role: user.role,
-		id: user._id,
-		metadata: user.metadata
-	}, jwtSecret, {
-		expiresIn: '3h'
-	});
-	return token;
-}
-
 // Connect to MongoDB using Mongoose
 mongoose.connect(process.env.MONGO_URI).then(db => {
 	const User = require('./models/User')(db);
 
+	/**
+	 * Signs JWT and returns it
+	 * 
+	 * @param UserSchema user 
+	 * @returns JWT String
+	 */
+	const signJwt = (user) => {
+		const token = jwt.sign({
+			email: user.email,
+			firstName: user.firstName,
+			lastName: user.lastName,
+			role: user.role,
+			id: user._id,
+			metadata: user.metadata
+		}, jwtSecret, {
+			expiresIn: '3h'
+		});
+		return token;
+	}
+
 	app.get(`${BASE_URL}`, (req, res) => {
-		res.send("Hello, world!");
+		res.send("EasyApply API");
 	});
 
 	// Setup body-parser middleware
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(bodyParser.json());
 
-	// Setup Router
-	app.use(router);
+	const verifyUser = (req, res, next) => {
+		const token = req.headers.authorization;
+		jwt.verify(token, jwtSecret, (err, decoded) => {
+			if (err) {
+				res.status(401).json({ "status": "Unauthorized" });
+			} else {
+				res.locals.authData = decoded;
+				next();
+			}
+		});
+	};
 
 	// Initialize passport
 	app.use(passport.initialize());
@@ -61,20 +76,17 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 	require('./middleware/localStrategy')(User, passport);
 	require('./middleware/googleStrategy')(User, passport);
 
+	// Setup Router
+	app.use(`${BASE_URL}`, router);
+
 	// Verify JWT endpoint
-	app.get(`${BASE_URL}/user/verify_header`, (req, res, next) => {
-		const token = req.headers.authorization;
-		jwt.verify(token, jwtSecret, (err, decoded) => {
-			if (err) {
-				res.status(401).json({ "status": "Unauthorized" });
-			} else {
-				res.status(200).json({ "status": "Authorized", "data": decoded });
-			}
-		});
+	router.get(`/user/verify_header`, verifyUser, (req, res, next) => {
+		const decoded = res.locals.authData;
+		res.status(200).json({ "status": "Authorized", "data": decoded });
 	})
 
 	// Google OAuth2 endpoint callback
-	app.get(`${BASE_URL}/user/auth/google_callback`, (req, res, next) => {
+	router.get(`/user/auth/google_callback`, (req, res, next) => {
 		passport.authenticate('google-login', { session: false }, (err, user, info) => {
 			if (err) {
 				return next(err);
@@ -92,7 +104,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 		})(req, res, next);
 	});
 
-	app.get(`${BASE_URL}/user/auth/google`,
+	router.get(`/user/auth/google`,
 		passport.authenticate('google-login', {
 			scope:
 				['email', 'profile']
@@ -100,7 +112,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 	);
 
 	// Login route with Passport
-	app.post(`${BASE_URL}/user/authenticate`, (req, res, next) => {
+	router.post(`/user/authenticate`, (req, res, next) => {
 		passport.authenticate('local-signin', (err, user, info) => {
 			if (err) {
 				return next(err);
@@ -120,7 +132,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 		})(req, res, next);
 	});
 
-	app.post(`${BASE_URL}/user/create`, (req, res, next) => {
+	router.post(`/user/create`, (req, res, next) => {
 		passport.authenticate('local-signup', (err, user, info) => {
 			if (err) {
 				return next(err);
@@ -134,5 +146,27 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 				message: 'Registration successful',
 			});
 		})(req, res, next);
+	});
+
+	router.delete(`/user/delete`, verifyUser, (req, res, next) => {
+		User.findById(res.locals.authData.id, (err, user) => {
+			if (err) {
+				return next(err);
+			}
+			if (!user) {
+				return res.status(404).json({
+					message: 'User not found. This probably means the user has already been deleted.'
+				});
+			}
+			user.remove((err) => {
+				if (err) {
+					return next(err);
+				}
+			})
+
+			return res.status(200).json({
+				message: 'User deleted'
+			});
+		});
 	});
 });
