@@ -1,11 +1,15 @@
 
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+
 module.exports = mongoose => {
 	const UserSchema = new mongoose.Schema({
-			username: String,
-			email: String,
-			hashed_password: String,
-			salt: String,
-			metadata: Array,
-		}, { timestamps: true });
+		email: String,
+		password: String,
+		firstName: String,
+		lastName: String,
+		role: String,
+		metadata: Array,
+	}, { timestamps: true });
 	return mongoose.model("User", UserSchema);
 };

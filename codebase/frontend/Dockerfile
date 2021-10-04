@@ -3,8 +3,9 @@ FROM node:14
 WORKDIR /usr/src/app
 COPY package*.json ./
 COPY ./.env ./
+COPY ./craco.config.js ./
 RUN npm install
-RUN npm run build
 COPY . .
+RUN npm run build
 EXPOSE 8000
 
