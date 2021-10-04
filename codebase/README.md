@@ -1,6 +1,37 @@
 # Codebase
 
+## Environment setup for Windows 10+ users
+
+Follow the guide: https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers to install WSL 2, and to install Docker desktop, etc.
+
+Once you have WSL 2 installed, it is suggested that you choose Ubuntu 20.04 LTS as a distribution (as that is what this has been tested on.)
+
+Open the Ubuntu prompt from Windows (search Ubuntu on your start menu), and clone the repository. You may need to add an SSH key to GitHub.
+
+Generating SSH keys:
+
+    # Side note: Make sure you run "chmod 600 /path/to/ssh.key" -- otherwise, you will not be able to add it using ssh-add.
+    ssh-keygen
+
+Adding SSH keys:
+
+    eval $(ssh-agent)
+    ssh-add /path/to/ssh.key
+
+Recommended IDE: Visual Studio Code for Windows. It offers WSL (Windows Subsystem for Linux) integration, which is very handy for this.
+
+Once you've added your SSH key, execute:
+
+    git clone git@github.com:UTSCCSCC01/projectf21-Steadfast-Solutions.git
+    cd projectf21-Steadfast-Solutions
+    
+You should now be able to follow the remaining instructions to complete setup.
+
+Video instructions: https://qc-ca.flamz.pw/dl/installation.mp4
+
 ## Setting up environment
+
+### Initializing environment variables
 
     source init.sh
 

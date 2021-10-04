@@ -1,3 +1,0 @@
-FRONTEND_PORT=8000
-API_PORT=8001
-MONGO_URI="mongodb+srv://backend:qDR7ivWJBwmSYoEb@cluster0.zlq2g.mongodb.net/backend_db?retryWrites=true&w=majority"
