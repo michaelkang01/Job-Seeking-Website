@@ -145,8 +145,13 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 	});
 
 	app.get("/jobseekerprofile", (req, res) => {
-		//const emailser = "testuser@email.com";
-		JobseekerProfile.find().then(ret => {
+		if (req.query.email) {
+			authEmail = req.query.email;
+		}
+		else {
+			authEmail = ""
+		}
+		JobseekerProfile.find({email : authEmail}).then(ret => {
 			res.json(ret);
 		});
 	});

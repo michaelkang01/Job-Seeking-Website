@@ -5,7 +5,6 @@ import axios from 'axios';
 import SearchBar from '../components/SearchBar'
 import Joblisting from '../types/Joblisting'
 import { useAuth } from "../context/AuthContext";
-import JobseekerProfile from '../types/JobseekerProfile';
 
 const filterListingLoc = (joblistings: Joblisting[], query: any) => {
   if (!query) {
@@ -30,13 +29,17 @@ const filterListingKeywords = (joblistings: Joblisting[], query: any) => {
       const keywords = query.toLowerCase().split(/[ ,]+/)
       return keywords.some((x:string) => jobDesc.includes(x)) || keywords.some((x:string) => jobTitle.includes(x));
   });
-};
-
+}; 
+ //Loading job listings
 const Search = () => {
   //Aquire state and search parameters
   const [isLoading, setIsLoading] = useState(true);
   const { search } = window.location;
   const params = new URLSearchParams(search);
+  //Checking auth/login
+  const auth = useAuth();
+  const authToken = auth.getAuthData().authToken;
+  const authData = auth.getAuthData().authData;
   //Acquire Job listings
   const getAllJoblistings = async (setIsLoading: any, setlistings: any) => {
     return axios.get('http://localhost:8001/joblistings')
@@ -62,7 +65,6 @@ const Search = () => {
       });
   };
 
-  //Loading job listings
   const [joblistings, setListings] = useState<Joblisting[]>([]);
 
   useEffect(() => {
@@ -72,21 +74,20 @@ const Search = () => {
       });
     }
   }, [isLoading]);
-
-  //Checking auth/login
-  const auth = useAuth();
-  const authToken = auth.getAuthData().authToken;
-  const authData = auth.getAuthData().authData;
-
+  
+  let filteredListings = joblistings;
   //Filtering Location
   const locParam = params.get('location');
   const [searchLocQuery, setSearchLocQuery] = useState(locParam ||  "");
-  let filteredListings = filterListingLoc(joblistings, searchLocQuery);
+  if (searchLocQuery !== "") {
+    filteredListings = filterListingLoc(filteredListings, searchLocQuery);
+  }
   //Filtering Keywords
   const wordParam = params.get('keywords');
   const [searchWordQuery, setSearchWordQuery] = useState(wordParam ||  "");
-  filteredListings = filterListingKeywords(filteredListings, searchWordQuery);
-
+  if (searchWordQuery !== "") {
+    filteredListings = filterListingKeywords(filteredListings, searchWordQuery);
+  }
   return (
     <div className="px-8 pt-28 h-screen">
       <header>

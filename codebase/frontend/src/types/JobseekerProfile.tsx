@@ -1,10 +1,9 @@
 type JobseekerProfile = {
-    username: String,
-    email: String,
+    email: string,
     skills: any,
-    address: String,
-    firstName: String,
-    lastName: String,
+    address: string,
+    firstName: string,
+    lastName: string,
     metadata: any
 }
 
