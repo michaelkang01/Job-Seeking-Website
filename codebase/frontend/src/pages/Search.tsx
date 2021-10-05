@@ -78,13 +78,13 @@ const Search = () => {
   let filteredListings = joblistings;
   //Filtering Location
   const locParam = params.get('location');
-  const [searchLocQuery, setSearchLocQuery] = useState(locParam ||  "");
+  const [searchLocQuery] = useState(locParam ||  "");
   if (searchLocQuery !== "") {
     filteredListings = filterListingLoc(filteredListings, searchLocQuery);
   }
   //Filtering Keywords
   const wordParam = params.get('keywords');
-  const [searchWordQuery, setSearchWordQuery] = useState(wordParam ||  "");
+  const [searchWordQuery] = useState(wordParam ||  "");
   if (searchWordQuery !== "") {
     filteredListings = filterListingKeywords(filteredListings, searchWordQuery);
   }
