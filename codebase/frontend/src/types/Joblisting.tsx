@@ -9,6 +9,6 @@ type Joblisting = {
     contact_title: String,
     contact_address: String,
     number_applied: number,
-    metadata: any
+    metadata: Array<any>
   }
 export default Joblisting

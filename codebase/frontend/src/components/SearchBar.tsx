@@ -20,7 +20,7 @@ const SearchBar = () => {
 
     useEffect(() => {
         const getProfileData = async (profIsLoading: any, setProfileData: any) => {
-            return axios.get('http://localhost:8001/jobseekerprofile', {params : {email : authEmail}})
+            return axios.get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {params : {email : authEmail}})
             .then(res => {
                 profIsLoading(false);
                 const profileData = [] as JobseekerProfile[];
@@ -31,6 +31,12 @@ const SearchBar = () => {
                     address: data.address,
                     firstName: data.firstName,
                     lastName: data.lastName,
+                    githubID: data.githubID,
+                    facebookID: data.facebookID,
+                    resumeUrl: data.resumeUrl,
+                    summary: data.summary,
+                    workExperience: data.workExperience,
+                    education: data.education,
                     metadata: data.metadata
                 });
                 }
@@ -51,72 +57,72 @@ const SearchBar = () => {
         profSkills = profileData[0].skills;
     }
     return (
-    <div className="p-8">
-    <form className="bg-white flex items-center rounded-full w-full shadow-xl"
-        method="get">
-        <input className="rounded-l-auto w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none"
-            id="ser-keywords"
-            type="text"
-            placeholder="Keywords (Software Developer, Python, Marketing, etc.)"
-            name="keywords">
-        </input>
-        <input className="rounded-l-auto w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none"
-            id="ser-location"
-            type="text"
-            placeholder="Location (Toronto, Ottawa, etc.)"
-            name="location">
-        </input>
-        <div className="p-4">
-        <button className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center"
-            type="submit">
-            Go
-        </button>
-        </div>
-    </form>
-    {signedIn ? <><p> {authEmail}</p>
-            <form
-                method="get">
-                <input id="ser-keywords-auto"
-                    type="hidden"
-                    name="keywords"
-                    value={profSkills}>
-                </input>
-                <input id="ser-location-auto"
-                    type="hidden"
-                    name="location"
-                    value={profLoc}>
-                </input>
-                <button className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-24 h-12 flex items-center justify-center"
-                    type="submit">
-                    Auto All
-                </button>
-            </form>
-            <form
-                method="get">
-                <input id="ser-keywords-auto"
-                    type="hidden"
-                    name="keywords"
-                    value={profSkills}>
-                </input>
-                <button className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-24 h-12 flex items-center justify-center"
-                    type="submit">
-                    Auto Skills
-                </button>
-            </form>
-            <form
-                method="get">
-                <input id="ser-location-auto"
-                    type="hidden"
-                    name="location"
-                    value={profLoc}>
-                </input>
-                <button className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-24 h-12 flex items-center justify-center"
-                    type="submit">
-                    Auto Location
-                </button>
-            </form></>
-            
-    :  <p>Please sign in to use auto-detect features</p>}
+    <div className="p-8 flex">
+        <form className="bg-white flex items-center rounded-full w-full shadow-xl"
+            method="get">
+            <input className="rounded-l-auto w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none"
+                id="ser-keywords"
+                type="text"
+                placeholder="Keywords (Software Developer, Python, Marketing, etc.)"
+                name="keywords">
+            </input>
+            <input className="rounded-l-auto w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none"
+                id="ser-location"
+                type="text"
+                placeholder="Location (Toronto, Ottawa, etc.)"
+                name="location">
+            </input>
+            <div className="p-4">
+            <button className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center"
+                type="submit">
+                Go
+            </button>
+            </div>
+        </form>
+        {signedIn ? <>
+                <form
+                    method="get">
+                    <input id="ser-keywords-auto"
+                        type="hidden"
+                        name="keywords"
+                        value={profSkills}>
+                    </input>
+                    <input id="ser-location-auto"
+                        type="hidden"
+                        name="location"
+                        value={profLoc}>
+                    </input>
+                    <button className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-24 h-12 flex items-center justify-center"
+                        type="submit">
+                        Auto All
+                    </button>
+                </form>
+                <form
+                    method="get">
+                    <input id="ser-keywords-auto"
+                        type="hidden"
+                        name="keywords"
+                        value={profSkills}>
+                    </input>
+                    <button className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-24 h-12 flex items-center justify-center"
+                        type="submit">
+                        Auto Skills
+                    </button>
+                </form>
+                <form
+                    method="get">
+                    <input id="ser-location-auto"
+                        type="hidden"
+                        name="location"
+                        value={profLoc}>
+                    </input>
+                    <button className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-24 h-12 flex items-center justify-center"
+                        type="submit">
+                        Auto Location
+                    </button>
+                </form></>
+                
+        :  <p>Please sign in to use auto-detect features</p>}
     </div>
     )
 };

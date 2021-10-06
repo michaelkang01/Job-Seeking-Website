@@ -1,10 +1,16 @@
 type JobseekerProfile = {
     email: string,
-    skills: any,
-    address: string,
     firstName: string,
     lastName: string,
-    metadata: any
+    githubID: string,
+    facebookID: string,
+    resumeUrl: string,
+    summary: string,
+    address: string,
+    workExperience: Object,
+    education: Object,
+    skills: any,
+    metadata: Array<any>
 }
 
 export default JobseekerProfile

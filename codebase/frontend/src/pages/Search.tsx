@@ -42,7 +42,7 @@ const Search = () => {
   const authData = auth.getAuthData().authData;
   //Acquire Job listings
   const getAllJoblistings = async (setIsLoading: any, setlistings: any) => {
-    return axios.get('http://localhost:8001/joblistings')
+    return axios.get(`${process.env.REACT_APP_API_URL}/api/joblistings`)
       .then(res => {
         setIsLoading(false);
         const listing_list = [] as Joblisting[];

@@ -1,12 +1,17 @@
-
 module.exports = mongoose => {
 	const JobseekerProfileSchema = new mongoose.Schema({
-			username: String,
 			email: String,
-			skills: Array,
+			firstName: String,
+			lastName: String,
+            githubID: String,
+            facebookID: String,
+			resumeUrl: String,
+			summary: String,
 			address: String,
-            full_name: String,
-            metadata: Array
+			workExperience: Object,
+			education: Object,
+			skills: Array,
+			metadata: Array,
 		}, { timestamps: true });
 	return mongoose.model("JobseekerProfile", JobseekerProfileSchema);
 };

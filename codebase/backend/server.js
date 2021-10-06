@@ -173,13 +173,13 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 		});
 	});
 
-	app.get("/joblistings", (req, res) => {
+	router.get(`/joblistings`, (req, res) => {
 		Joblisting.find().then(ret => {
 			res.json(ret);
 		});
 	});
 
-	app.get("/jobseekerprofile", (req, res) => {
+	router.get(`/jobseekerprofile`, (req, res) => {
 		if (req.query.email) {
 			authEmail = req.query.email;
 		}
