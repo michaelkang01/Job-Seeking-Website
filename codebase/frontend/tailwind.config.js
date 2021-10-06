@@ -8,7 +8,8 @@ module.exports = {
       'md': '0.375rem',
       'lg': '0.5rem',
       'full': '9999px',
-      'xl': '16px'
+      'xl': '16px',
+      '3xl': '1.5rem'
     },
     extend: {},
   },

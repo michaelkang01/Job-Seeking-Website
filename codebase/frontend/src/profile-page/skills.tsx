@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "tailwindcss/tailwind.css";
 import Section from "./section";
+import axios from "axios";
 
 const Skills = () => {
   const [skills_list, set_skill_list] = useState([]);
@@ -10,6 +10,9 @@ const Skills = () => {
     event.preventDefault();
     const new_skill = event.target.skill.value;
     if (skills_list.findIndex((skill) => skill === new_skill) === -1) {
+      axios.get(`${process.env.REACT_APP_API_URL}/api/test`).then((res) => {
+        console.log(res);
+      }).catch((err) => console.log(err));
       const new_list = skills_list.concat(new_skill);
       set_skill_list(new_list);
     }
@@ -28,7 +31,12 @@ const Skills = () => {
           className="flex items-center bg-gray-300 mx-4 mb-4 p-2"
           key={skill}
         >
-          <button className="hover:text-gray-500" onClick={() => delete_skill(skill)}>&#10005;</button>
+          <button
+            className="hover:text-gray-500"
+            onClick={() => delete_skill(skill)}
+          >
+            &#10005;
+          </button>
           <p className="my-0 mx-2">{skill}</p>
         </div>
       ))}
@@ -41,7 +49,7 @@ const Skills = () => {
               name="skill"
               placeholder="Enter in a new skill"
             />
-            <input type="submit" value="Enter" className="bg-gray-300 px-2"/>
+            <input type="submit" value="Enter" className="bg-gray-300 px-2" />
           </form>
         </div>
       )}

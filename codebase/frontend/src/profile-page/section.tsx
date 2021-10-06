@@ -1,5 +1,3 @@
-import "tailwindcss/tailwind.css";
-
 const Section = (props) => {
 
   return (
