@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "tailwindcss/tailwind.css";
-import CloseButton from "react-bootstrap/CloseButton";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 import {
   FaBriefcase,
@@ -102,10 +100,10 @@ const WorkExperiences = () => {
           </div>
           {display_remove_button ===
             work_experiences_list.indexOf(work_experience) && (
-            <CloseButton
-              className="absolute top-4 left-0"
+            <button
+              className="hover:text-gray-500 absolute top-4 left-0"
               onClick={() => delete_work_experience(work_experience)}
-            />
+            >&#10005;</button>
           )}
         </div>
       ))}
@@ -146,7 +144,7 @@ const WorkExperiences = () => {
                 required
               />
               <br />
-              <input type="submit" value="Enter" />
+              <input type="submit" value="Enter" className="bg-white px-4" />
             </form>
           </div>
         </div>

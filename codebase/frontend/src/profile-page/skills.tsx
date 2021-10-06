@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import "tailwindcss/tailwind.css";
-
-import CloseButton from "react-bootstrap/CloseButton";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Section from "./section";
 
 const Skills = () => {
@@ -12,8 +9,10 @@ const Skills = () => {
   const add_skill = (event) => {
     event.preventDefault();
     const new_skill = event.target.skill.value;
-    const new_list = skills_list.concat(new_skill);
-    set_skill_list(new_list);
+    if (skills_list.findIndex((skill) => skill === new_skill) === -1) {
+      const new_list = skills_list.concat(new_skill);
+      set_skill_list(new_list);
+    }
     event.target.reset();
   };
 
@@ -29,20 +28,20 @@ const Skills = () => {
           className="flex items-center bg-gray-300 mx-4 mb-4 p-2"
           key={skill}
         >
-          <CloseButton onClick={() => delete_skill(skill)} />
+          <button className="hover:text-gray-500" onClick={() => delete_skill(skill)}>&#10005;</button>
           <p className="my-0 mx-2">{skill}</p>
         </div>
       ))}
       {display_insert && (
         <div className="flex items-center bg-gray-300 mx-4 p-2">
-          <CloseButton />
           <form onSubmit={add_skill}>
             <input
+              className="bg-gray-200"
               type="text"
               name="skill"
               placeholder="Enter in a new skill"
             />
-            <input type="submit" value="Enter" />
+            <input type="submit" value="Enter" className="bg-gray-300 px-2"/>
           </form>
         </div>
       )}
