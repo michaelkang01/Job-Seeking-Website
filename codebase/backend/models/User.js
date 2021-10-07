@@ -1,6 +1,12 @@
 
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const { Schema } = require('mongoose');
+
+// mongo db refs
+// original_id = ObjectId()
+// db.users.insert({"_id": original_id, "email": ...})
+// db.jobseekerprofiles.insert({"userID": original_id, ...})
 
 module.exports = mongoose => {
 	const UserSchema = new mongoose.Schema({
