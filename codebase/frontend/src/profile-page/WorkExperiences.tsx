@@ -6,7 +6,7 @@ import {
   FaCalendarAlt,
   FaMapMarkerAlt,
 } from "react-icons/fa";
-import Section from "./section";
+import Section from "./Section";
 
 type Job = {
   position: string;
@@ -61,7 +61,7 @@ const WorkExperiences = () => {
   };
 
   const work_experiences = (
-    <div className="flex flex-row w-full flex-wrap">
+    <div className="flex flex-row w-full flex-wrap py-4">
       {work_experiences_list.map((work_experience: Job, i: number) => (
         <div
           className="relative flex items-center mx-4 mb-4 p-2"

@@ -1,7 +1,7 @@
 import React from "react";
 import "tailwindcss/tailwind.css";
 import { useAuth } from "../context/AuthContext";
-import ProfilePage from "../profile-page";
+import ProfilePage from "../profile-page/ProfilePage";
 
 const Welcome = () => {
   const auth = useAuth();

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Section from "./section";
+import Section from "./Section";
 import axios from "axios";
 
 const Skills = () => {
@@ -25,7 +25,7 @@ const Skills = () => {
   };
 
   const skills = (
-    <div className="flex flex-row w-full flex-wrap ">
+    <div className="flex flex-row w-full flex-wrap py-4">
       {skills_list.map((skill) => (
         <div
           className="flex items-center bg-gray-300 mx-4 mb-4 p-2"
