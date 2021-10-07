@@ -28,6 +28,8 @@ app.listen(API_PORT, () => {
 // Connect to MongoDB using Mongoose
 mongoose.connect(process.env.MONGO_URI).then(db => {
 	const User = require('./models/User')(db);
+	const Joblisting = require('./models/Joblisting')(db);
+	const JobseekerProfile = require('./models/JobseekerProfile')(db);
 
 	/**
 	 * Signs JWT and returns it
@@ -170,4 +172,21 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 			});
 		});
 	});
+
+	router.get(`/joblistings`, (req, res) => {
+		Joblisting.find().then(ret => {
+			res.json(ret);
+		});
+	});
+
+	router.get(`/jobseekerprofile`, (req, res) => {
+		if (req.query.email) {
+			authEmail = req.query.email;
+		}
+		else {
+			authEmail = ""
+		}
+		JobseekerProfile.find({email : authEmail}).then(ret => {
+			res.json(ret);
+		})});
 });
