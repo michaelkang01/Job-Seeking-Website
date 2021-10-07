@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "tailwindcss/tailwind.css";
 
 /**
@@ -45,17 +45,6 @@ const AuthProvider = ({ children }: AuthProps) => {
    */
   const getAuthData = () => {
     // {"header":{"alg":"HS256","typ":"JWT"},"payload":{"email":"akyle2001@gmail.com","firstName":"Andrew","lastName":"Hong","role":"user","id":"61549a053a2836dfe1da37f3","metadata":[],"iat":1632935449,"exp":1632939049},"signature":"QHgFbGiGE3hswtfBJGe1rXaubwOiI20sa0qIEc7ihAI"}
-    const authTokenFromStorage = localStorage.getItem("authToken");
-    const authDataFromStorage = localStorage.getItem("authData");
-
-    if (
-      !authData &&
-      authTokenFromStorage != null &&
-      authDataFromStorage != null
-    ) {
-      setAuthToken(authTokenFromStorage);
-      setAuthData(authDataFromStorage);
-    }
 
     if (authData) {
       const data = JSON.parse(authData);
@@ -96,6 +85,19 @@ const AuthProvider = ({ children }: AuthProps) => {
     setAuthToken(authToken);
     setAuthData(authData);
   };
+
+  useEffect(() => {
+    const authTokenFromStorage = localStorage.getItem("authToken");
+    const authDataFromStorage = localStorage.getItem("authData");
+    if (
+      !authData &&
+      authTokenFromStorage != null &&
+      authDataFromStorage != null
+    ) {
+      setAuthToken(authTokenFromStorage);
+      setAuthData(authDataFromStorage);
+    }
+  }, [authData])
 
   return (
     <AuthContext.Provider
