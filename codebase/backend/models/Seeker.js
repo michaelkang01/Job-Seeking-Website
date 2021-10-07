@@ -18,3 +18,5 @@ export default mongoose => {
     });
     return mongoose.model("Seeker", seekerSchema);
 };
+
+// object relation for job seeker accounts
