@@ -10,7 +10,6 @@ const { Schema } = require('mongoose');
 
 module.exports = mongoose => {
 	const UserSchema = new mongoose.Schema({
-		_id: Schema.Types.ObjectId,
 		email: String,
 		password: String,
 		firstName: String,

@@ -2,7 +2,8 @@ import crypto from 'crypto';
 
 export default mongoose => {
     const seekerSchema = new Schema({
-        userID: Schema.Types.ObjectId,
+        // https://mongoosejs.com/docs/populate.html
+        user: {type: Schema.Types.ObjectId, ref: 'User'},
         email: String,
         firstName: String,
         lastName: String,   
@@ -11,8 +12,8 @@ export default mongoose => {
         facebookID: String,
         resumeUrl: String,
         summary: String,
-        workExperience: { type: Array }, // {exp1: {title, start, end, location, description}, exp2: [...]}
-        education: { type: Array }, // {ed1: [schoolName, start, end, location}}
+        workExperience: [{ title: String, start: String , end: String, location: String, description: String }],
+        education: [{ schoolName: String, start: String, end: String, location: String }],
         skills: [String], // "skills" : ["Express", "Ruby"]
     });
     return mongoose.model("Seeker", seekerSchema);
