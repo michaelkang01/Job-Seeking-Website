@@ -41,33 +41,33 @@ const Search = () => {
   const authToken = auth.getAuthData().authToken;
   const authData = auth.getAuthData().authData;
   //Acquire Job listings
-  const getAllJoblistings = async (setIsLoading: any, setlistings: any) => {
-    return axios.get(`${process.env.REACT_APP_API_URL}/api/joblistings`)
-      .then(res => {
-        setIsLoading(false);
-        const listing_list = [] as Joblisting[];
-        for (const listing of res.data) {
-          listing_list.push({
-            listing_id: listing.listing_id,
-            employer_id: listing.emplyoer_id,
-            job_description: listing.job_description,
-            job_location: listing.job_location,
-            job_title: listing.job_title,
-            date_posted: listing.date_posted,
-            contact_name: listing.contact_name,
-            contact_title: listing.contact_title,
-            contact_address: listing.contact_address,
-            number_applied: listing.number_applied,
-            metadata: listing.metadata
-          });
-        }
-        setlistings(listing_list);
-      });
-  };
 
   const [joblistings, setListings] = useState<Joblisting[]>([]);
 
   useEffect(() => {
+    const getAllJoblistings = async (setIsLoading: any, setlistings: any) => {
+      return axios.get(`${process.env.REACT_APP_API_URL}/api/joblistings`)
+        .then(res => {
+          setIsLoading(false);
+          const listing_list = [] as Joblisting[];
+          for (const listing of res.data) {
+            listing_list.push({
+              listing_id: listing.listing_id,
+              employer_id: listing.emplyoer_id,
+              job_description: listing.job_description,
+              job_location: listing.job_location,
+              job_title: listing.job_title,
+              date_posted: listing.date_posted,
+              contact_name: listing.contact_name,
+              contact_title: listing.contact_title,
+              contact_address: listing.contact_address,
+              number_applied: listing.number_applied,
+              metadata: listing.metadata
+            });
+          }
+          setlistings(listing_list);
+        });
+    };
     if (isLoading) {
       getAllJoblistings(setIsLoading, setListings).then(() => {
         setIsLoading(false);
