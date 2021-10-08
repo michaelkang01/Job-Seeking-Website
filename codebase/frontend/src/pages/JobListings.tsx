@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import "tailwindcss/tailwind.css";
-import Footer from "../components/Footer";
+
 import Job from "../components/Job";
-import Nav from "../components/Nav";
+
 import Joblisting from "../types/Joblisting";
-import getPosting from "./getPostings";
+
 import './JobListings.css'
 
 interface prop{
@@ -28,7 +28,7 @@ const JobListings = (props:prop) => {
    }
 
   function handleClick(){
-   if(moreDetails ==-1){
+   if(moreDetails ===-1){
       return
    }
    setMoredetails(-1)
@@ -49,7 +49,7 @@ const JobListings = (props:prop) => {
         
          
    
-           {props.jobs !=undefined && props.jobs.map((Posting)=>{
+           {props.jobs !== undefined && props.jobs.map((Posting)=>{
               return(
                  <Job moreDetails={moreDetails} setMoreDetails={selectJob} job={Posting} />
               )
@@ -58,7 +58,7 @@ const JobListings = (props:prop) => {
         
         <div className="pt-24  pb-6 w-full ">
         
-       {moreDetails == -1 || jobSelected == undefined ?<> </>:
+       {moreDetails === -1 || jobSelected === undefined ?<> </>:
             <div className="moredetails p-12 text-gray-900 w-full  pr-25  mx-2  bg-white border rounded flex-none">
                <button onClick={ handleClick} className="cross ">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
@@ -71,7 +71,7 @@ const JobListings = (props:prop) => {
              <div className="text-xl text-right">{jobSelected?.contact_name}</div>
              <div className="text-xl text-right">{jobSelected?.contact_address}</div>
              <div className="text-xl text-right">{jobSelected?.contact_title}</div>
-             <div className="text-xl font-semibold">{jobSelected?.number_applied == 0?<div>Be the first to apply</div>:<div> {jobSelected?.number_applied} others already applied </div>}  </div>
+             <div className="text-xl font-semibold">{jobSelected?.number_applied === 0?<div>Be the first to apply</div>:<div> {jobSelected?.number_applied} others already applied </div>}  </div>
              <section>{jobSelected?.job_location}</section>
              <section className =" font-extralight text-center">- {jobSelected?.job_description}</section>
            
@@ -81,7 +81,7 @@ const JobListings = (props:prop) => {
             Apply
             </button>
             <div className="text-xl font-bold">
-               {jobSelected?.date_posted != undefined?<div>Posted  {differenceInDays(date,new Date(jobSelected?.date_posted))} days ago</div>:
+               {jobSelected?.date_posted !== undefined?<div>Posted  {differenceInDays(date,new Date(jobSelected?.date_posted))} days ago</div>:
                <div/>}
            
            </div>
