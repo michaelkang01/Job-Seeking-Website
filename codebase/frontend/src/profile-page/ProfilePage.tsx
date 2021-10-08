@@ -7,11 +7,11 @@ import WorkExperiences from "./WorkExperiences";
 const ProfilePage = () => {
   return (
     <div className="w-11/12 m-auto">
-      <div className="float-left w-1/4 p-4">
+      <div className="w-full float-left p-4 sm:w-1/4 ">
         <Profile />
         <ElevatorPitch />
       </div>
-      <div className="float-left w-3/4 p-4">
+      <div className="w-full float-left p-4 sm:w-3/4">
         <Summary />
         <Skills />
         <WorkExperiences />

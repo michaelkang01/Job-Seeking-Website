@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import Section from "./Section";
-import axios from "axios";
+import {isMobile} from 'react-device-detect';
 
 const Skills = () => {
   const [skills_list, set_skill_list] = useState([]);
   const [display_insert, set_display_insert] = useState(false);
+  const [display_edit_button, set_display_edit_button] = useState(false);
 
   const add_skill = (event) => {
     event.preventDefault();
     const new_skill = event.target.skill.value;
     if (skills_list.findIndex((skill) => skill === new_skill) === -1) {
-      axios.get(`${process.env.REACT_APP_API_URL}/api/test`).then((res) => {
-        console.log(res);
-      }).catch((err) => console.log(err));
       const new_list = skills_list.concat(new_skill);
       set_skill_list(new_list);
     }
@@ -58,9 +56,18 @@ const Skills = () => {
 
   return (
     <div
-      onMouseOver={() => set_display_insert(true)}
-      onMouseLeave={() => set_display_insert(false)}
+      className="relative"
+      onMouseOver={() => set_display_edit_button(true)}
+      onMouseLeave={() => set_display_edit_button(false)}
     >
+      {display_edit_button || isMobile && (
+        <button
+          className="absolute top-0 z-10 right-0 text-xl text-gray-200 p-4 hover:text-white"
+          onClick={() => set_display_insert(!display_insert)}
+        >
+         {display_insert ? "done" : "edit"}
+        </button>
+      )}
       <Section name="Skills" content={skills} />
     </div>
   );

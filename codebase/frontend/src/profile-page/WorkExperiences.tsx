@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {isMobile} from 'react-device-detect';
 
 import {
   FaBriefcase,
@@ -17,11 +18,12 @@ type Job = {
 
 const WorkExperiences = () => {
   const initialize: Job[] = [];
-
+  const [display_edit_button, set_display_edit_button] = useState(false);
   const [work_experiences_list, set_work_experience_list] =
     useState(initialize);
   const [display_insert, set_display_insert] = useState(false);
   const [display_remove_button, set_display_remove_button] = useState(-1);
+
 
   const add_work_experience = (event) => {
     event.preventDefault();
@@ -61,7 +63,7 @@ const WorkExperiences = () => {
   };
 
   const work_experiences = (
-    <div className="flex flex-row w-full flex-wrap py-4">
+    <div className="flex flex-row w-full flex-wrap py-4 overflow-auto">
       {work_experiences_list.map((work_experience: Job, i: number) => (
         <div
           className="relative flex items-center mx-4 mb-4 p-2"
@@ -102,7 +104,9 @@ const WorkExperiences = () => {
             <button
               className="hover:text-gray-500 absolute top-4 left-0"
               onClick={() => delete_work_experience(work_experience)}
-            >&#10005;</button>
+            >
+              &#10005;
+            </button>
           )}
         </div>
       ))}
@@ -143,7 +147,7 @@ const WorkExperiences = () => {
                 required
               />
               <br />
-              <input type="submit" value="Enter" className="bg-white px-4" />
+              <input type="submit" value="Enter" className="bg-white px-4 mt-4" />
             </form>
           </div>
         </div>
@@ -152,9 +156,18 @@ const WorkExperiences = () => {
   );
   return (
     <div
-      onMouseOver={() => set_display_insert(true)}
-      onMouseLeave={() => set_display_insert(false)}
+      className="relative"
+      onMouseOver={() => set_display_edit_button(true)}
+      onMouseLeave={() => set_display_edit_button(false)}
     >
+      {display_edit_button || isMobile && (
+        <button
+          className="absolute top-0 z-10 right-0 text-xl text-gray-200 p-4 hover:text-white"
+          onClick={() => set_display_insert(!display_insert)}
+        >
+         {display_insert ? "done" : "edit"}
+        </button>
+      )}
       <Section name="Work Experiences" content={work_experiences} />
     </div>
   );
