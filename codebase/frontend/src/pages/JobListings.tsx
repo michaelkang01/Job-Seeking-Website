@@ -49,7 +49,7 @@ const JobListings = (props:prop) => {
         
          
    
-           {props.jobs !== undefined && props.jobs.map((Posting)=>{
+           {props.jobs !==undefined && props.jobs.map((Posting)=>{
               return(
                  <Job moreDetails={moreDetails} setMoreDetails={selectJob} job={Posting} />
               )

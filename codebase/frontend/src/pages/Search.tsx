@@ -52,7 +52,7 @@ const Search = () => {
         for (const listing of res.data) {
           listing_list.push({
             listing_id: listing.listing_id,
-            employer_id: listing.emplyoer_id,
+            employer_id: listing.employer_id,
             job_description: listing.job_description,
             job_location: listing.job_location,
             job_title: listing.job_title,
