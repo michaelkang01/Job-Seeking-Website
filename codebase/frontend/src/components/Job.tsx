@@ -1,0 +1,52 @@
+import { join } from 'path';
+import React from 'react'
+import "tailwindcss/tailwind.css";
+import Joblisting from '../types/Joblisting';
+
+interface JobPosting {
+ job:Joblisting
+ setMoreDetails:Function
+ moreDetails:Number
+}
+
+const Job = (props:JobPosting  ) => {
+function handleClick(){
+    if(props.moreDetails == props.job.listing_id){
+        return
+    }
+}
+
+    return (    
+        <div>                                             
+        <div onClick={()=>props.setMoreDetails(props.job.listing_id)} className="max-w-xl  rounded hover:border-black border-2">
+       
+         <div className=" p-8 text-gray-900 leading-normal bg-white border rounded">
+             <img className="object-scale-down h-9 place-items-start" src="https://images.theconversation.com/files/93616/original/image-20150902-6700-t2axrz.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1000&fit=clip"></img>
+              <span className="text-2xl text-left font-bold">{props?.job.job_title}</span>
+             <div className="text-xl">{props?.job.employer_id}</div>
+
+             <section>{props?.job.job_location}</section>
+             <section className =" font-extralight">- {props?.job.job_description}</section>
+        
+             
+         
+         </div>
+         
+         
+        
+        
+     
+       
+      </div>
+     
+
+     </div>
+    
+           
+          
+          
+      
+    )
+}
+
+export default Job
