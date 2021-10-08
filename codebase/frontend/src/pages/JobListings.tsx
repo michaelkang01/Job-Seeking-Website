@@ -14,15 +14,28 @@ interface prop{
 const JobListings = (props:prop) => {
    console.log('render')
    var date = new Date();
+   let emptyjob = undefined as Joblisting | undefined
    
-
    const [moreDetails,setMoredetails] = useState(-1)
+   const [jobSelected,setJobSelected] = useState(emptyjob)
+   function selectJob(id:number){
+
+   setMoredetails(id)
+   var job = props.jobs.find(({ listing_id }) => listing_id === id)
+
+   setJobSelected(job)
+   
+   }
+
   function handleClick(){
    if(moreDetails ==-1){
       return
    }
    setMoredetails(-1)
+   setJobSelected(emptyjob)
    }
+
+
    const differenceInDays = (a:Date, b:Date) => Math.floor(
       (a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24)
     )
@@ -38,14 +51,14 @@ const JobListings = (props:prop) => {
    
            {props.jobs !=undefined && props.jobs.map((Posting)=>{
               return(
-                 <Job moreDetails={moreDetails} setMoreDetails={setMoredetails} job={Posting} />
+                 <Job moreDetails={moreDetails} setMoreDetails={selectJob} job={Posting} />
               )
            })}
         </div>
         
         <div className="pt-24  pb-6 w-full ">
         
-       {moreDetails == -1 ?<> </>:
+       {moreDetails == -1 || jobSelected == undefined ?<> </>:
             <div className="moredetails p-12 text-gray-900 w-full  pr-25  mx-2  bg-white border rounded flex-none">
                <button onClick={ handleClick} className="cross ">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
@@ -53,14 +66,14 @@ const JobListings = (props:prop) => {
       </svg>
       </button>
       
-              <span className="text-3xl text-left font-bold">{props.jobs[moreDetails-1].job_title}</span>
-             <div className="text-2xl">{props.jobs[moreDetails-1].employer_id}</div>
-             <div className="text-xl text-right">{props.jobs[moreDetails-1].contact_name}</div>
-             <div className="text-xl text-right">{props.jobs[moreDetails-1].contact_address}</div>
-             <div className="text-xl text-right">{props.jobs[moreDetails-1].contact_title}</div>
-             <div className="text-xl font-semibold">{props.jobs[moreDetails-1].number_applied == 0?<div>Be the first to apply</div>:<div> {props.jobs[moreDetails-1].number_applied} others already applied </div>}  </div>
-             <section>{props.jobs[moreDetails-1].job_location}</section>
-             <section className =" font-extralight text-center">- {props.jobs[moreDetails-1].job_description}</section>
+              <span className="text-3xl text-left font-bold">{jobSelected?.job_title}</span>
+             <div className="text-2xl">{jobSelected?.employer_id}</div>
+             <div className="text-xl text-right">{jobSelected?.contact_name}</div>
+             <div className="text-xl text-right">{jobSelected?.contact_address}</div>
+             <div className="text-xl text-right">{jobSelected?.contact_title}</div>
+             <div className="text-xl font-semibold">{jobSelected?.number_applied == 0?<div>Be the first to apply</div>:<div> {jobSelected?.number_applied} others already applied </div>}  </div>
+             <section>{jobSelected?.job_location}</section>
+             <section className =" font-extralight text-center">- {jobSelected?.job_description}</section>
            
           
             
@@ -68,7 +81,9 @@ const JobListings = (props:prop) => {
             Apply
             </button>
             <div className="text-xl font-bold">
-           Posted  {differenceInDays(date,new Date(props.jobs[moreDetails-1].date_posted))} days ago
+               {jobSelected?.date_posted != undefined?<div>Posted  {differenceInDays(date,new Date(jobSelected?.date_posted))} days ago</div>:
+               <div/>}
+           
            </div>
          </div> }
        
