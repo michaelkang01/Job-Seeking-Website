@@ -1,0 +1,15 @@
+Purpose: Send search and filter data to current page.
+Type: react Component
+
+/**
+*   Returns JobseekerProfile data of current user profile.
+*   @param {any} setIsLoading is a useState variable for the current job listing data session.
+*   @param {any} setlistings is a useState variable for setting current job listing data.
+*   @return {Joblisting[]} list of Joblisting Objects.
+*/
+
+const getAllJoblistings = async (setIsLoading: any, setlistings: any) => { ... }
+
+/**
+*  @return an HTML5 Object.
+*/
