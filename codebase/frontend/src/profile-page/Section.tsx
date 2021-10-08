@@ -1,9 +1,9 @@
-type Section = {
+type SectionRequirements = {
   name: string,
   centerheader?: boolean,
   content: any
 }
-const Section = (props: Section) => {
+const Section = (props: SectionRequirements) => {
 
   return (
     <div className="relative rounded-3xl mb-16 grid shadow-xl">
