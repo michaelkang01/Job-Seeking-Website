@@ -1,0 +1,2 @@
+Purpose: Store data pertaining to a single user login and authentication entity.
+Type: mongoose schema Object

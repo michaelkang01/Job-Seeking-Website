@@ -1,0 +1,2 @@
+Purpose: Store data pertaining to a single joblisting profile entity.
+Type: JavaScript Object
