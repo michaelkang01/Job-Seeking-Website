@@ -1,4 +1,4 @@
 File name: resumeController.js
 Purpose: Contains methods which allow users to store resumes. 
 Description: Controller renames file created by user to prevent other users from modifying the aws url and accessing the resumes of other users. 
-Each resume is stored in the same AWS S3 bucket as an object, with resume being available to users through the object URL.
+             Each resume is stored in the same AWS S3 bucket as an object, with resume being available to users through the object URL.
