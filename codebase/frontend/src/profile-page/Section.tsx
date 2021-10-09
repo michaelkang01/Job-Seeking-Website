@@ -1,11 +1,5 @@
-/**
- * Pass in parameter for a <Section /> tag
- */
-type SectionRequirements = {
-  name: string;
-  centerheader?: boolean;
-  content: any;
-};
+import SectionRequirements from "../types/SectionRequirements";
+
 
 /**
  *

@@ -7,17 +7,8 @@ import {
   FaCalendarAlt,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import Job from "../types/WorkExperience";
 import Section from "./Section";
-
-/**
- * Necessary attributes to showcase a work experience
- */
-type Job = {
-  position: string;
-  company: string;
-  time: string;
-  location: string;
-};
 
 /**
  * Work Experiences section in profile page
