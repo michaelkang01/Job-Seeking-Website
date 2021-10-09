@@ -1,0 +1,2 @@
+Purpose: renders job cards for each job posting, renders more details tab depending on state
+Type: react Component
