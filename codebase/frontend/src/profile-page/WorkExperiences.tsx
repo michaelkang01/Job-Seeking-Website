@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {isMobile} from 'react-device-detect';
+import { isMobile } from "react-device-detect";
 
 import {
   FaBriefcase,
@@ -9,6 +9,9 @@ import {
 } from "react-icons/fa";
 import Section from "./Section";
 
+/**
+ * Necessary attributes to showcase a work experience
+ */
 type Job = {
   position: string;
   company: string;
@@ -16,15 +19,40 @@ type Job = {
   location: string;
 };
 
+/**
+ * Work Experiences section in profile page
+ * 
+ * @returns JSX.Element content to be displayed
+ */
 const WorkExperiences = () => {
   const initialize: Job[] = [];
+
+  /**
+   * Display the edit button in which user can click to display the form to update their work experiences
+   */
   const [display_edit_button, set_display_edit_button] = useState(false);
+
+  /**
+   * List containing user's work experiences
+   */
   const [work_experiences_list, set_work_experience_list] =
     useState(initialize);
+
+  /**
+   * Display the insert work experience form
+   */
   const [display_insert, set_display_insert] = useState(false);
+
+  /**
+   * Display a button to remove a work experience at index i in work_experiences_list
+   */
   const [display_remove_button, set_display_remove_button] = useState(-1);
 
-
+  /**
+   * Adds a new work experience based on form input
+   * 
+   * @param event Form input 
+   */
   const add_work_experience = (event) => {
     event.preventDefault();
     const position = event.target.position.value;
@@ -55,6 +83,11 @@ const WorkExperiences = () => {
     event.target.reset();
   };
 
+  /**
+   * Removes a work experience
+   * 
+   * @param remove_work_experience Work experience to remove
+   */
   const delete_work_experience = (remove_work_experience) => {
     const new_list = work_experiences_list.filter(
       (work_experience) => work_experience !== remove_work_experience
@@ -147,7 +180,11 @@ const WorkExperiences = () => {
                 required
               />
               <br />
-              <input type="submit" value="Enter" className="bg-white px-4 mt-4" />
+              <input
+                type="submit"
+                value="Enter"
+                className="bg-white px-4 mt-4"
+              />
             </form>
           </div>
         </div>
@@ -165,7 +202,7 @@ const WorkExperiences = () => {
           className="absolute top-0 z-10 right-0 text-xl text-gray-200 p-4 hover:text-white"
           onClick={() => set_display_insert(!display_insert)}
         >
-         {display_insert ? "done" : "edit"}
+          {display_insert ? "done" : "edit"}
         </button>
       )}
       <Section name="Work Experiences" content={work_experiences} />

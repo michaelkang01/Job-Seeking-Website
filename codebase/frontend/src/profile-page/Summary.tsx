@@ -3,13 +3,28 @@ import Section from "./Section";
 import TextareaAutosize from "react-textarea-autosize";
 import {isMobile} from 'react-device-detect';
 
+/**
+ * Summary section of profile page
+ * 
+ * @returns JSX.Element content to be displayed
+ */
 const Summary = () => {
+  /**
+   * Display the edit button in which user can click to display the form to update their summary
+   */
   const [display_edit_button, set_display_edit_button] = useState(false);
+
+  /**
+   * Editing is enabled on summary
+   */
   const [is_editing, set_is_editing] = useState(false);
 
+  /**
+   * Updates users summary based on what the textbox has.
+   * @param event contents of the textbox
+   */
   const edit_summary = (event) => {
     event.preventDefault();
-    console.log(event.target.summary.value);
     set_is_editing(false);
   };
 

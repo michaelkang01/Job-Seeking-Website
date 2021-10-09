@@ -12,14 +12,31 @@ import {
 
 import Modal from "react-modal";
 
+/**
+ * Basic profile and contact information on profile page
+ *
+ * @returns JSX.Element content to be displayed
+ */
 const Profile = () => {
+  /**
+   * Shows the editing modal for profile and contact information changes
+   */
   const [show_editing_modal, set_show_editing_modal] = useState(false);
+
+  /**
+   * Functions to update the various contact information iterms
+   */
   const [name, set_name] = useState("Bob the Builder");
   const [number, set_number] = useState("1234567890");
   const [email, set_email] = useState("testuser@email.com");
   const [twitter, set_twitter] = useState("tweettweet");
   const [facebook, set_facebook] = useState("noprivacyallowed");
 
+  /**
+   * Updates the users contact information based on the input provided by the editing modal
+   *
+   * @param event Form input from the editing modal
+   */
   const update_profile = (event) => {
     event.preventDefault();
     const name = event.target.name.value;
@@ -35,6 +52,9 @@ const Profile = () => {
     set_show_editing_modal(false);
   };
 
+  /**
+   * CSS for the editing modal
+   */
   const customStyles = {
     content: {
       top: "50%",

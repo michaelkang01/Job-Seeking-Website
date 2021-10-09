@@ -4,6 +4,11 @@ import Skills from "./Skills";
 import Summary from "./Summary";
 import WorkExperiences from "./WorkExperiences";
 
+/**
+ * THe profile page
+ * 
+ * @returns JSX.Element content to be displayed
+ */
 const ProfilePage = () => {
   return (
     <div className="w-11/12 m-auto">

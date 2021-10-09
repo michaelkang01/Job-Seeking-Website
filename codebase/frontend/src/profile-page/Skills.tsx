@@ -2,11 +2,33 @@ import React, { useState } from "react";
 import Section from "./Section";
 import {isMobile} from 'react-device-detect';
 
+/**
+ * Skills section in profile page
+ * 
+ * @returns JSX.Element content to be displayed
+ */
 const Skills = () => {
+
+  /**
+   * List of user skills
+   */
   const [skills_list, set_skill_list] = useState([]);
+
+  /**
+   * Display the insert input form
+   */
   const [display_insert, set_display_insert] = useState(false);
+
+  /**
+   * Display the edit button in which user can click to display the form to add a new skill
+   */
   const [display_edit_button, set_display_edit_button] = useState(false);
 
+  /**
+   * Adds a new distinct skill based on insert skill form
+   * 
+   * @param event Form input passed in by the insert skill form
+   */
   const add_skill = (event) => {
     event.preventDefault();
     const new_skill = event.target.skill.value;
@@ -17,6 +39,11 @@ const Skills = () => {
     event.target.reset();
   };
 
+  /**
+   * Removes a skill from the user profile
+   * 
+   * @param remove_skill Skill from skills_list to remove
+   */
   const delete_skill = (remove_skill) => {
     const new_list = skills_list.filter((skill) => skill !== remove_skill);
     set_skill_list(new_list);
