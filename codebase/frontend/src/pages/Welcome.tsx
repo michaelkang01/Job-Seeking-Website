@@ -1,6 +1,7 @@
 import React from "react";
 import "tailwindcss/tailwind.css";
 import { useAuth } from "../context/AuthContext";
+import ProfilePage from "../profile-page/ProfilePage";
 
 const Welcome = () => {
   const auth = useAuth();
@@ -12,6 +13,7 @@ const Welcome = () => {
       {authToken && authData ? (
         <>
           <h1 className="text-2xl">Welcome back, {JSON.parse(authData).payload.firstName}. (profile goes here)</h1>
+          <ProfilePage />
         </>
       ) : (
         <h1 className="text-2xl">Welcome. Please sign in. (frontpage goes here)</h1>
