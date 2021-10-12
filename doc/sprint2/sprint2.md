@@ -12,6 +12,16 @@ Handle S3 upload (Andrew)
 Handle post-video upload hooks (Andrew)
 Upload pitch video UI (Andrew)
 API: Handle video upload and display (Andrew)
+
+As a job-seeker, I want to be able to review the applications I've sent.
+Create Page to view applied jobs (Kiryl)
+Create Api jobs applied (Kiryl)
+
+As a job-seeker, I want to be able to apply to jobs.
+Create model and collection in the database (Kiryl)
+Create application page in the front end (Kiryl)
+Create api for job applications (Kiryl)
+
 As a job-seeker, I want to be able to list/modify my skills and personal information.
 
 UI for Profile Page (Daniel)
