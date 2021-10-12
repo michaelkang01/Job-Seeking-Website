@@ -34,14 +34,15 @@ As a job-seeker, I want to be able to see a list of jobs that are near me.
 
 UI for Job Listing Page (Kiryl)
 Filter job listing by location (Kiryl)
-As a job-seeker, I want to be able to see a list of jobs that require my skills.
 
-Filter job listing by skills (Michael)
-Automatically filter job listings by account's details (Michael)
-General Database Tasks:
+As a job-seeker, I want to be able to contact recruiters (Michael)
+  1. Hide recruiter details until logged in as a job-seeker (Michael)
+  2. Access recruiter contact information while on a job-seeker account (Michael)
 
-Create Object Relation for Job Listings (Michael)
-Create Object Relation for Job Seekers Account (Seyon)
+As a job-seeker, I want to be able to pre-fill my applications with my profile (Michael)
+  1. Retrieve profile data from databse (Michael)
+  2. Send profile data to prefill form (Michael)
+
 Spikes
 There are no spikes in particular to document; these tasks are not critically complicated.
 
