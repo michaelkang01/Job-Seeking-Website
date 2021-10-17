@@ -13,6 +13,10 @@ const Pitch = (mongoose) => {
             type: Number,
             required: true,
         },
+        transcription: {
+            type: String,
+            required: false,
+        },
         createdAt: {
             type: Date,
             default: Date.now,

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import "tailwindcss/tailwind.css";
@@ -14,38 +15,51 @@ const PitchVideo = () => {
   const [uploadError, setUploadError] = React.useState(false);
 
   console.log(authData);
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
-    setUploadError(false);
-    if (acceptedFiles.length > 1) {
-      setUploadMessage("Please choose one video to upload.");
-      setUploadError(true);
-    } else {
-      setUploadMessage("Your video is being uploaded...");
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      // Do something with the files
       setUploadError(false);
-      const formData = new FormData();
-      formData.append("pitch", acceptedFiles[0]);
-      fetch(`${process.env.REACT_APP_API_URL}/api/pitch/store`, {
-        method: "POST",
-        headers: {
-          "Authorization": authToken,
-        },
-        body: formData
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.success === true) {
-            setUploadMessage("Video uploaded successfully.");
-            setUploadError(false);
-            setVideoUrl("");
-            setVideoUrl(res.videoUrl);
-          } else {
-            setUploadMessage("Error uploading video: " + res.error);
-            setUploadError(true);
-          }
-        });
-    }
-  }, [authToken]);
+      if (acceptedFiles.length > 1) {
+        setUploadMessage("Please choose one video to upload.");
+        setUploadError(true);
+      } else {
+        setUploadMessage("Your video is being uploaded...");
+        setUploadError(false);
+        const formData = new FormData();
+        formData.append("pitch", acceptedFiles[0]);
+        axios
+          .request({
+            url: `${process.env.REACT_APP_API_URL}/api/pitch/store`,
+            method: "POST",
+            headers: {
+              Authorization: authToken,
+            },
+            data: formData,
+            onUploadProgress: (progressEvent) => {
+              const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
+              setUploadMessage(`${percentCompleted > 95 ? "Processing..." : percentCompleted + "% uploaded..."}`);
+            },
+          })
+          .then((res) => {
+            return res.data;
+          })
+          .then((res) => {
+            if (res.success === true) {
+              setUploadMessage("Video uploaded successfully.");
+              setUploadError(false);
+              setVideoUrl("");
+              setVideoUrl(res.videoUrl);
+            } else {
+              setUploadMessage("Error uploading video: " + res.error);
+              setUploadError(true);
+            }
+          });
+      }
+    },
+    [authToken]
+  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   useEffect(() => {
@@ -111,7 +125,7 @@ const PitchVideo = () => {
           </div>
           <div className="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4">
             <div className="mb-4">
-              <h1 className="text-2xl font-bold text-center pb-4">Upload</h1>
+              <h1 className="text-2xl font-bold text-center pb-4">Upload pitch video</h1>
               <div
                 className="text-center bg-gray-100 py-8 px-4"
                 {...getRootProps()}

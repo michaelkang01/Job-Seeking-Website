@@ -8,7 +8,7 @@ const passport = require('passport');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-const {verifyUser, signJwt} = require('./middleware/auth');
+const { verifyUser, signJwt } = require('./middleware/auth');
 const uploadVideoRoute = require('./controllers/pitchVideoController');
 
 const API_PORT = process.env.API_PORT || 3000;
@@ -130,7 +130,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 					message: 'User not found. This probably means the user has already been deleted.'
 				});
 			}
-			
+
 			user.remove((err) => {
 				if (err) {
 					return next(err);
@@ -156,9 +156,10 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 		else {
 			authEmail = ""
 		}
-		JobseekerProfile.find({email : authEmail}).then(ret => {
+		JobseekerProfile.find({ email: authEmail }).then(ret => {
 			res.json(ret);
-		})});
+		})
+	});
 
 	/**
 	 * @api {get} /api/pitch/get Get the user's pitch video, if it exists
@@ -173,7 +174,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 			}
 		});
 	});
-
+	
 	uploadVideoRoute(router, Pitch);
 });
 
