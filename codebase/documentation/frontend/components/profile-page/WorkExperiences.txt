@@ -1,0 +1,2 @@
+Purpose: Display elevator pitch section in profile page
+Type: React component

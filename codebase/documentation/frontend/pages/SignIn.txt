@@ -1,0 +1,2 @@
+Purpose: Provides an interface and communicates with API to sign users in.
+Type: react Component
