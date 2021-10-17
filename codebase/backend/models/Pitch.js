@@ -9,6 +9,10 @@ const Pitch = (mongoose) => {
             type: String,
             required: true,
         },
+        videoName: {
+            type: String,
+            required: true,
+        },
         processingStatus: {
             type: Number,
             required: true,

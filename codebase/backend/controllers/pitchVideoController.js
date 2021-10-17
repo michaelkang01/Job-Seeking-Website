@@ -82,8 +82,15 @@ const uploadVideoRoute = (router, Pitch) => {
                     Pitch.create({
                         userId: uid,
                         videoUrl: req.file.location,
+                        videoName: req.file.key,
                         processingStatus: 1,
-                    })
+                    }).then(pitch => {
+                        return res.json({
+                            success: true,
+                            message: "Video uploaded successfully.",
+                            videoUrl: req.file.location,
+                        });
+                    });
                 } else {
                     Pitch.updateOne({
                         userId: uid,
@@ -91,16 +98,19 @@ const uploadVideoRoute = (router, Pitch) => {
                         $set: {
                             userId: uid,
                             videoUrl: req.file.location,
+                            videoName: req.file.key,
                             processingStatus: 1,
+                            transcription: "",
                             updatedAt: Date.now(),
                         },
+                    }).then(() => {
+                        res.json({
+                            success: true,
+                            message: "Video uploaded successfully.",
+                            videoUrl: req.file.location,
+                        });
                     });
                 }
-            });
-            return res.json({
-                success: true,
-                message: "Video uploaded successfully",
-                videoUrl: req.file.location,
             });
         });
       });

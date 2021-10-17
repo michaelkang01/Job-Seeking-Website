@@ -165,7 +165,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 			if (pitch) {
 				res.json(pitch);
 			} else {
-				res.status(404).json({ message: 'No pitch found' });
+				res.status(404).json({ success: false, message: 'No pitch found' });
 			}
 		});
 	});
@@ -175,7 +175,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 	 */
 	router.get('/pitch/getUnprocessed', (req, res) => {
 		if ('authorization' in req.headers && req.headers['authorization'] === 'Bearer ' + process.env.ADMIN_TOKEN) {
-			Pitch.find({ processed: 1 }).then(pitches => {
+			Pitch.find({ processingStatus: 1 }).then(pitches => {
 				if (pitches) {
 					res.json({
 						success: true,
@@ -186,8 +186,6 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 				}
 			});
 		} else {
-			console.log(req.headers);
-			console.log(process.env.ADMIN_TOKEN);
 			res.status(401).json({ success: false, message: 'Unauthorized' });
 		}
 	});
