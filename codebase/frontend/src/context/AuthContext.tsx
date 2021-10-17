@@ -97,7 +97,8 @@ const AuthProvider = ({ children }: AuthProps) => {
       setAuthToken(authTokenFromStorage);
       setAuthData(authDataFromStorage);
     }
-  }, [authData])
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <AuthContext.Provider

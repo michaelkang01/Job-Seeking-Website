@@ -6,9 +6,10 @@ const mongoose = require('mongoose');
 const app = express();
 const passport = require('passport');
 const router = express.Router();
-const jwtSecret = require('./jwtConfig').secret;
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const {verifyUser, signJwt} = require('./middleware/auth');
+const uploadVideoRoute = require('./controllers/pitchVideoController');
 
 const API_PORT = process.env.API_PORT || 3000;
 const BASE_URL = '/api';
@@ -30,46 +31,15 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 	const User = require('./models/User')(db);
 	const Joblisting = require('./models/Joblisting')(db);
 	const JobseekerProfile = require('./models/JobseekerProfile')(db);
-
-	/**
-	 * Signs JWT and returns it
-	 * 
-	 * @param UserSchema user 
-	 * @returns JWT String
-	 */
-	const signJwt = (user) => {
-		const token = jwt.sign({
-			email: user.email,
-			firstName: user.firstName,
-			lastName: user.lastName,
-			role: user.role,
-			id: user._id,
-			metadata: user.metadata
-		}, jwtSecret, {
-			expiresIn: '3h'
-		});
-		return token;
-	}
+	const Pitch = require('./models/Pitch')(db);
 
 	app.get(`${BASE_URL}`, (req, res) => {
 		res.send("EasyApply API");
 	});
 
 	// Setup body-parser middleware
-	app.use(bodyParser.urlencoded({ extended: false }));
-	app.use(bodyParser.json());
-
-	const verifyUser = (req, res, next) => {
-		const token = req.headers.authorization;
-		jwt.verify(token, jwtSecret, (err, decoded) => {
-			if (err) {
-				res.status(401).json({ "status": "Unauthorized" });
-			} else {
-				res.locals.authData = decoded;
-				next();
-			}
-		});
-	};
+	app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100000000, limit: '50mb' }));
+	app.use(bodyParser.json({ limit: '50mb', parameterLimit: 100000000 }));
 
 	// Initialize passport
 	app.use(passport.initialize());
@@ -189,4 +159,21 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 		JobseekerProfile.find({email : authEmail}).then(ret => {
 			res.json(ret);
 		})});
+
+	/**
+	 * @api {get} /api/pitch/get Get the user's pitch video, if it exists
+	 */
+	router.get('/pitch/get', [verifyUser], (req, res) => {
+		const uid = res.locals.authData.id;
+		Pitch.findOne({ userId: uid }).then(pitch => {
+			if (pitch) {
+				res.json(pitch);
+			} else {
+				res.status(404).json({ message: 'No pitch found' });
+			}
+		});
+	});
+
+	uploadVideoRoute(router, Pitch);
 });
+
