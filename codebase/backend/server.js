@@ -151,7 +151,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 
 	router.get(`/jobseekerprofile`, (req, res) => {
 		const authEmail = req.query.email || "";
-		JobseekerProfile.find({email : authEmail}).then(ret => {
+		JobseekerProfile.find({ email: authEmail }).then(ret => {
 			res.json(ret);
 		})
 	});
@@ -168,6 +168,51 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 				res.status(404).json({ message: 'No pitch found' });
 			}
 		});
+	});
+
+	/**
+	 * @api {post} /api/pitch/getUnprocessed Get all unprocessed pitches
+	 */
+	router.get('/pitch/getUnprocessed', (req, res) => {
+		if ('authorization' in req.headers && req.headers['authorization'] === 'Bearer ' + process.env.ADMIN_TOKEN) {
+			Pitch.find({ processed: 1 }).then(pitches => {
+				if (pitches) {
+					res.json({
+						success: true,
+						pitches: pitches
+					});
+				} else {
+					res.status(404).json({ success: false, message: 'No pitches found' });
+				}
+			});
+		} else {
+			console.log(req.headers);
+			console.log(process.env.ADMIN_TOKEN);
+			res.status(401).json({ success: false, message: 'Unauthorized' });
+		}
+	});
+
+	/**
+	 * @api {post} /api/pitch/process Update the processed status of a pitch
+	 */
+	router.post('/pitch/process', (req, res) => {
+		if ('authorization' in req.headers && req.headers['authorization'] === 'Bearer ' + process.env.ADMIN_TOKEN) {
+			const pitchId = req.body.pitchId;
+			const processed = req.body.processed || 1;
+			const transcription = req.body.transcription || "";
+			Pitch.findOneAndUpdate({ _id: pitchId }, { processingStatus: processed, transcription: transcription }).then(pitch => {
+				if (pitch) {
+					res.json({
+						success: true,
+						pitch
+					});
+				} else {
+					res.status(404).json({ success: false, message: 'No pitch found' });
+				}
+			});
+		} else {
+			res.status(401).json({ success: false, message: 'Unauthorized' });
+		}
 	});
 
 	uploadVideoRoute(router, Pitch);
