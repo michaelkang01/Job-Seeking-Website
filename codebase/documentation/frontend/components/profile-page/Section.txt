@@ -1,0 +1,2 @@
+Purpose: Section template for profile page
+Type: React component

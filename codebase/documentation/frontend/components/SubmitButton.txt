@@ -1,0 +1,2 @@
+Purpose: Uses PillButton to provide a dynamic button that can be adjusted to show different states based on the status of the request.
+Type: react Component

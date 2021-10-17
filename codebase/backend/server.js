@@ -150,13 +150,8 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 	});
 
 	router.get(`/jobseekerprofile`, (req, res) => {
-		if (req.query.email) {
-			authEmail = req.query.email;
-		}
-		else {
-			authEmail = ""
-		}
-		JobseekerProfile.find({ email: authEmail }).then(ret => {
+		const authEmail = req.query.email || "";
+		JobseekerProfile.find({email : authEmail}).then(ret => {
 			res.json(ret);
 		})
 	});
@@ -174,7 +169,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 			}
 		});
 	});
-	
+
 	uploadVideoRoute(router, Pitch);
 });
 

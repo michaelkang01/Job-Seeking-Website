@@ -1,0 +1,2 @@
+Purpose: Provides a standard navigation menu that changes based on authentication status.
+Type: react Component

@@ -1,0 +1,2 @@
+Purpose: Display summary section in profile page
+Type: React component
