@@ -31,7 +31,6 @@ app.listen(API_PORT, () => {
 });
 
 // Connect to MongoDB using Mongoose
-
 mongoose.connect(process.env.MONGO_URI).then((db) => {
   const User = require("./models/User")(db);
   const Joblisting = require("./models/Joblisting")(db);
@@ -279,4 +278,34 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 		})
 	})
 
+  router.get(`/joblistings`, (req, res) => {
+    Joblisting.find().then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  router.get(`/jobseekerprofile`, (req, res) => {
+    const authEmail = req.query.email || "";
+    JobseekerProfile.find({ email: authEmail }).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  router.post(`/updateprofilesummary`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      { summary: req.body.summary }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  router.post(`/updateprofileskills`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      { skills: req.body.skills }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
 });

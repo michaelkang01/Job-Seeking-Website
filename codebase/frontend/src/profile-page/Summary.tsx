@@ -10,7 +10,6 @@ import axios from "axios";
  * @returns JSX.Element content to be displayed
  */
 const Summary = (props) => {
-
   /**
    * Holds the user summary.
    */
@@ -27,7 +26,8 @@ const Summary = (props) => {
   const [is_editing, set_is_editing] = useState(false);
 
   /**
-   *  Retrives the user summary from the database
+   * Retrives the user summary from the database
+   * 
    * @returns Promise.
    */
   const get_profile_summary = async () => {
@@ -40,10 +40,13 @@ const Summary = (props) => {
       });
   };
 
-  get_profile_summary();
+  useEffect(() => {
+    get_profile_summary();
+  }, []);
 
   /**
    * Updates users summary based on what the textbox has.
+   * 
    * @param event contents of the textbox
    */
   const update_summary = async (event) => {
