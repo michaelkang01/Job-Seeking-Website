@@ -273,4 +273,10 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 
   uploadVideoRoute(router, Pitch);
 
+	router.post(`/updateprofilesummary`, (req, res) => {
+		JobseekerProfile.updateOne({email: req.body.email || ""}, {summary: req.body.summary}).then(ret => {
+			res.json(ret);
+		})
+	})
+
 });
