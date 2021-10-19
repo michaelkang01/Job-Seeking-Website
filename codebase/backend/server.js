@@ -183,5 +183,13 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 		const authEmail = req.query.email || "";
 		JobseekerProfile.find({email : authEmail}).then(ret => {
 			res.json(ret);
-		})});
+		})
+	});
+
+	router.post(`/updateprofilesummary`, (req, res) => {
+		JobseekerProfile.updateOne({email: req.body.email || ""}, {summary: req.body.summary}).then(ret => {
+			res.json(ret);
+		})
+	})
+
 });
