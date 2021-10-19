@@ -19,7 +19,7 @@ const ProfilePage = (props) => {
       <div className="w-full float-left p-4 sm:w-3/4">
         <Summary email={props.email}/>
         <Skills email={props.email}/>
-        <WorkExperiences />
+        <WorkExperiences email={props.email}/>
       </div>
     </div>
   );

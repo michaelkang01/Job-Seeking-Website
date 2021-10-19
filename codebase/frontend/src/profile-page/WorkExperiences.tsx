@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 
 import {
@@ -12,10 +13,10 @@ import Section from "./Section";
 
 /**
  * Work Experiences section in profile page
- * 
+ *
  * @returns JSX.Element content to be displayed
  */
-const WorkExperiences = () => {
+const WorkExperiences = (props) => {
   const initialize: Job[] = [];
 
   /**
@@ -39,12 +40,40 @@ const WorkExperiences = () => {
    */
   const [display_remove_button, set_display_remove_button] = useState(-1);
 
+  useEffect(() => {
+    /**
+     * Retrives the user work experienes from the database
+     *
+     * @returns Promise.
+     */
+    const get_work_experiences = async () => {
+      return axios
+        .get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {
+          params: { email: props.email },
+        })
+        .then((res) => {
+          let new_list: Job[] = [];
+          for (const experience in res.data[0].workExperience) {
+            const new_work_experience: Job = {
+              position: res.data[0].workExperience[experience].position,
+              company: res.data[0].workExperience[experience].company,
+              time: res.data[0].workExperience[experience].time,
+              location: res.data[0].workExperience[experience].location,
+            };
+            new_list.push(new_work_experience);
+          }
+          set_work_experience_list(new_list);
+        });
+    };
+    get_work_experiences();
+  }, [props.email]);
+
   /**
    * Adds a new work experience based on form input
-   * 
-   * @param event Form input 
+   *
+   * @param event Form input
    */
-  const add_work_experience = (event) => {
+  const add_work_experience = async (event) => {
     event.preventDefault();
     const position = event.target.position.value;
     const company = event.target.company.value;
@@ -70,20 +99,34 @@ const WorkExperiences = () => {
       location: location,
     };
     const new_list = work_experiences_list.concat(new_work_experience);
-    set_work_experience_list(new_list);
-    event.target.reset();
+    return axios
+      .post(`${process.env.REACT_APP_API_URL}/api/updateworkexperiences`, {
+        email: props.email,
+        workExperience: new_list,
+      })
+      .then(() => {
+        set_work_experience_list(new_list);
+        event.target.reset();
+      });
   };
 
   /**
    * Removes a work experience
-   * 
+   *
    * @param remove_work_experience Work experience to remove
    */
   const delete_work_experience = (remove_work_experience) => {
     const new_list = work_experiences_list.filter(
       (work_experience) => work_experience !== remove_work_experience
     );
-    set_work_experience_list(new_list);
+    return axios
+      .post(`${process.env.REACT_APP_API_URL}/api/updateworkexperiences`, {
+        email: props.email,
+        workExperience: new_list,
+      })
+      .then(() => {
+        set_work_experience_list(new_list);
+      });
   };
 
   const work_experiences = (
@@ -123,8 +166,8 @@ const WorkExperiences = () => {
               {work_experience.location}
             </p>
           </div>
-          {display_remove_button ===
-            work_experiences_list.indexOf(work_experience) && (
+          {(display_remove_button ===
+            work_experiences_list.indexOf(work_experience) || isMobile) && (
             <button
               className="hover:text-gray-500 absolute top-4 left-0"
               onClick={() => delete_work_experience(work_experience)}
