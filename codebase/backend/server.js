@@ -308,4 +308,13 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
       res.json(ret);
     });
   });
+
+  router.post(`/updateworkexperiences`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      { workExperience: req.body.workExperience }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
 });
