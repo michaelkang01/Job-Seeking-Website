@@ -132,8 +132,6 @@ const PitchVideo = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(error);
-
   return (
     <div className="px-8 pt-28 h-screen">
       <div className="flex justify-center">
@@ -194,13 +192,13 @@ const PitchVideo = () => {
               </div>
             </div>
           </div>
-          <div className="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4">
+          <div className="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-16">
             <div className="mb-4">
               <h1 className="text-2xl font-bold text-center pb-4">
                 Transcription
               </h1>
               <div className="text-center">
-                <p className="text-gray-600 text-center">
+                <div className="text-gray-600 text-center">
                   {(error && (
                     <p className="text-red-500 text-center">{error}</p>
                   ) ||
@@ -209,15 +207,21 @@ const PitchVideo = () => {
                   ) : (
                     <pre
                       style={{
+                        maxWidth: "100%",
                         width: "100%",
+                        height: "auto",
+                        maxHeight: 300,
+                        overflowX: "hidden",
                         overflowY: "scroll",
                         wordWrap: "break-word",
+                        whiteSpace: "pre-wrap",
                       }}
+                      className="bg-gray-200 px-3 py-2 text-justify rounded-md"
                     >
-                      {transcription}
+                      {JSON.parse(transcription).results.transcripts[0].transcript}
                     </pre>
                   )))}
-                </p>
+                </div>
               </div>
             </div>
           </div>
