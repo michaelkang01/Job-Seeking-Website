@@ -24,24 +24,23 @@ const Skills = (props) => {
    */
   const [display_edit_button, set_display_edit_button] = useState(false);
 
-  /**
-   * Retrieves user skills from the database
-   * 
-   * @returns Promise
-   */
-  const get_skills = async () => {
-    return axios
-      .get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {
-        params: { email: props.email },
-      })
-      .then((res) => {
-        set_skill_list(res.data[0].skills);
-      });
-  };
-
   useEffect(() => {
+    /**
+     * Retrieves user skills from the database
+     *
+     * @returns Promise
+     */
+    const get_skills = async () => {
+      return axios
+        .get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {
+          params: { email: props.email },
+        })
+        .then((res) => {
+          set_skill_list(res.data[0].skills);
+        });
+    };
     get_skills();
-  }, []);
+  }, [props.email]);
 
   /**
    * Adds a new distinct skill based on insert skill form

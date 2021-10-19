@@ -25,28 +25,27 @@ const Summary = (props) => {
    */
   const [is_editing, set_is_editing] = useState(false);
 
-  /**
-   * Retrives the user summary from the database
-   * 
-   * @returns Promise.
-   */
-  const get_profile_summary = async () => {
-    return axios
-      .get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {
-        params: { email: props.email },
-      })
-      .then((res) => {
-        set_summary(res.data[0].summary);
-      });
-  };
-
   useEffect(() => {
+    /**
+     * Retrives the user summary from the database
+     *
+     * @returns Promise.
+     */
+    const get_profile_summary = async () => {
+      return axios
+        .get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {
+          params: { email: props.email },
+        })
+        .then((res) => {
+          set_summary(res.data[0].summary);
+        });
+    };
     get_profile_summary();
-  }, []);
+  }, [props.email]);
 
   /**
    * Updates users summary based on what the textbox has.
-   * 
+   *
    * @param event contents of the textbox
    */
   const update_summary = async (event) => {
