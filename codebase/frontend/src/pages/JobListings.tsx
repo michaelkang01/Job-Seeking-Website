@@ -8,14 +8,18 @@ import Joblisting from "../types/Joblisting";
 
 import './JobListings.css'
 
+import { useAuth } from "../context/AuthContext";
+
 interface prop{
    jobs:Joblisting[]
 }
 const JobListings = (props:prop) => {
    console.log('render')
    var date = new Date();
-   let emptyjob = undefined as Joblisting | undefined
-   
+   let emptyjob = undefined as Joblisting | undefined;
+   const auth = useAuth();
+   const authToken = auth.getAuthData().authToken;
+   const authData = auth.getAuthData().authData;
    const [moreDetails,setMoredetails] = useState(-1)
    const [jobSelected,setJobSelected] = useState(emptyjob)
    function selectJob(id:number){
@@ -68,9 +72,17 @@ const JobListings = (props:prop) => {
       
               <span className="text-3xl text-left font-bold">{jobSelected?.job_title}</span>
              <div className="text-2xl">{jobSelected?.employer_id}</div>
+             {authData && authToken ? (
+                <>
              <div className="text-xl text-right">{jobSelected?.contact_name}</div>
              <div className="text-xl text-right">{jobSelected?.contact_address}</div>
              <div className="text-xl text-right">{jobSelected?.contact_title}</div>
+             </>
+             ) : (
+               <>
+             <div className="text-xl text-right">Login to view contact details.</div>
+             </>
+             )}
              <div className="text-xl font-semibold">{jobSelected?.number_applied === 0?<div>Be the first to apply</div>:<div> {jobSelected?.number_applied} others already applied </div>}  </div>
              <section>{jobSelected?.job_location}</section>
              <section className =" font-extralight text-center">- {jobSelected?.job_description}</section>
