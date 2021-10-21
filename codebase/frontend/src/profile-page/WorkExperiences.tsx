@@ -17,8 +17,6 @@ import Section from "./Section";
  * @returns JSX.Element content to be displayed
  */
 const WorkExperiences = (props) => {
-  const initialize: Job[] = [];
-
   /**
    * Display the edit button in which user can click to display the form to update their work experiences
    */
@@ -28,7 +26,7 @@ const WorkExperiences = (props) => {
    * List containing user's work experiences
    */
   const [work_experiences_list, set_work_experience_list] =
-    useState(initialize);
+    useState<Job[]>([]);
 
   /**
    * Display the insert work experience form

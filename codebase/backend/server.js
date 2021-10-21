@@ -317,4 +317,21 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
       res.json(ret);
     });
   });
+
+  router.post(`/updatecontactinformation`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      {
+        firstName: req.body.profile.firstName,
+        lastName: req.body.profile.lastName,
+        email: req.body.profile.email,
+        address: req.body.profile.address,
+        githubID: req.body.profile.github,
+        facebookID: req.body.profile.facebook,
+        resumeUrl: req.body.profile.resumeURL,
+      }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
 });
