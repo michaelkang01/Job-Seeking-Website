@@ -1,23 +1,25 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import {
-  FaPhoneAlt,
   FaRegEnvelope,
-  FaTwitter,
+  FaGithub,
   FaFacebookF,
   FaUserCircle,
   FaCog,
-  FaRegBookmark,
-  FaSearch,
+  FaMapMarkerAlt,
+  FaFileAlt,
 } from "react-icons/fa";
 
 import Modal from "react-modal";
+import ContactInformation from "../types/ContactInformation";
+import Section from "./Section";
 
 /**
  * Basic profile and contact information on profile page
  *
  * @returns JSX.Element content to be displayed
  */
-const Profile = () => {
+const Profile = (props) => {
   /**
    * Shows the editing modal for profile and contact information changes
    */
@@ -26,30 +28,69 @@ const Profile = () => {
   /**
    * Functions to update the various contact information iterms
    */
-  const [name, set_name] = useState("Bob the Builder");
-  const [number, set_number] = useState("1234567890");
-  const [email, set_email] = useState("testuser@email.com");
-  const [twitter, set_twitter] = useState("tweettweet");
-  const [facebook, set_facebook] = useState("noprivacyallowed");
+
+  const [contact, set_contact] = useState<ContactInformation>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    github: "",
+    facebook: "",
+    resumeURL: "",
+  });
+
+  useEffect(() => {
+    /**
+     * Gets user profile from database
+     * 
+     * @returns Promise
+     */
+    const get_profile = async () => {
+      return axios
+        .get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {
+          params: { email: props.email },
+        })
+        .then((res) => {
+          set_contact({
+            firstName: res.data[0].firstName,
+            lastName: res.data[0].lastName,
+            email: res.data[0].email,
+            address: res.data[0].address,
+            github: res.data[0].githubID,
+            facebook: res.data[0].facebookID,
+            resumeURL: res.data[0].resumeUrl,
+          });
+        });
+    };
+    get_profile();
+  }, [props.email]);
 
   /**
    * Updates the users contact information based on the input provided by the editing modal
    *
    * @param event Form input from the editing modal
    */
-  const update_profile = (event) => {
+  const update_profile = async (event) => {
     event.preventDefault();
-    const name = event.target.name.value;
-    const number = event.target.number.value;
-    const email = event.target.email.value;
-    const twitter = event.target.twitter.value;
-    const facebook = event.target.twitter.value;
-    set_name(name);
-    set_email(email);
-    set_number(number);
-    set_twitter("@" + twitter);
-    set_facebook("@" + facebook);
-    set_show_editing_modal(false);
+    const profile: ContactInformation = {
+      firstName: event.target.firstName.value,
+      lastName: event.target.lastName.value,
+      email: event.target.email.value,
+      address: event.target.address.value,
+      github: event.target.github.value,
+      facebook: event.target.facebook.value,
+      resumeURL: event.target.resumeURL.value,
+    };
+    return axios
+      .post(`${process.env.REACT_APP_API_URL}/api/updatecontactinformation`, {
+        email: props.email,
+        profile,
+      })
+      .then(() => {
+        set_contact(profile);
+        event.target.reset();
+        set_show_editing_modal(false);
+      });
   };
 
   /**
@@ -65,82 +106,97 @@ const Profile = () => {
     },
   };
 
+  const labels = {
+    firstName: "First Name",
+    lastName: "Last Name",
+    email: "Email",
+    address: "Address",
+    github: "Github Account (optional)",
+    facebook: "Facebook Account (optional",
+    resumeURL: "Resume",
+  };
+
   const modal = (
     <Modal
       isOpen={show_editing_modal}
       onRequestClose={() => set_show_editing_modal(false)}
-      contentLabel="Example Modal"
       style={customStyles}
     >
       <form onSubmit={update_profile}>
-        <label htmlFor="name" className="inline m-2">
-          Name
-        </label>
+        <div className="flex gap-8">
+          <div className="flex flex-col">
+            {Object.keys(contact).map((key, index) => (
+              <label htmlFor={key} className="mb-4" key={index}>
+                {labels[key]}
+              </label>
+            ))}
+          </div>
+          <div className="flex flex-col">
+            {Object.keys(contact).map((key, index) => (
+              <input
+                key={index}
+                type="text"
+                name={key}
+                defaultValue={contact[key]}
+                className="ml-4 w-96 mb-4"
+              />
+            ))}
+          </div>
+        </div>
         <input
-          type="text"
-          name="name"
-          placeholder="Profile Name"
-          defaultValue={name}
-          required
+          type="submit"
+          value="Enter"
+          className="bg-gray-300 px-4 mt-4 w-20"
         />
-        <br />
-        <br />
-        <FaPhoneAlt className="inline m-2" />
-        <input type="text" name="number" placeholder="Phone Number" />
-        <br />
-        <FaRegEnvelope className="inline m-2" />
-        <input type="text" name="email" placeholder="Email" />
-        <br />
-        <FaTwitter className="inline m-2" />
-        <input type="text" name="twitter" placeholder="Twitter Username" />
-        <br />
-        <FaFacebookF className="inline m-2" />
-        <input type="text" name="facebook" placeholder="Facebook Username" />
-        <br />
-        <input type="submit" value="Enter" className="bg-gray-300 px-4 mt-4" />
       </form>
     </Modal>
   );
-  return (
-    <div className="relative rounded-3xl mb-16 grid justify-items-center shadow-xl pb-8">
+
+  const profile = (
+    <div>
       {modal}
-      <div className="rounded-t-3xl bg-green-600 w-full h-40"></div>
-      <div className="absolute top-24 rounded-full bg-white w-32 h-32"></div>
-      <FaUserCircle className="absolute p-2 top-24 rounded-full bg-white w-32 h-32" />
       <div className="grid justify-items-center mt-16">
-        <div className="mb-8">
-          <FaRegBookmark className="inline mx-2" />
-          <FaSearch className="inline mx-2" />
+        <div className="absolute top-24 rounded-full bg-white w-32 h-32"></div>
+        <FaUserCircle className="absolute p-2 top-24 rounded-full bg-white w-32 h-32" />
+        <div className="mb-4">
           <FaCog
             className="inline mx-2 cursor-pointer"
-            onClick={() => {
-              set_show_editing_modal(true);
-            }}
+            onClick={() => set_show_editing_modal(true)}
           />
         </div>
-        <p className="text-3xl">{name}</p>
-        <p className="mt-8 mb-4 text-xl">Contact Information</p>
+        <p className="text-3xl mb-2">
+          {contact.firstName + " " + contact.lastName}
+        </p>
         <div>
           <p>
-            <FaPhoneAlt className="inline mr-4" />
-            {number}
-          </p>
-          <p>
             <FaRegEnvelope className="inline mr-4" />
-            {email}
+            {contact.email}
           </p>
           <p>
-            <FaTwitter className="inline mr-4" />
-            {twitter}
+            <FaMapMarkerAlt className="inline mr-4" />
+            {contact.address}
           </p>
-          <p>
-            <FaFacebookF className="inline mr-4" />
-            {facebook}
-          </p>
+          <a
+            href={contact.resumeURL}
+            target="_blank"
+            title="Click Here to View My Resume"
+          >
+            <FaFileAlt className="inline mr-4" /> Resume
+          </a>
+        </div>
+        <hr className="w-1/3 mt-4"/> 
+        <div className="mt-2 mb-2">
+          <a href={contact.facebook} target="_blank" title="Facebook Profile">
+            <FaFacebookF className="inline mx-2 text-lg" />
+          </a>
+          <a href={contact.github} target="_blank" title="Github Profile">
+            <FaGithub className="inline mx-2 text-lg" />
+          </a>
         </div>
       </div>
     </div>
   );
+  return <Section name="" content={profile} headerHeight="h-40" />;
 };
 
 export default Profile;
