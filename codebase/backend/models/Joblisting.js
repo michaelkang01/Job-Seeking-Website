@@ -1,6 +1,6 @@
 module.exports = mongoose => {
 	const JoblistingSchema = new mongoose.Schema({
-		listing_id: Number,
+		listing_id: String, // uuid() is a string
 		employer_id: String,
 		job_description: String,
 		job_location: String,
