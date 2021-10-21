@@ -8,7 +8,7 @@ mongoose.connect(process.env.MONGO_URI);
 const router = express.Router();
 
 export const createJobListing = async (req, res) => {
-    const { employer_id, job_title, job_location, job_description } = res.body;
+    const { employer_id, job_title, job_location, job_description } = req.body;
     
     var currUser = res.locals.authData;
     const listing_id = uuid();
