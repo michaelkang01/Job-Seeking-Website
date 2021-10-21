@@ -9,7 +9,7 @@ const router = express.Router();
 
 export const createJobListing = async (req, res) => {
     const { employer_id, job_title, job_location, job_description } = req.body;
-    
+
     let currUser = res.locals.authData;
     const listing_id = uuid();
     const date_posted = new Date().toISOString().slice(0, 10);  
@@ -21,7 +21,7 @@ export const createJobListing = async (req, res) => {
     // TODO: uncomment once recruiter profile is set up
     var recruiterProfiles = db.collection("recruiterprofiles");
     recruiterProfiles.updateOne({"email": contact_address}, {$push: { "jobsPosted": listing_id }});
-    
+
     try {
         await newJobListing.save();
         res.status(201).json(newJobListing);
@@ -68,4 +68,4 @@ export const getJobListing = async (req, res) => {
 
 // }
 
-export default router;
+export default router; 
