@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose'
 import Joblisting from '../models/Joblisting';
-import uuid from 'uuid/v4';  
+import { v4 as uuid } from 'uuid';
 
 mongoose.connect(process.env.MONGO_URI);
 
