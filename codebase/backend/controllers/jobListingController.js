@@ -12,9 +12,9 @@ export const createJobListing = async (req, res) => {
     
     var currUser = res.locals.authData;
     const listing_id = uuid();
-    var date_posted = new Date().toISOString().slice(0, 10);  
-    const contact_name = currUser.firstName + ' ' + currUser.lastName;
-    const contact_address = currUser.email;
+    const date_posted = new Date().toISOString().slice(0, 10);  
+    const contact_name = `${currUser.firstName} ${currUser.lastName}`;
+    const contact_address = `${currUser.email}`;
 
     const newJobListing = new Joblisting({ listing_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address });
 
