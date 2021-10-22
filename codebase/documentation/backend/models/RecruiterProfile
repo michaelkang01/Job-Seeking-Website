@@ -1,0 +1,2 @@
+Purpose: Store data pertaining to a recruiter, for use in the recruiter dashboard.
+Type: mongoose schema Object
