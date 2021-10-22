@@ -8,6 +8,8 @@ import Joblisting from "../types/Joblisting";
 
 import './JobListings.css'
 
+import { useAuth } from "../context/AuthContext";
+
 interface prop{
    jobs:Joblisting[]
    applied:boolean
@@ -15,8 +17,10 @@ interface prop{
 const JobListings = (props:prop) => {
    console.log('render')
    var date = new Date();
-   let emptyjob = undefined as Joblisting | undefined
-   
+   let emptyjob = undefined as Joblisting | undefined;
+   const auth = useAuth();
+   const authToken = auth.getAuthData().authToken;
+   const authData = auth.getAuthData().authData;
    const [moreDetails,setMoredetails] = useState(-1)
    const [jobSelected,setJobSelected] = useState(emptyjob)
    function selectJob(id:number){
@@ -36,6 +40,10 @@ const JobListings = (props:prop) => {
    setJobSelected(emptyjob)
    }
 
+   function sendMail() {
+      const mailto: string = "mailto:"+jobSelected?.contact_address;
+      window.location.href=mailto
+   }
 
    const differenceInDays = (a:Date, b:Date) => Math.floor(
       (a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24)
