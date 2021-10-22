@@ -17,11 +17,13 @@ const BASE_URL = "/api";
 // Handle CORS
 const cors = require("cors");
 
+
 app.use(
   cors({
     origin: `${process.env.BASE_URL}:${process.env.FRONTEND_PORT}`,
   })
 );
+
 
 // Set up Express to listen on API_PORT
 app.listen(API_PORT, () => {
@@ -88,6 +90,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 	console.log(req)
 		
 	});
+
   // Google OAuth2 endpoint callback
   router.get(`/user/auth/google_callback`, (req, res, next) => {
     passport.authenticate(
@@ -185,18 +188,22 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-  router.get(`/joblistings`, (req, res) => {
-    Joblisting.find().then((ret) => {
-      res.json(ret);
-    });
-  });
+	router.get(`/joblistings/:id`, (req, res) => {
+		Joblisting.find({listing_id:req.params.id}).then(ret => {
+			res.json(ret);
+		});
+	});
+	router.get(`/joblistings`, (req, res) => {
+		Joblisting.find().then(ret => {
+			res.json(ret);
+		});
+	});
 
-  router.get(`/jobseekerprofile`, (req, res) => {
-    const authEmail = req.query.email || "";
-    JobseekerProfile.find({ email: authEmail }).then((ret) => {
-      res.json(ret);
-    });
-  });
+	router.get(`/jobseekerprofile/`, (req, res) => {
+		const authEmail = req.query.email || "";
+		JobseekerProfile.find({email : authEmail}).then(ret => {
+			res.json(ret);
+		})});
 
   /**
    * @api {get} /api/pitch/get Get the user's pitch video, if it exists
@@ -265,4 +272,5 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   });
 
   uploadVideoRoute(router, Pitch);
+
 });
