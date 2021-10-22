@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Search from "./pages/Search"
 import { AuthProvider } from "./context/AuthContext";
 import SignInCallback from "./pages/SignInCallback";
+import Jobsapplied from "./pages/Jobsapplied";
 
 const App = () => {
   const main = (
@@ -28,6 +29,10 @@ const App = () => {
         <Route path="/search">
           <Search />
         </Route>
+        <Route path="/applied">
+          <Jobsapplied/>
+        </Route>
+
         <Route path="/">
           <Welcome />
         </Route>

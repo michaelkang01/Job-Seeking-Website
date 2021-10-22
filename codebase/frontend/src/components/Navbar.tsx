@@ -72,12 +72,21 @@ const Navbar = () => {
         </Link>
       )}
       {signedIn && (
-      <Link
+        <Link
           to="/search"
           className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
         >
           Job Search
-      </Link>)}
+        </Link>
+      )}
+      {signedIn && (
+        <Link
+          to="/applied"
+          className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+        >
+          Applied
+        </Link>
+      )}
     </nav>
   );
 };

@@ -105,7 +105,7 @@ const Search = () => {
         )}
         <SearchBar />
         <p>Testing platform for Joblistings and Search functions. Keyword/Location working to exact/inclusive and multi-parameter seperated by comma or space</p>
-       <JobListings jobs={filteredListings}/>
+       <JobListings jobs={filteredListings} applied={false}/>
       </main>
     </div>
   );
