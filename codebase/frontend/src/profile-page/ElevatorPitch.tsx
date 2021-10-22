@@ -5,7 +5,7 @@ import Section from "./Section";
 
 /**
  * Elevtator pitch section of profile page.
- * 
+ *
  * @returns JSX.Element content to be displayed
  */
 const ElevatorPitch = () => {

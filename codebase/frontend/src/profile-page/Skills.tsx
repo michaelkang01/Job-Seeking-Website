@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import Section from "./Section";
-import {isMobile} from 'react-device-detect';
+import { isMobile } from "react-device-detect";
 
 /**
  * Skills section in profile page
- * 
+ *
  * @returns JSX.Element content to be displayed
  */
 const Skills = () => {
-
   /**
    * List of user skills
    */
@@ -26,7 +25,7 @@ const Skills = () => {
 
   /**
    * Adds a new distinct skill based on insert skill form
-   * 
+   *
    * @param event Form input passed in by the insert skill form
    */
   const add_skill = (event) => {
@@ -41,7 +40,7 @@ const Skills = () => {
 
   /**
    * Removes a skill from the user profile
-   * 
+   *
    * @param remove_skill Skill from skills_list to remove
    */
   const delete_skill = (remove_skill) => {
@@ -92,7 +91,7 @@ const Skills = () => {
           className="absolute top-0 z-10 right-0 text-xl text-gray-200 p-4 hover:text-white"
           onClick={() => set_display_insert(!display_insert)}
         >
-         {display_insert ? "done" : "edit"}
+          {display_insert ? "done" : "edit"}
         </button>
       )}
       <Section name="Skills" content={skills} />

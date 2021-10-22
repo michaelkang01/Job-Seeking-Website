@@ -6,7 +6,7 @@ import WorkExperiences from "./WorkExperiences";
 
 /**
  * THe profile page
- * 
+ *
  * @returns JSX.Element content to be displayed
  */
 const ProfilePage = () => {

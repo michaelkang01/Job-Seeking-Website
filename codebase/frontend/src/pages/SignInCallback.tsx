@@ -10,7 +10,7 @@ const useQuery = () => {
 
 const SignInCallback = () => {
   const auth = useAuth();
-  
+
   // Parse token from query string
   const d = useQuery().get("d") || btoa(JSON.stringify({}));
 

@@ -32,7 +32,9 @@ const SubmitButton = ({
     <PillButton
       className={`${className} ${
         disabled ? "button-disabled" : "cursor-pointer"
-      } transition-all ease-in-out duration-500 ${state === "success" ? "bg-green-400" : "bg-blue-600 disabled:opacity-50"} py-2 h-10 w-10 object-scale-down px-6 rounded-md `}
+      } transition-all ease-in-out duration-500 ${
+        state === "success" ? "bg-green-400" : "bg-blue-600 disabled:opacity-50"
+      } py-2 h-10 w-10 object-scale-down px-6 rounded-md `}
       disabled={disabled}
       type="submit"
     >
