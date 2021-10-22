@@ -29,11 +29,13 @@ app.listen(API_PORT, () => {
 });
 
 // Connect to MongoDB using Mongoose
+
 mongoose.connect(process.env.MONGO_URI).then((db) => {
   const User = require("./models/User")(db);
   const Joblisting = require("./models/Joblisting")(db);
   const JobseekerProfile = require("./models/JobseekerProfile")(db);
   const Pitch = require("./models/Pitch")(db);
+  const Application = require('./models/Application')(db);
 
   app.get(`${BASE_URL}`, (req, res) => {
     res.send("EasyApply API");
@@ -64,7 +66,28 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     const decoded = res.locals.authData;
     res.status(200).json({ status: "Authorized", data: decoded });
   });
-
+  router.post(`/jobs/apply`, (req, res) => {
+		
+		 const {  listing_id,
+          firstName,
+          lastName,
+          email,
+          city,
+          province,
+          zip} = req.body;
+		  const app = new Application({_id: new mongoose.Types.ObjectId().toHexString(), listing_id, firstName, lastName, email, city, province, zip}, { collection: "application" });
+		  //change _id later 
+	 try {
+         app.save();
+        res.status(201).json(app);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+ 
+  
+	console.log(req)
+		
+	});
   // Google OAuth2 endpoint callback
   router.get(`/user/auth/google_callback`, (req, res, next) => {
     passport.authenticate(
