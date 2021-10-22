@@ -70,7 +70,8 @@ When adding a new feature to the codebase, make sure to follow the below steps:
 1. Switch to dev branch if you have not already
 2. git fetch + git pull to update your local dev branch
 4. Create a new feature branch off dev with your features name
-5. Commit necessary changes to your branch
+5. Before you push, make sure to run `npx prettier --write .` to standardize your formatting in both `frontend` and `backend`.
+6. Commit necessary changes to your branch
 
 When your features is done, and you are ready to create a pull request to merge onto dev, follow the below steps
 
