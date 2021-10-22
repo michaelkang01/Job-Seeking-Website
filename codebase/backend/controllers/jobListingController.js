@@ -3,11 +3,10 @@ import mongoose from 'mongoose'
 import Joblisting from '../models/Joblisting';
 import { v4 as uuid } from 'uuid';
 
-mongoose.connect(process.env.MONGO_URI);
-const db = mongoose.connection;
-const router = express.Router();
+// mongoose.connect(process.env.MONGO_URI);
+// const db = mongoose.connection;
 
-export const createJobListing = async (req, res) => {
+export const createJobListing = async (req, res, db) => {
     const { employer_id, job_title, job_location, job_description } = req.body;
 
     let currUser = res.locals.authData;
@@ -31,7 +30,7 @@ export const createJobListing = async (req, res) => {
 }
 
 
-export const getJobListings = async (req, res) => {
+export const getJobListings = async (req, res, db) => {
     try {
         var jobListings = [];
         jobListings.concat(db.getCollection("joblistings").find());
@@ -43,7 +42,7 @@ export const getJobListings = async (req, res) => {
 }
 
 
-export const getJobListing = async (req, res) => {
+export const getJobListing = async (req, res, db) => {
     const { _id } = req.params;
 
     try {
@@ -67,5 +66,3 @@ export const getJobListing = async (req, res) => {
 // export const deleteJobListing = async (req, res) => {
 
 // }
-
-export default router; 
