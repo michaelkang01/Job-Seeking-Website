@@ -38,6 +38,30 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
 
+  /**
+   * Signs JWT and returns it
+   *
+   * @param UserSchema user
+   * @returns JWT String
+   */
+  const signJwt = (user) => {
+    const token = jwt.sign(
+      {
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        id: user._id,
+        metadata: user.metadata,
+      },
+      jwtSecret,
+      {
+        expiresIn: "3h",
+      }
+    );
+    return token;
+  };
+
   app.get(`${BASE_URL}`, (req, res) => {
     res.send("EasyApply API");
   });
