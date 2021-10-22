@@ -30,7 +30,7 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 	const User = require('./models/User')(db);
 	const Joblisting = require('./models/Joblisting')(db);
 	const JobseekerProfile = require('./models/JobseekerProfile')(db);
-
+	const Application = require('./models/Application')(db);
 	/**
 	 * Signs JWT and returns it
 	 * 
@@ -148,6 +148,29 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 				message: 'Registration successful',
 			});
 		})(req, res, next);
+	});
+
+	router.post(`/jobs/apply`, (req, res) => {
+		
+		 const {  listing_id,
+          firstName,
+          lastName,
+          email,
+          city,
+          province,
+          zip} = req.body;
+		  const app = new Application({_id: new mongoose.Types.ObjectId().toHexString(), listing_id, firstName, lastName, email, city, province, zip}, { collection: "application" });
+		  //change _id later 
+	 try {
+         app.save();
+        res.status(201).json(app);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+ 
+  
+	console.log(req)
+		
 	});
 
 	router.delete(`/user/delete`, verifyUser, (req, res, next) => {
