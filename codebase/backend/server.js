@@ -31,36 +31,13 @@ app.listen(API_PORT, () => {
 });
 
 // Connect to MongoDB using Mongoose
+
 mongoose.connect(process.env.MONGO_URI).then((db) => {
   const User = require("./models/User")(db);
   const Joblisting = require("./models/Joblisting")(db);
   const JobseekerProfile = require("./models/JobseekerProfile")(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
-
-  /**
-   * Signs JWT and returns it
-   *
-   * @param UserSchema user
-   * @returns JWT String
-   */
-  const signJwt = (user) => {
-    const token = jwt.sign(
-      {
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role,
-        id: user._id,
-        metadata: user.metadata,
-      },
-      jwtSecret,
-      {
-        expiresIn: "3h",
-      }
-    );
-    return token;
-  };
 
   app.get(`${BASE_URL}`, (req, res) => {
     res.send("EasyApply API");
@@ -295,15 +272,6 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   });
 
   uploadVideoRoute(router, Pitch);
-
-  /**
-   * @api {post} /api/updateprofilesummary Update user profile
-   */
-	router.post(`/updateprofilesummary`, (req, res) => {
-		JobseekerProfile.updateOne({email: req.body.email || ""}, {summary: req.body.summary}).then(ret => {
-			res.json(ret);
-		})
-	})
 
   /**
    * @api {post} /api/updateprofilesummary Update user summary
