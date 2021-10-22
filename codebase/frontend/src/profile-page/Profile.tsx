@@ -179,6 +179,7 @@ const Profile = (props) => {
           <a
             href={contact.resumeURL}
             target="_blank"
+            rel="noreferrer"
             title="Click Here to View My Resume"
           >
             <FaFileAlt className="inline mr-4" /> Resume
@@ -186,10 +187,10 @@ const Profile = (props) => {
         </div>
         <hr className="w-1/3 mt-4"/> 
         <div className="mt-2 mb-2">
-          <a href={contact.facebook} target="_blank" title="Facebook Profile">
+          <a href={contact.facebook} target="_blank" rel="noreferrer" title="Facebook Profile">
             <FaFacebookF className="inline mx-2 text-lg" />
           </a>
-          <a href={contact.github} target="_blank" title="Github Profile">
+          <a href={contact.github} target="_blank" rel="noreferrer" title="Github Profile">
             <FaGithub className="inline mx-2 text-lg" />
           </a>
         </div>
