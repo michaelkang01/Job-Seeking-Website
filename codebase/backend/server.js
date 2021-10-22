@@ -272,25 +272,18 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 
   uploadVideoRoute(router, Pitch);
 
+  /**
+   * @api {post} /api/updateprofilesummary Update user profile
+   */
 	router.post(`/updateprofilesummary`, (req, res) => {
 		JobseekerProfile.updateOne({email: req.body.email || ""}, {summary: req.body.summary}).then(ret => {
 			res.json(ret);
 		})
 	})
 
-  router.get(`/joblistings`, (req, res) => {
-    Joblisting.find().then((ret) => {
-      res.json(ret);
-    });
-  });
-
-  router.get(`/jobseekerprofile`, (req, res) => {
-    const authEmail = req.query.email || "";
-    JobseekerProfile.find({ email: authEmail }).then((ret) => {
-      res.json(ret);
-    });
-  });
-
+  /**
+   * @api {post} /api/updateprofilesummary Update user summary
+   */
   router.post(`/updateprofilesummary`, (req, res) => {
     JobseekerProfile.updateOne(
       { email: req.body.email || "" },
@@ -300,6 +293,9 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
+  /**
+   * @api {post} /api/updateprofileskills Update user skills
+   */
   router.post(`/updateprofileskills`, (req, res) => {
     JobseekerProfile.updateOne(
       { email: req.body.email || "" },
@@ -309,6 +305,9 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
+  /**
+   * @api {post} /api/updateworkexperiences Update user work experiences
+   */
   router.post(`/updateworkexperiences`, (req, res) => {
     JobseekerProfile.updateOne(
       { email: req.body.email || "" },
@@ -318,6 +317,9 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
+  /**
+   * @api {post} /api/updatecontactinformation Update user contact information
+   */
   router.post(`/updatecontactinformation`, (req, res) => {
     JobseekerProfile.updateOne(
       { email: req.body.email || "" },
