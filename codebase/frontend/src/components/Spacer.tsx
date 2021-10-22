@@ -5,6 +5,6 @@ type SpacerProps = {
 };
 
 // Spacer component to add space between components
-export const Spacer = ({height}: SpacerProps) => (
+export const Spacer = ({ height }: SpacerProps) => (
   <div style={{ height: `${height}rem` }} />
 );

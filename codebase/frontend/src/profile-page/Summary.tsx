@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Section from "./Section";
 import TextareaAutosize from "react-textarea-autosize";
-import {isMobile} from 'react-device-detect';
+import { isMobile } from "react-device-detect";
 
 /**
  * Summary section of profile page
- * 
+ *
  * @returns JSX.Element content to be displayed
  */
 const Summary = () => {
@@ -37,7 +37,9 @@ const Summary = () => {
         name="summary"
         readOnly={!is_editing}
         minRows={3}
-      >Tell us about yourself!</TextareaAutosize>
+      >
+        Tell us about yourself!
+      </TextareaAutosize>
       {is_editing && (
         <input
           type="submit"
