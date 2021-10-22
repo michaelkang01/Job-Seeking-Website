@@ -1,12 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import TextInput from '../components/TextInput'
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
-  type LocationState = {
-  from: {
-    path: string;
-  }
-}
+
 function Application() {
     const location = useLocation();
     const listing_id = parseInt(location.pathname.replace('/application/',''))
