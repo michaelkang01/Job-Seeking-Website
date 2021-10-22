@@ -60,6 +60,14 @@ const Navbar = () => {
             Sign out
           </button>
         )}
+        {signedIn && (
+          <Link
+            to="/pitchvideo"
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            Pitch Video
+          </Link>
+        )}
       </div>
       {!signedIn && (
         <Link
@@ -87,6 +95,7 @@ const Navbar = () => {
           Applied
         </Link>
       )}
+
     </nav>
   );
 };

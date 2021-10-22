@@ -1,17 +1,14 @@
-.test{
-   
-  
-    display: flex;
+.test {
+  display: flex;
 }
-.button{
-    float: right;
-   
+.button {
+  float: right;
 }
-.moredetails{
+.moredetails {
   width: 800px;
 }
-.cross{
-    top: 0px;
-    right: 0px;
-    float:right;
+.cross {
+  top: 0px;
+  right: 0px;
+  float: right;
 }

@@ -1,6 +1,5 @@
 import SectionRequirements from "../types/SectionRequirements";
 
-
 /**
  *
  * @param props SectionRequirements to specify some useful styling
