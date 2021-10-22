@@ -42,7 +42,7 @@ const SignUp = () => {
         .catch((err) => {
           setMessage(
             "Error signing up: " +
-              (err.response.data.message || "Unspecified error")
+            (err.response.data.message || "Unspecified error")
           );
           setSignUpButtonDisabled(false);
         });
@@ -107,8 +107,8 @@ const SignUp = () => {
                   signedUp // Set button state to 'success' if signup was successful
                     ? "success"
                     : signUpButtonDisabled // Set button state to 'loading' if signup is in progress
-                    ? "pending"
-                    : "default" // Set button state to 'default' in all other cases
+                      ? "pending"
+                      : "default" // Set button state to 'default' in all other cases
                 }
               />
             </div>
