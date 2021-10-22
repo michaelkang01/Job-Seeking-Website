@@ -16,7 +16,7 @@ export const createJobListing = async (req, res) => {
     const contact_name = `${currUser.firstName} ${currUser.lastName}`;
     const contact_address = `${currUser.email}`;
     const number_applied = 0;
-    const newJobListing = new Joblisting({ listing_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied });
+    const newJobListing = new Joblisting({ listing_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" });
 
     // TODO: uncomment once recruiter profile is set up
     var recruiterProfiles = db.collection("recruiterprofiles");
@@ -33,8 +33,8 @@ export const createJobListing = async (req, res) => {
 
 export const getJobListings = async (req, res) => {
     try {
-        var jobListingColl = db.collection("joblistings");
-        const jobListings = jobListingColl.find();
+        var jobListings = [];
+        jobListings.concat(db.getCollection("joblistings").find());
         //const jobListings = await Joblisting.find();
         res.status(200).json(jobListings);
     } catch (error) {
