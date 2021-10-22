@@ -125,6 +125,7 @@ const PitchVideo = () => {
           setLoading(false);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken]);
 
   if (!authData || loading) {
@@ -199,9 +200,9 @@ const PitchVideo = () => {
               </h1>
               <div className="text-center">
                 <div className="text-gray-600 text-center">
-                  {(error && (
+                  {((error && (
                     <p className="text-red-500 text-center">{error}</p>
-                  ) ||
+                  )) ||
                   (!transcription ? (
                     "Transcription is being processed..."
                   ) : (
