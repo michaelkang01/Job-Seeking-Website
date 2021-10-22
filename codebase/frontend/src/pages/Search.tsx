@@ -110,12 +110,10 @@ const Search = () => {
           </h1>
         )}
         <SearchBar />
-        <p>
-          Testing platform for Joblistings and Search functions.
-          Keyword/Location working to exact/inclusive and multi-parameter
-          seperated by comma or space
-        </p>
-        <JobListings jobs={filteredListings} />
+
+        <p>Testing platform for Joblistings and Search functions. Keyword/Location working to exact/inclusive and multi-parameter seperated by comma or space</p>
+       <JobListings jobs={filteredListings} applied={false}/>
+
       </main>
     </div>
   );

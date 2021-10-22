@@ -11,8 +11,11 @@ import "./JobListings.css";
 
 import { useAuth } from "../context/AuthContext";
 
-interface prop {
-  jobs: Joblisting[];
+
+interface prop{
+   jobs:Joblisting[]
+   applied:boolean
+
 }
 const JobListings = (props: prop) => {
   console.log("render");
@@ -84,6 +87,7 @@ const JobListings = (props: prop) => {
               </span>
               <div className="text-2xl">{jobSelected?.employer_id}</div>
 
+
                  {authToken && authData ? ( <>
              <div className="text-xl text-right">{jobSelected?.contact_name}</div>
              <div className="text-xl text-right">{jobSelected?.contact_title}</div>
@@ -101,6 +105,7 @@ const JobListings = (props: prop) => {
                <div className="text-xl text-right">Login to view contact information</div>
                   </>
                )}
+
               <div className="text-xl font-semibold">
                 {jobSelected?.number_applied === 0 ? (
                   <div>Be the first to apply</div>
@@ -116,7 +121,13 @@ const JobListings = (props: prop) => {
                 - {jobSelected?.job_description}
               </section>
 
-              <Link
+
+              {props.applied ? (
+                <button className="button bg-green-500  font-semibold text-white py-2 px-4 border  hover:border-transparent rounded cursor-not-allowed ">
+                  Applied!
+                </button>
+              ) : (
+                      <Link
                 to={{
                   pathname: `/application/${jobSelected.listing_id}`,
                   
@@ -129,6 +140,7 @@ const JobListings = (props: prop) => {
                 Apply
               </button>
               </Link>
+              )}
 
               <div className="text-xl font-bold">
                 {jobSelected?.date_posted !== undefined ? (

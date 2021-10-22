@@ -8,6 +8,9 @@ import Navbar from "./components/Navbar";
 import Search from "./pages/Search";
 import { AuthProvider } from "./context/AuthContext";
 import SignInCallback from "./pages/SignInCallback";
+
+import Jobsapplied from "./pages/Jobsapplied";
+
 import Application from "./pages/Application";
 import PitchVideo from "./pages/PitchVideo";
 
@@ -34,10 +37,17 @@ const App = () => {
         <Route path="/search">
           <Search />
         </Route>
+
+        <Route path="/applied">
+          <Jobsapplied/>
+        </Route>
+
+
         <Route exact
           path="/application/:id">
             <Application/>
           </Route>
+
         <Route path="/">
           <Welcome />
         </Route>
