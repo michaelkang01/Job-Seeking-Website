@@ -193,6 +193,11 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 			res.json(ret);
 		});
 	});
+	router.get(`/joblistings`, (req, res) => {
+		Joblisting.find().then(ret => {
+			res.json(ret);
+		});
+	});
 
 	router.get(`/jobseekerprofile/`, (req, res) => {
 		const authEmail = req.query.email || "";
