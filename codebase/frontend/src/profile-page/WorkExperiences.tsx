@@ -12,7 +12,7 @@ import Section from "./Section";
 
 /**
  * Work Experiences section in profile page
- * 
+ *
  * @returns JSX.Element content to be displayed
  */
 const WorkExperiences = () => {
@@ -41,8 +41,8 @@ const WorkExperiences = () => {
 
   /**
    * Adds a new work experience based on form input
-   * 
-   * @param event Form input 
+   *
+   * @param event Form input
    */
   const add_work_experience = (event) => {
     event.preventDefault();
@@ -76,7 +76,7 @@ const WorkExperiences = () => {
 
   /**
    * Removes a work experience
-   * 
+   *
    * @param remove_work_experience Work experience to remove
    */
   const delete_work_experience = (remove_work_experience) => {

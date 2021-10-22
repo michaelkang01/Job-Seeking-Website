@@ -200,28 +200,31 @@ const PitchVideo = () => {
               </h1>
               <div className="text-center">
                 <div className="text-gray-600 text-center">
-                  {((error && (
+                  {(error && (
                     <p className="text-red-500 text-center">{error}</p>
                   )) ||
-                  (!transcription ? (
-                    "Transcription is being processed..."
-                  ) : (
-                    <pre
-                      style={{
-                        maxWidth: "100%",
-                        width: "100%",
-                        height: "auto",
-                        maxHeight: 300,
-                        overflowX: "hidden",
-                        overflowY: "scroll",
-                        wordWrap: "break-word",
-                        whiteSpace: "pre-wrap",
-                      }}
-                      className="bg-gray-200 px-3 py-2 text-justify rounded-md"
-                    >
-                      {JSON.parse(transcription).results.transcripts[0].transcript}
-                    </pre>
-                  )))}
+                    (!transcription ? (
+                      "Transcription is being processed..."
+                    ) : (
+                      <pre
+                        style={{
+                          maxWidth: "100%",
+                          width: "100%",
+                          height: "auto",
+                          maxHeight: 300,
+                          overflowX: "hidden",
+                          overflowY: "scroll",
+                          wordWrap: "break-word",
+                          whiteSpace: "pre-wrap",
+                        }}
+                        className="bg-gray-200 px-3 py-2 text-justify rounded-md"
+                      >
+                        {
+                          JSON.parse(transcription).results.transcripts[0]
+                            .transcript
+                        }
+                      </pre>
+                    ))}
                 </div>
               </div>
             </div>

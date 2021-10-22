@@ -30,7 +30,7 @@ export type AuthData = {
 
 /**
  * AuthProvider
- * 
+ *
  * @param AuthProps
  * @returns React.FunctionComponent
  */
@@ -40,7 +40,7 @@ const AuthProvider = ({ children }: AuthProps) => {
 
   /**
    * Get authentication and user data.
-   * 
+   *
    * @returns AuthData
    */
   const getAuthData = () => {
@@ -63,7 +63,7 @@ const AuthProvider = ({ children }: AuthProps) => {
 
   /**
    * Sign out (clear authentication token and data)
-   * 
+   *
    * @returns void
    */
   const signOut = () => {
@@ -75,7 +75,7 @@ const AuthProvider = ({ children }: AuthProps) => {
 
   /**
    * Update authentication data. Use this to update the authentication token and data, particularly within a user login, etc.
-   * 
+   *
    * @param AuthData data
    * @return void
    */
@@ -98,7 +98,7 @@ const AuthProvider = ({ children }: AuthProps) => {
       setAuthData(authDataFromStorage);
     }
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
   return (
     <AuthContext.Provider

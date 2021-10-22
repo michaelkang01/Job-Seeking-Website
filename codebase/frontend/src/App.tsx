@@ -5,7 +5,7 @@ import Welcome from "./pages/Welcome";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Navbar from "./components/Navbar";
-import Search from "./pages/Search"
+import Search from "./pages/Search";
 import { AuthProvider } from "./context/AuthContext";
 import SignInCallback from "./pages/SignInCallback";
 import PitchVideo from "./pages/PitchVideo";
