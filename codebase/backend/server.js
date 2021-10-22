@@ -184,4 +184,6 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 		JobseekerProfile.find({email : authEmail}).then(ret => {
 			res.json(ret);
 		})});
+	
+	router.post(`/newjoblisting`, createJobListing);
 });
