@@ -93,8 +93,8 @@ const SignIn = () => {
                   signedIn
                     ? "success"
                     : continueButtonDisabled
-                    ? "pending"
-                    : "default"
+                      ? "pending"
+                      : "default"
                 }
               />
             </div>
@@ -113,7 +113,7 @@ const SignIn = () => {
           <div className="flex flex-col justify-center items-center">
             <PillButton
               href={`${process.env.REACT_APP_API_URL}/api/user/auth/google`}
-              onClick={() => {}}
+              onClick={() => { }}
               externalHref={true}
             >
               <img

@@ -86,8 +86,6 @@ const JobListings = (props: prop) => {
                 {jobSelected?.job_title}
               </span>
               <div className="text-2xl">{jobSelected?.employer_id}</div>
-
-
                  {authToken && authData ? ( <>
              <div className="text-xl text-right">{jobSelected?.contact_name}</div>
              <div className="text-xl text-right">{jobSelected?.contact_title}</div>
@@ -105,7 +103,6 @@ const JobListings = (props: prop) => {
                <div className="text-xl text-right">Login to view contact information</div>
                   </>
                )}
-
               <div className="text-xl font-semibold">
                 {jobSelected?.number_applied === 0 ? (
                   <div>Be the first to apply</div>
@@ -130,15 +127,15 @@ const JobListings = (props: prop) => {
                       <Link
                 to={{
                   pathname: `/application/${jobSelected.listing_id}`,
-                  
+
                 }}
               >
-               
-              
-              
-              <button className="button bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded ">
-                Apply
-              </button>
+
+
+
+                <button className="button bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded ">
+                  Apply
+                </button>
               </Link>
               )}
 
