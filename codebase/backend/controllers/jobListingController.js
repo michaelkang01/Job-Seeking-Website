@@ -11,16 +11,16 @@ export const createJobListing = async (req, res) => {
     const { employer_id, job_title, job_location, job_description } = req.body;
 
     let currUser = res.locals.authData;
-    const listing_id = uuid();
+    const _id = uuid();
     const date_posted = new Date().toISOString().slice(0, 10);  
     const contact_name = `${currUser.firstName} ${currUser.lastName}`;
     const contact_address = `${currUser.email}`;
     const number_applied = 0;
-    const newJobListing = new Joblisting({ listing_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" });
+    const newJobListing = new Joblisting({ _id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" });
 
     // TODO: uncomment once recruiter profile is set up
     var recruiterProfiles = db.collection("recruiterprofiles");
-    recruiterProfiles.updateOne({"email": contact_address}, {$push: { "jobsPosted": listing_id }});
+    recruiterProfiles.updateOne({"email": contact_address}, {$push: { "jobsPosted": _id }});
 
     try {
         await newJobListing.save();
@@ -44,12 +44,12 @@ export const getJobListings = async (req, res) => {
 
 
 export const getJobListing = async (req, res) => {
-    const { listing_id } = req.params;
+    const { _id } = req.params;
 
     try {
         var jobListingColl = db.collection("joblistings");
-        const jobListing = await jobListingColl.findById(listing_id);
-        //const jobListing = await Joblisting.findById(listing_id);
+        const jobListing = await jobListingColl.findById(_id);
+        //const jobListing = await Joblisting.findById(_id);
         res.status(200).json(jobListing);
     } catch (error) {
         res.status(404).json({ message: error.message });
