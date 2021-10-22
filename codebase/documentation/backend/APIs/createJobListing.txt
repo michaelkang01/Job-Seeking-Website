@@ -1,4 +1,4 @@
 File name: jobListingController.js
 Purpose: Contains methods which allow recruiters to create job listings, and there are also methods to retrieve the job listings from the database. 
 Description: The API method createJobListing takes the request body containing job listing information from the UI form and writes it to the joblistings collection in the database.
-             The other methods, getJobListing and getJobListings are used to retrieve job listings from the database to display on a UI. May eventually deprecate there methods based on need.
+             The other methods, getJobListing and getJobListings are used to retrieve job listings from the database to display on a UI. May eventually deprecate these methods based on need.
