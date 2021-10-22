@@ -12,6 +12,7 @@ module.exports = mongoose => {
 			education: Object,
 			skills: Array,
 			metadata: Array,
+			jobsApplied:Array,
 		}, { timestamps: true });
 	return mongoose.model("JobseekerProfile", JobseekerProfileSchema);
 };

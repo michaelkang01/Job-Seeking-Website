@@ -18,6 +18,7 @@ const cors = require('cors');
 
 app.use(cors({
 	origin: `${process.env.BASE_URL}:${process.env.FRONTEND_PORT}`,
+	origin: `${process.env.BASE_URL}:${process.env.FRONTEND_PORT}`
 }));
 
 // Set up Express to listen on API_PORT
@@ -178,8 +179,13 @@ mongoose.connect(process.env.MONGO_URI).then(db => {
 			res.json(ret);
 		});
 	});
+	router.get(`/joblistings/:id`, (req, res) => {
+		Joblisting.find({listing_id:req.params.id}).then(ret => {
+			res.json(ret);
+		});
+	});
 
-	router.get(`/jobseekerprofile`, (req, res) => {
+	router.get(`/jobseekerprofile/`, (req, res) => {
 		const authEmail = req.query.email || "";
 		JobseekerProfile.find({email : authEmail}).then(ret => {
 			res.json(ret);
