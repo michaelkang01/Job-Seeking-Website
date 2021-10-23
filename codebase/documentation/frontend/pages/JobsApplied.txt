@@ -1,0 +1,2 @@
+Purpose: Displays the jobs that user has already applied to 
+Type: react Component
