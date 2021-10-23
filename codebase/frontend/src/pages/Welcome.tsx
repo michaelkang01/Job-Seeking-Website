@@ -7,16 +7,13 @@ const Welcome = () => {
   const auth = useAuth();
   const authToken = auth.getAuthData().authToken;
   const authData = auth.getAuthData().authData;
-
+  
   return (
     <div className="px-8 pt-28 h-screen">
       {authToken && authData ? (
         <>
-          <h1 className="text-2xl">
-            Welcome back, {JSON.parse(authData).payload.firstName}. (profile
-            goes here)
-          </h1>
-          <ProfilePage />
+          <h1 className="text-2xl">Welcome back, {JSON.parse(authData).payload.firstName}. (profile goes here)</h1>
+          <ProfilePage email={JSON.parse(authData).payload.email}/>
         </>
       ) : (
         <h1 className="text-2xl">

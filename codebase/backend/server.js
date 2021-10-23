@@ -273,4 +273,59 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 
   uploadVideoRoute(router, Pitch);
 
+  /**
+   * @api {post} /api/updateprofilesummary Update user summary
+   */
+  router.post(`/updateprofilesummary`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      { summary: req.body.summary }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  /**
+   * @api {post} /api/updateprofileskills Update user skills
+   */
+  router.post(`/updateprofileskills`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      { skills: req.body.skills }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  /**
+   * @api {post} /api/updateworkexperiences Update user work experiences
+   */
+  router.post(`/updateworkexperiences`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      { workExperience: req.body.workExperience }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  /**
+   * @api {post} /api/updatecontactinformation Update user contact information
+   */
+  router.post(`/updatecontactinformation`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      {
+        firstName: req.body.profile.firstName,
+        lastName: req.body.profile.lastName,
+        email: req.body.profile.email,
+        address: req.body.profile.address,
+        githubID: req.body.profile.github,
+        facebookID: req.body.profile.facebook,
+        resumeUrl: req.body.profile.resumeURL,
+      }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
 });

@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Section from "./Section";
 import { isMobile } from "react-device-detect";
+import axios from "axios";
 
 /**
  * Skills section in profile page
  *
  * @returns JSX.Element content to be displayed
  */
-const Skills = () => {
+const Skills = (props) => {
   /**
    * List of user skills
    */
@@ -23,19 +24,44 @@ const Skills = () => {
    */
   const [display_edit_button, set_display_edit_button] = useState(false);
 
+  useEffect(() => {
+    /**
+     * Retrieves user skills from the database
+     *
+     * @returns Promise
+     */
+    const get_skills = async () => {
+      return axios
+        .get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {
+          params: { email: props.email },
+        })
+        .then((res) => {
+          set_skill_list(res.data[0].skills);
+        });
+    };
+    get_skills();
+  }, [props.email]);
+
   /**
    * Adds a new distinct skill based on insert skill form
    *
    * @param event Form input passed in by the insert skill form
    */
-  const add_skill = (event) => {
+  const add_skill = async (event) => {
     event.preventDefault();
     const new_skill = event.target.skill.value;
     if (skills_list.findIndex((skill) => skill === new_skill) === -1) {
       const new_list = skills_list.concat(new_skill);
-      set_skill_list(new_list);
+      return axios
+        .post(`${process.env.REACT_APP_API_URL}/api/updateprofileskills`, {
+          email: props.email,
+          skills: new_list,
+        })
+        .then(() => {
+          set_skill_list(new_list);
+          event.target.reset();
+        });
     }
-    event.target.reset();
   };
 
   /**
@@ -45,7 +71,12 @@ const Skills = () => {
    */
   const delete_skill = (remove_skill) => {
     const new_list = skills_list.filter((skill) => skill !== remove_skill);
-    set_skill_list(new_list);
+    return axios
+      .post(`${process.env.REACT_APP_API_URL}/api/updateprofileskills`, {
+        email: props.email,
+        skills: new_list,
+      })
+      .then(() => set_skill_list(new_list));
   };
 
   const skills = (

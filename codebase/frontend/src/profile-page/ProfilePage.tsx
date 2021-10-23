@@ -9,17 +9,17 @@ import WorkExperiences from "./WorkExperiences";
  *
  * @returns JSX.Element content to be displayed
  */
-const ProfilePage = () => {
+const ProfilePage = (props) => {
   return (
     <div className="w-11/12 m-auto">
       <div className="w-full float-left p-4 sm:w-1/4 ">
-        <Profile />
+        <Profile email={props.email}/>
         <ElevatorPitch />
       </div>
       <div className="w-full float-left p-4 sm:w-3/4">
-        <Summary />
-        <Skills />
-        <WorkExperiences />
+        <Summary email={props.email}/>
+        <Skills email={props.email}/>
+        <WorkExperiences email={props.email}/>
       </div>
     </div>
   );
