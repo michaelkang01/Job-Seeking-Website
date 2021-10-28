@@ -12,3 +12,4 @@ We still had some communications issues, which led to blockers being resolved la
 We learned that we should set speciifc dates to complete tasks by, in order to prevent creating blockers. This would also prevent the burndown chart from indicating a lack of progress until the end of the sprint. We aslo learned we should meet more than 4 times per sprint to resolve issues quicker.
 
 ### How should the next sprint play out?
+We will finalize the mongoose models, and try to standardize the styling of the UI. In addition to implementing new features, we will refactor whatever code thatfollows bad design patterns. As mentioned, we will attempt to complete JIRA tickets in a scheduled manner rather than at the end of the sprint.
