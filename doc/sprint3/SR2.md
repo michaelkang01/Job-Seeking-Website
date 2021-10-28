@@ -1,13 +1,14 @@
 Attendees:
 
-Sprint 1 Retrospective__
-#What went well in Sprint 2?__
+#Sprint 2 Retrospective
+
+##What went well in Sprint 2?
 
 
-#What went wrong in Sprint 1?__
+##What went wrong in Sprint 1?
 
 
-#What did we learn?__
+###What did we learn?
 
 
-#How should the next sprint play out?__
+##How should the next sprint play out?
