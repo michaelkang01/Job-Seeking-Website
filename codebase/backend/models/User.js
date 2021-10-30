@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const { builtinModules } = require("module");
 const { Schema } = require("mongoose");
 
 // mongo db refs
@@ -7,7 +8,7 @@ const { Schema } = require("mongoose");
 // db.users.insert({"_id": original_id, "email": ...})
 // db.jobseekerprofiles.insert({"userID": original_id, ...})
 
-module.exports = (mongoose) => {
+module.exports = UserModel = (mongoose) => {
   const UserSchema = new mongoose.Schema(
     {
       email: String,

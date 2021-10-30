@@ -1,13 +1,7 @@
 const aws = require("aws-sdk");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-const crypto = require("crypto");
 const { verifyUser } = require("../middleware/auth");
-const fs = require("fs");
-
-const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGO_URI);
-const db = mongoose.connection;
 
 const S3_ACCESS_KEY = process.env.S3_ACCESS_KEY;
 const S3_SECRETACCESS_KEY = process.env.S3_SECRETACCESS_KEY;
