@@ -36,7 +36,7 @@ app.listen(API_PORT, () => {
 mongoose.connect(process.env.MONGO_URI).then((db) => {
   const User = require("./models/User")(db);
   const Joblisting = require("./models/Joblisting")(db);
-  //const JobseekerProfile = require("./models/JobseekerProfile")(db);
+  const JobseekerProfile = require("./models/JobseekerProfile")(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
 

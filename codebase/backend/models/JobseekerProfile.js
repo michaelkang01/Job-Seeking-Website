@@ -1,8 +1,11 @@
+const { ObjectID } = require("bson");
+
 module.exports = (mongoose) => {
   const JobseekerProfileSchema = new mongoose.Schema(
     {
       // https://mongoosejs.com/docs/populate.html
-      user: { type: Schema.Types.ObjectId, ref: "User" },
+      //user: { type: Schema.Types.ObjectId, ref: "User" },
+      user: ObjectID, //bandaid fix.
       profile_picture: String,
       email: String,
       firstName: String,
