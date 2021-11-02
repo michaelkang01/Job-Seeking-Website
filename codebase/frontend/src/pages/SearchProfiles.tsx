@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import { useAuth } from "../context/AuthContext";
 import JobseekerProfile from "../types/JobseekerProfile";
+import Seeker from "../components/Seeker"
 import axios from "axios";
 import ProfileSearchBar from "../components/ProfileSearchBar";
 
@@ -26,12 +27,6 @@ const SearchProfiles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { search } = window.location;
   const params = new URLSearchParams(search);
-  //Checking auth/login
-  const auth = useAuth();
-  const authToken = auth.getAuthData().authToken;
-  const authData = auth.getAuthData().authData;
-  //Acquire Job listings
-
   const [Seekers, setSeekers] = useState<JobseekerProfile[]>([]);
 
   useEffect(() => {
@@ -58,7 +53,7 @@ const SearchProfiles = () => {
               metadata: seeker.metadata
             });
           }
-          setlistings(setSeekers);
+          setlistings(seeker_list);
         });
     };
     if (isLoading) {
@@ -67,19 +62,19 @@ const SearchProfiles = () => {
       });
     }
   }, [isLoading]);
-
   let filteredSeekers = Seekers;
-  const wordParam = params.get("keywords");
+  const wordParam = params.get("skills");
   const [searchWordQuery] = useState(wordParam || "");
   if (searchWordQuery !== "") {
     filteredSeekers = filterSeekerSkills(filteredSeekers, searchWordQuery);
   }
-
+  const listSeekers = filteredSeekers.map((s) => {return (<Seeker seeker={s}/>)});
   return (
     <div className="px-8 pt-28 h-screen bg-gray-100">
       <header></header>
       <main className="p-8 top-0">
         <ProfileSearchBar />
+        {filteredSeekers ? (<>{listSeekers}</>) : (<>None matching criteria found.</>)}
       </main>
     </div>
   );

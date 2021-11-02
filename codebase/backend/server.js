@@ -208,8 +208,10 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 		})});
   
   router.get(`/allseekerprofiles`, (req, res) => {
-    
-  })
+    JobseekerProfile.find().then(ret=> {
+      res.json(ret);
+    });
+  });
 
   /**
    * @api {get} /api/pitch/get Get the user's pitch video, if it exists

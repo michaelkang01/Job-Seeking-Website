@@ -8,7 +8,7 @@ type JobseekerProfile = {
   resumeUrl: string;
   summary: string;
   address: string;
-  workExperience: Object;
+  workExperience: Array<any>;
   education: Object;
   skills: Array<string>;
   metadata: Array<any>;
