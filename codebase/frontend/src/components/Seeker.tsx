@@ -1,7 +1,6 @@
 import React from "react";
 import "tailwindcss/tailwind.css";
 import TextareaAutosize from "react-textarea-autosize";
-import WorkExperiences from "../profile-page/WorkExperiences";
 import JobseekerProfile from "../types/JobseekerProfile";
 import {
   FaBriefcase,

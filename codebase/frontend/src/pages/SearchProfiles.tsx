@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
-import { useAuth } from "../context/AuthContext";
 import JobseekerProfile from "../types/JobseekerProfile";
 import Seeker from "../components/Seeker"
 import axios from "axios";
