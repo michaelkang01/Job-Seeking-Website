@@ -16,6 +16,7 @@ const BASE_URL = "/api";
 
 // Handle CORS
 const cors = require("cors");
+const { getSystemErrorMap } = require("util");
 
 
 app.use(
@@ -149,6 +150,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   });
 
   router.post(`/user/create`, (req, res, next) => {
+    console.log("Reached API");
     passport.authenticate("local-signup", (err, user, info) => {
       if (err) {
         return next(err);
