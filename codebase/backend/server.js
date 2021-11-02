@@ -38,6 +38,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   const JobseekerProfile = require("./models/JobseekerProfile")(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
+  const RecruiterProfile = require("./models/RecruiterProfile")(db);
 
   app.get(`${BASE_URL}`, (req, res) => {
     res.send("EasyApply API");
