@@ -51,7 +51,6 @@ module.exports = async (UserModel, passport) => {
             });
           }
           req.body.password = bcrypt.hashSync(password, 10);
-          req.body.role = "user";
           const newUser = new UserModel(req.body);
           await newUser.save();
           return done(null, newUser);

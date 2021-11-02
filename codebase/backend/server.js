@@ -16,6 +16,7 @@ const BASE_URL = "/api";
 
 // Handle CORS
 const cors = require("cors");
+const { getSystemErrorMap } = require("util");
 
 
 app.use(
@@ -38,7 +39,6 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   const JobseekerProfile = require("./models/JobseekerProfile")(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
-  const RecruiterProfile = require("./models/RecruiterProfile")(db);
 
   app.get(`${BASE_URL}`, (req, res) => {
     res.send("EasyApply API");
@@ -150,6 +150,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   });
 
   router.post(`/user/create`, (req, res, next) => {
+    console.log("Reached API");
     passport.authenticate("local-signup", (err, user, info) => {
       if (err) {
         return next(err);

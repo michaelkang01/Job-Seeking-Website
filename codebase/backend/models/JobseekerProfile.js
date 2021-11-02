@@ -1,4 +1,3 @@
-
 module.exports = (mongoose) => {
   const JobseekerProfileSchema = new mongoose.Schema(
     {
@@ -32,3 +31,4 @@ module.exports = (mongoose) => {
   return mongoose.model("JobseekerProfile", JobseekerProfileSchema);
 
 };
+
