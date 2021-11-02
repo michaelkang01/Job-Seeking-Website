@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const { verifyUser, signJwt } = require("./middleware/auth");
 const uploadVideoRoute = require("./controllers/pitchVideoController");
+const uploadResumeRoute = require("./controllers/resumeController")
 
 const API_PORT = process.env.API_PORT || 3000;
 const BASE_URL = "/api";
@@ -324,10 +325,11 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
         address: req.body.profile.address,
         githubID: req.body.profile.github,
         facebookID: req.body.profile.facebook,
-        resumeUrl: req.body.profile.resumeURL,
       }
     ).then((ret) => {
       res.json(ret);
     });
   });
+
+  uploadResumeRoute(router, JobseekerProfile);
 });
