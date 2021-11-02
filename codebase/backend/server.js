@@ -206,6 +206,10 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 		JobseekerProfile.find({email : authEmail}).then(ret => {
 			res.json(ret);
 		})});
+  
+  router.get(`/allseekerprofiles`, (req, res) => {
+    
+  })
 
   /**
    * @api {get} /api/pitch/get Get the user's pitch video, if it exists
