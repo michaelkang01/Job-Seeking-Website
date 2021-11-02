@@ -1,15 +1,16 @@
 type JobseekerProfile = {
-  email: string;
-  firstName: string;
+  user: any;
+  profile_picture: string;
+  email: string,
+  firstName: string,
   lastName: string;
-  githubID: string;
-  facebookID: string;
+  socials: Array<string>;
   resumeUrl: string;
   summary: string;
   address: string;
   workExperience: Object;
   education: Object;
-  skills: any;
+  skills: Array<string>;
   metadata: Array<any>;
 };
 

@@ -29,18 +29,19 @@ const SearchBar = () => {
           const profileData = [] as JobseekerProfile[];
           for (const data of res.data) {
             profileData.push({
+              user: data.user,
+              profile_picture: data.profile_picture,
               email: data.email,
-              skills: data.skills,
-              address: data.address,
               firstName: data.firstName,
               lastName: data.lastName,
-              githubID: data.githubID,
-              facebookID: data.facebookID,
+              socials: data.socials,
               resumeUrl: data.resumeUrl,
               summary: data.summary,
+              address: data.address,
               workExperience: data.workExperience,
               education: data.education,
-              metadata: data.metadata,
+              skills: data.skills,
+              metadata: data.metadata
             });
           }
           setProfileData(profileData);
@@ -57,7 +58,7 @@ const SearchBar = () => {
   let profSkills = "";
   if (profileData[0]) {
     profLoc = profileData[0].address;
-    profSkills = profileData[0].skills;
+    profSkills = profileData[0].skills.toString();
   }
   return (
     <div className="p-8 flex">
