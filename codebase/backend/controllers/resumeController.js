@@ -22,6 +22,7 @@ const uploadResume = (bucketID) =>
     storage: multerS3({
       s3,
       bucket: bucketID,
+      contentType: multerS3.AUTO_CONTENT_TYPE,
       metadata: function (req, file, cb) {
         cb(null, { filename: file.fieldname });
       },
