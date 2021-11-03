@@ -82,3 +82,14 @@ When your features is done, and you are ready to create a pull request to merge 
 5. Create the pull request and make changes as necessary
 6. After 2+ members have approved, person in charge will merge it onto dev
 7. DO NOT DELETE THE BRANCH AFTER MERGING as TA will need to mark it
+
+# Documentation
+Documentation will be auto generated based on the doctrings provided each file.
+Refer to the following guides for more information: \
+Frontend: https://typedoc.org/ \
+Backend: https://jsdoc.app/
+### Frontend
+    npx typedoc --entryPointStrategy expand ./src
+
+### Backend
+    npm run docs

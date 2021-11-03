@@ -1,2 +1,0 @@
-Purpose: Provides a standard pill-shaped button for UI usage.
-Type: react Component
