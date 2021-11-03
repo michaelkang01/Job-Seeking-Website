@@ -31,6 +31,7 @@ const SignUp = () => {
           lastName: form.lastName.value,
           email: form.email.value,
           password: form.password.value,
+          role: form.role.value,
         },
       })
         .then(() => {
@@ -99,6 +100,14 @@ const SignUp = () => {
               placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
               autoComplete="new-password"
             />
+            <Spacer height={1.5} />
+            <label className="pl-4">Account Type</label>
+            <select className="border border-gray-300 rounded-full text-black w-full h-10 pl-5 pr-10 bg-gray-200 hover:border-gray-400 focus:outline-none appearance-none"
+              name="role"
+              required={true}>
+              <option value="Jobseeker">Jobseeker</option>
+              <option value="Recruiter">Recruiter</option>
+            </select>
             <Spacer height={2} />
             <div className="flex flex-col justify-center items-center">
               <SubmitButton

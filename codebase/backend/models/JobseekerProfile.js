@@ -1,18 +1,32 @@
+const { ObjectID } = require("bson");
 
 module.exports = (mongoose) => {
   const JobseekerProfileSchema = new mongoose.Schema(
     {
+      // https://mongoosejs.com/docs/populate.html
+      //user: { type: Schema.Types.ObjectId, ref: "User" },
+      user: ObjectID, //bandaid fix.
+      profile_picture: String,
       email: String,
       firstName: String,
       lastName: String,
-      githubID: String,
-      facebookID: String,
+      socials: [String],
       resumeUrl: String,
       summary: String,
       address: String,
-      workExperience: Object,
-      education: Object,
-      skills: Array,
+      workExperience: [
+        {
+          title: String,
+          start: String,
+          end: String,
+          location: String,
+          description: String,
+        },
+      ],
+      education: [
+        { schoolName: String, start: String, end: String, location: String },
+      ],
+      skills: [String],
       metadata: Array,
     },
     { timestamps: true }
@@ -20,3 +34,4 @@ module.exports = (mongoose) => {
   return mongoose.model("JobseekerProfile", JobseekerProfileSchema);
 
 };
+
