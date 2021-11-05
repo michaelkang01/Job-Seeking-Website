@@ -53,6 +53,7 @@ const websocketServer = async (server, UserModel) => {
         // Remove expired connections
         connections.forEach(connection => {
             if (connection.expiry < Date.now()) {
+                connection.webSocket.close();
                 connections.delete(connection);
             }
         });
@@ -61,6 +62,7 @@ const websocketServer = async (server, UserModel) => {
     wss.on('close', (ws) => {
         const connectionsToDelete = connections.filter(connection => connection.webSocket === ws);
         connectionsToDelete.forEach(connection => {
+            connection.webSocket.close();
             connections.delete(connection);
         });
     });
