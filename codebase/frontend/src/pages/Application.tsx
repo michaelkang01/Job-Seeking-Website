@@ -5,13 +5,13 @@ import axios from 'axios';
 import "tailwindcss/tailwind.css";
 import { useAuth } from "../context/AuthContext";
 import JobseekerProfile from "../types/JobseekerProfile";
-import getjobsappliedlist from './getjobsappliedlist';
+
 
 function Application(this: any) {
   const location = useLocation();
   const listing_id = parseInt(location.pathname.replace('/application/', ''))
   const history = useHistory()
-   const [applied, setApplied] = useState([-1]);
+
   const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
    
    
