@@ -5,16 +5,31 @@ import axios from 'axios';
 import "tailwindcss/tailwind.css";
 import { useAuth } from "../context/AuthContext";
 import JobseekerProfile from "../types/JobseekerProfile";
+import getjobsappliedlist from './getjobsappliedlist';
 
 function Application(this: any) {
   const location = useLocation();
   const listing_id = parseInt(location.pathname.replace('/application/', ''))
   const history = useHistory()
-  const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
+   const [applied, setApplied] = useState([-1]);
+  const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+   
+   
+    
+    
+    // var job_list = []
     event.preventDefault();
+   
 
 
     const form = event.target as HTMLFormElement;
+   await axios.post(
+     `${process.env.REACT_APP_API_URL}/api/updateprofilejobsapplied`,
+     {
+       email: form.email.value,
+       job: listing_id
+     }
+   );
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}/api/jobs/apply`,
@@ -41,6 +56,7 @@ function Application(this: any) {
   let authEmail: null = null;
   if (signedIn) {
     authEmail = JSON.parse(authData).payload.email;
+      
   }
   //Loading Profile data
 

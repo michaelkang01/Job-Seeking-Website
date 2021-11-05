@@ -11,7 +11,6 @@ export default async function getjobsappliedlist(authData) {
                .then((res) => {
                  job_list = JSON.parse(JSON.stringify(res.data[0])).jobsApplied;
 
-                console.log(job_list)
                });
                return job_list
 }
