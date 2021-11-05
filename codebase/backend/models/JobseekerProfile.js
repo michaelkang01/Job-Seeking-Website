@@ -27,6 +27,7 @@ module.exports = (mongoose) => {
         { schoolName: String, start: String, end: String, location: String },
       ],
       skills: [String],
+       jobsApplied: [Number],
       metadata: Array,
     },
     { timestamps: true }
