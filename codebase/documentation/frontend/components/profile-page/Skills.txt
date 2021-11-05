@@ -1,2 +1,0 @@
-Purpose: Display skills section in profile page
-Type: React component

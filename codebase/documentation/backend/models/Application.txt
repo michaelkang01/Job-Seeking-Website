@@ -1,2 +1,0 @@
-Purpose: Store data about an application to a job listing 
-Type: mongoose schema Object

@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Navbar from "./components/Navbar";
 import Search from "./pages/Search";
+import SearchProfiles from "./pages/SearchProfiles";
 import { AuthProvider } from "./context/AuthContext";
 import SignInCallback from "./pages/SignInCallback";
 
@@ -39,18 +40,18 @@ const App = () => {
           <Search />
         </Route>
         <Route path="/applied">
-          <Jobsapplied/>
+          <Jobsapplied />
+        </Route>
+        <Route path="/searchprofiles">
+          <SearchProfiles/>
         </Route>
         <Route path="/messages">
           <ChatSystem />
         </Route>
-
-
         <Route exact
           path="/application/:id">
-            <Application/>
-          </Route>
-
+          <Application />
+        </Route>
         <Route path="/">
           <Welcome />
         </Route>
