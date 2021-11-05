@@ -1,7 +1,6 @@
 import { randomBytes } from "crypto";
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 type UserTableRow = {
@@ -45,7 +44,7 @@ const ChatSystem = () => {
 
     // Attempt to establish a websocket connection to the server
     useEffect(() => {
-        if (webSocket === undefined && authToken != "") {
+        if (webSocket === undefined && authToken !== "") {
             console.log("Attempting to establish websocket connection...");
             const newWebSocket = new WebSocket("ws://localhost:8001/api/ws/connect");
             setWebSocket(newWebSocket);
@@ -89,7 +88,7 @@ const ChatSystem = () => {
                         chime.play();
                         if (!data.isNewChat) {
                             chatSessions.forEach((chat: ChatInstance) => {
-                                if (chat.personOne == data.personOne && chat.personTwo == data.personTwo) {
+                                if (chat.personOne === data.personOne && chat.personTwo === data.personTwo) {
                                     if (chatSessions.indexOf(chat) > -1) {
                                         chat.messages.push({
                                             sender: data.from,
@@ -148,6 +147,7 @@ const ChatSystem = () => {
                 setDisconnected(true);
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loading, webSocket, authToken]);
 
     // Show chat interface, and loading screen if websocket connection is not established
