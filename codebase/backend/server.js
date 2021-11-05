@@ -285,7 +285,17 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   /**
    * @api {post} /api/updateprofilesummary Update user summary
    */
-  router.post(`/updateprofilesummary`, (req, res) => {
+  router.post(`/updateprofilejobsapplied`, (req, res) => {
+    
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      {$push: {jobsApplied: req.body.job} }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+   router.post(`/updateprofilesummary`, (req, res) => {
     JobseekerProfile.updateOne(
       { email: req.body.email || "" },
       { summary: req.body.summary }

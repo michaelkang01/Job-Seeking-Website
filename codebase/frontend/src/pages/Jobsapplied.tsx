@@ -63,7 +63,7 @@ function Jobsapplied() {
       getJobsapplied(setIsLoading, setApplied).then(() => {
         setIsLoading(false);
       });
-      console.log(applied)
+   
 
     }
 
