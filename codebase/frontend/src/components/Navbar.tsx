@@ -35,9 +35,8 @@ const Navbar = () => {
         </button>
       </div>
       <div
-        className={`${
-          mobileNavShown ? "block" : "hidden"
-        } md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-blue-900 md:border-none`}
+        className={`${mobileNavShown ? "block" : "hidden"
+          } md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-blue-900 md:border-none`}
       >
         <Link
           to="/"
@@ -53,28 +52,35 @@ const Navbar = () => {
             Sign in
           </Link>
         )) || (
-          <button
-            onClick={auth.signOut}
-            className="block w-full text-right md:text-left md:w-auto md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-          >
-            Sign out
-          </button>
-        )}
+            <button
+              onClick={auth.signOut}
+              className="block w-full text-right md:text-left md:w-auto md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+            >
+              Sign out
+            </button>
+          )}
         {signedIn && (
-          <Link
-            to="/pitchvideo"
-            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-          >
-            Pitch Video
-          </Link>
+          <>
+            <Link
+              to="/pitchvideo"
+              className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+            >
+              Pitch Video
+            </Link>
+            <Link
+              to="/messages"
+              className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+            >
+              Messaging
+            </Link>
+          </>
         )}
       </div>
       {!signedIn && (
         <Link
           to="/signup"
-          className={`${
-            mobileNavShown ? "block" : "hidden"
-          } md:flex w-full md:w-auto px-4 py-2 text-right bg-blue-900 hover:bg-blue-500 text-white md:rounded-md`}
+          className={`${mobileNavShown ? "block" : "hidden"
+            } md:flex w-full md:w-auto px-4 py-2 text-right bg-blue-900 hover:bg-blue-500 text-white md:rounded-md`}
         >
           Create Account
         </Link>

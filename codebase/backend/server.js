@@ -4,12 +4,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const app = express();
+const { WebSocket } = require("ws");
+const { parse } = require("url");
 const passport = require("passport");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
-const { verifyUser, signJwt } = require("./middleware/auth");
+const { verifyUser, signJwt, verifyUserWithoutResponse } = require("./middleware/auth");
 const uploadVideoRoute = require("./controllers/pitchVideoController");
+const websocketServer = require("./controllers/websocketController");
 const uploadResumeRoute = require("./controllers/resumeController")
 
 const API_PORT = process.env.API_PORT || 3000;
@@ -19,16 +22,14 @@ const BASE_URL = "/api";
 const cors = require("cors");
 const { getSystemErrorMap } = require("util");
 
-
 app.use(
   cors({
     origin: `${process.env.BASE_URL}:${process.env.FRONTEND_PORT}`,
   })
 );
 
-
 // Set up Express to listen on API_PORT
-app.listen(API_PORT, () => {
+const server = app.listen(API_PORT, () => {
   console.log(`Listening on port ${API_PORT}`);
 });
 
@@ -40,6 +41,8 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   const JobseekerProfile = require("./models/JobseekerProfile")(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
+
+  websocketServer(server, User);
 
   app.get(`${BASE_URL}`, (req, res) => {
     res.send("EasyApply API");
@@ -70,28 +73,29 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     const decoded = res.locals.authData;
     res.status(200).json({ status: "Authorized", data: decoded });
   });
+
   router.post(`/jobs/apply`, (req, res) => {
-		
-		 const {  listing_id,
-          firstName,
-          lastName,
-          email,
-          city,
-          province,
-          zip} = req.body;
-		  const app = new Application({_id: new mongoose.Types.ObjectId().toHexString(), listing_id, firstName, lastName, email, city, province, zip}, { collection: "application" });
-		  //change _id later 
-	 try {
-         app.save();
-        res.status(201).json(app);
+
+    const { listing_id,
+      firstName,
+      lastName,
+      email,
+      city,
+      province,
+      zip } = req.body;
+    const app = new Application({ _id: new mongoose.Types.ObjectId().toHexString(), listing_id, firstName, lastName, email, city, province, zip }, { collection: "application" });
+    //change _id later 
+    try {
+      app.save();
+      res.status(201).json(app);
     } catch (error) {
-        res.status(409).json({ message: error.message });
+      res.status(409).json({ message: error.message });
     }
- 
-  
-	console.log(req)
-		
-	});
+
+
+    console.log(req)
+
+  });
 
   // Google OAuth2 endpoint callback
   router.get(`/user/auth/google_callback`, (req, res, next) => {

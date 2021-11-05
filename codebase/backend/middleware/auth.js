@@ -14,6 +14,17 @@ const verifyUser = (req, res, next) => {
   });
 };
 
+const verifyUserWithoutResponse = async (token) => {
+  const result = jwt.verify(token, jwtSecret, (err, decoded) => {
+    if (err) {
+      return false;
+    } else {
+      return decoded;
+    }
+  });
+  return result;
+};
+
 /**
  * Signs JWT and returns it
  *
@@ -38,4 +49,4 @@ const signJwt = (user) => {
   return token;
 };
 
-module.exports = { verifyUser, signJwt };
+module.exports = { verifyUser, signJwt, verifyUserWithoutResponse };

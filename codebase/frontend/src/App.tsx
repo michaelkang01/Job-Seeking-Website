@@ -14,6 +14,7 @@ import Jobsapplied from "./pages/Jobsapplied";
 
 import Application from "./pages/Application";
 import PitchVideo from "./pages/PitchVideo";
+import ChatSystem from "./pages/ChatSystem";
 
 
 const App = () => {
@@ -44,11 +45,13 @@ const App = () => {
         <Route path="/searchprofiles">
           <SearchProfiles/>
         </Route>
+        <Route path="/messages">
+          <ChatSystem />
+        </Route>
         <Route exact
           path="/application/:id">
           <Application />
         </Route>
-
         <Route path="/">
           <Welcome />
         </Route>
