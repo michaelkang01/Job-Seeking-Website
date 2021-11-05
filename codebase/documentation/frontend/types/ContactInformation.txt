@@ -1,2 +1,0 @@
-Purpose: Store contact information of user
-Type: JavaScript Object

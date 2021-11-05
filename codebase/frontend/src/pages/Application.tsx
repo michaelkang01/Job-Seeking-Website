@@ -57,18 +57,19 @@ function Application(this: any) {
           const profileData = [] as JobseekerProfile[];
           for (const data of res.data) {
             profileData.push({
+              user: data.user,
+              profile_picture: data.profile_picture,
               email: data.email,
-              skills: data.skills,
-              address: data.address,
               firstName: data.firstName,
               lastName: data.lastName,
-              githubID: data.githubID,
-              facebookID: data.facebookID,
+              socials: data.socials,
               resumeUrl: data.resumeUrl,
               summary: data.summary,
+              address: data.address,
               workExperience: data.workExperience,
               education: data.education,
-              metadata: data.metadata,
+              skills: data.skills,
+              metadata: data.metadata
             });
           }
           setProfileData(profileData);
@@ -93,8 +94,8 @@ function Application(this: any) {
     <div className="mx-auto max-w-screen-xl pt-96  ">
       <div className="text-xl font-bold pb-10">Apply To Company</div>
       {signedIn
-      ? <div className="text-l italic pb-10">We have prefilled some data from your profile!</div>
-      : <></>}
+        ? <div className="text-l italic pb-10">We have prefilled some data from your profile!</div>
+        : <></>}
       <form onSubmit={submitForm}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">

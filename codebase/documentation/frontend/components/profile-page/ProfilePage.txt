@@ -1,2 +1,0 @@
-Purpose: Displays profile page
-Type: React component

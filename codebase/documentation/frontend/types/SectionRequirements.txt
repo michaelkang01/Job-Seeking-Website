@@ -1,2 +1,0 @@
-Purpose: Pass in parameter for a <Section /> tag
-Type: JavaScript object

@@ -1,2 +1,0 @@
-Purpose: Store data pertaining to a single job jobseeker profile entity.
-Type: mongoose schema Object

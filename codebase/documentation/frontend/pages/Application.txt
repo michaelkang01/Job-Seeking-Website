@@ -1,2 +1,0 @@
-Purpose: Form for applying to Job 
-Type: react Component

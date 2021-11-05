@@ -1,2 +1,0 @@
-Purpose: Provides a text input field for UI usage.
-Type: react Component

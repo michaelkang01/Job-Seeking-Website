@@ -1,2 +1,0 @@
-Purpose: Necessary attributes to showcase a work experience 
-Type: JavaScript object

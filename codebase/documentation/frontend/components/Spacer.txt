@@ -1,2 +1,0 @@
-Purpose: Provides a standard spacing utility for UI.
-Type: react Component
