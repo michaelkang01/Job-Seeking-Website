@@ -12,7 +12,7 @@ As a recruiter, I want to be able to send and receive messages to my applicants.
 
 As a job-seeker I want to be able to view my resume on my profile
 
-Finalize existing MongoDB models and accompanying JS models. Including Integrity Constraints.
+Finalize existing MongoDB models and accompanying JS models. Including Integrity Constraints. (Daniel)
 
 As a recruiter I want to create an account for my company
 
