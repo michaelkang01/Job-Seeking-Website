@@ -20,6 +20,8 @@ As a recruiter, I want to be able to view an applicant's short pitch video (Kiry
 
 As a recruiter, I want to be able to accept or reject applications. (Seyon)
 
+As a recruiter, I want to create a job listing.
+
 Spikes There are no spikes in particular to document; these tasks are not critically complicated.
 
 Participants Everyone was in attendance.
