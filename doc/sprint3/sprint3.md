@@ -16,9 +16,9 @@ Finalize existing MongoDB models and accompanying JS models. Including Integrity
 
 As a recruiter I want to create an account for my company
 
-As a recruiter, I want to be able to view an applicant's short pitch video
+As a recruiter, I want to be able to view an applicant's short pitch video (Kiryl) 
 
-As a recruiter, I want to be able to accept or reject applications.
+As a recruiter, I want to be able to accept or reject applications. (Seyon)
 
 Spikes There are no spikes in particular to document; these tasks are not critically complicated.
 
