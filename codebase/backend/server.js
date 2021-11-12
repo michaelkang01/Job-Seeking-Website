@@ -15,6 +15,8 @@ const uploadVideoRoute = require("./controllers/pitchVideoController");
 const websocketServer = require("./controllers/websocketController");
 const uploadResumeRoute = require("./controllers/resumeController")
 const JobSeekerProfileRoute = require("./controllers/jobseekerProfileController");
+const { showApplicationsRoute, showApplicationRoute } = require("./controllers/recruiterController");
+
 const API_PORT = process.env.API_PORT || 3000;
 const BASE_URL = "/api";
 
@@ -42,6 +44,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   const RecruiterProfile = require("./models/RecruiterProfile").RecruiterProfileSchema(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
+  const RecruiterProfile = require("./models/RecruiterProfile")(db);
 
   websocketServer(server, User);
 
@@ -75,7 +78,16 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     res.status(200).json({ status: "Authorized", data: decoded });
   });
 
-  router.post(`/jobs/apply`, (req, res) => {
+  router.post(`/jobs/apply`, async (req, res) => {
+    let user_id = "";
+
+    if (req.headers.authorization) {
+      const token = req.headers.authorization || "";
+      const authData = await verifyUserWithoutResponse(token);
+      if (authData && authData.id) {
+        user_id = authData.id;
+      }
+    }
 
     const { listing_id,
       firstName,
@@ -84,7 +96,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
       city,
       province,
       zip } = req.body;
-    const app = new Application({ _id: new mongoose.Types.ObjectId().toHexString(), listing_id, firstName, lastName, email, city, province, zip }, { collection: "application" });
+    const app = new Application({ _id: new mongoose.Types.ObjectId().toHexString(), user_id, listing_id, firstName, lastName, email, city, province, zip }, { collection: "application" });
     //change _id later 
     try {
       app.save();
@@ -196,25 +208,26 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-	router.get(`/joblistings/:id`, (req, res) => {
-		Joblisting.find({listing_id:req.params.id}).then(ret => {
-			res.json(ret);
-		});
-	});
-	router.get(`/joblistings`, (req, res) => {
-		Joblisting.find().then(ret => {
-			res.json(ret);
-		});
-	});
+  router.get(`/joblistings/:id`, (req, res) => {
+    Joblisting.find({ listing_id: req.params.id }).then(ret => {
+      res.json(ret);
+    });
+  });
+  router.get(`/joblistings`, (req, res) => {
+    Joblisting.find().then(ret => {
+      res.json(ret);
+    });
+  });
 
-	router.get(`/jobseekerprofile/`, (req, res) => {
-		const authEmail = req.query.email || "";
-		JobseekerProfile.find({email : authEmail}).then(ret => {
-			res.json(ret);
-		})});
-  
+  router.get(`/jobseekerprofile/`, (req, res) => {
+    const authEmail = req.query.email || "";
+    JobseekerProfile.find({ email: authEmail }).then(ret => {
+      res.json(ret);
+    })
+  });
+
   router.get(`/allseekerprofiles`, (req, res) => {
-    JobseekerProfile.find().then(ret=> {
+    JobseekerProfile.find().then(ret => {
       res.json(ret);
     });
   });
@@ -284,20 +297,73 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
       res.status(401).json({ success: false, message: "Unauthorized" });
     }
   });
-
-  uploadVideoRoute(router, Pitch);
-  JobSeekerProfileRoute(router, JobseekerProfile);
-  uploadResumeRoute(router, JobseekerProfile);
   
   router.post(`/updateprofilejobsapplied`, (req, res) => {
-    
+
     JobseekerProfile.updateOne(
       { email: req.body.email || "" },
-      {$push: {jobsApplied: req.body.job} }
+      { $push: { jobsApplied: req.body.job } }
     ).then((ret) => {
       res.json(ret);
     });
   });
 
-  
+  router.post(`/updateprofilesummary`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      { summary: req.body.summary }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  /**
+   * @api {post} /api/updateprofileskills Update user skills
+   */
+  router.post(`/updateprofileskills`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      { skills: req.body.skills }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  /**
+   * @api {post} /api/updateworkexperiences Update user work experiences
+   */
+  router.post(`/updateworkexperiences`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      { workExperience: req.body.workExperience }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  /**
+   * @api {post} /api/updatecontactinformation Update user contact information
+   */
+  router.post(`/updatecontactinformation`, (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: req.body.email || "" },
+      {
+        firstName: req.body.profile.firstName,
+        lastName: req.body.profile.lastName,
+        email: req.body.profile.email,
+        address: req.body.profile.address,
+        githubID: req.body.profile.github,
+        facebookID: req.body.profile.facebook,
+      }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  uploadResumeRoute(router, JobseekerProfile);
+  showApplicationsRoute(router, Application, RecruiterProfile, JobseekerProfile, User, Pitch);
+  showApplicationRoute(router, Application, RecruiterProfile, JobseekerProfile, User, Pitch);
+  uploadVideoRoute(router, Pitch);
+  JobSeekerProfileRoute(router, JobseekerProfile);
+  uploadResumeRoute(router, JobseekerProfile);
 });

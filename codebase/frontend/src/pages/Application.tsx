@@ -8,6 +8,7 @@ import JobseekerProfile from "../types/JobseekerProfile";
 
 
 function Application(this: any) {
+  const authToken = useAuth().getAuthData().authToken;
   const location = useLocation();
   const listing_id = parseInt(location.pathname.replace('/application/', ''))
   const history = useHistory()
@@ -35,6 +36,7 @@ function Application(this: any) {
       url: `${process.env.REACT_APP_API_URL}/api/jobs/apply`,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${authToken}`
       },
       data: {
         listing_id: listing_id,

@@ -1,7 +1,7 @@
 module.exports = (mongoose) => {
   const JoblistingSchema = new mongoose.Schema(
     {
-      job_id: String,
+      listing_id: Number,
       employer_id: String,
       job_description: String,
       job_location: String,
@@ -11,9 +11,7 @@ module.exports = (mongoose) => {
       contact_title: String,
       contact_address: String,
       number_applied: Number,
-      applicants: Array,
       metadata: Array,
-      questions: Array,
     },
     { timestamps: true }
   );

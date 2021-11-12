@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.3.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -31,7 +33,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "set PORT=8000 && craco start",
+    "start": "export PORT=8000 && craco start",
     "build": "craco build",
     "test": "craco test",
     "serve": "node server.js",

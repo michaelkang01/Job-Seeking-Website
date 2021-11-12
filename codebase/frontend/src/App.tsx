@@ -15,7 +15,8 @@ import Jobsapplied from "./pages/Jobsapplied";
 import Application from "./pages/Application";
 import PitchVideo from "./pages/PitchVideo";
 import ChatSystem from "./pages/ChatSystem";
-
+import { ViewApplicants } from "./components/ViewApplicants";
+import ViewApplicant from "./components/ViewApplicant";
 
 const App = () => {
   const main = (
@@ -43,14 +44,16 @@ const App = () => {
           <Jobsapplied />
         </Route>
         <Route path="/searchprofiles">
-          <SearchProfiles/>
+          <SearchProfiles />
         </Route>
-        <Route path="/messages">
-          <ChatSystem />
-        </Route>
-        <Route exact
-          path="/application/:id">
+        <Route exact path="/messages" component={ChatSystem} />
+        <Route exact path="/messages/start/:id" component={ChatSystem} />
+        <Route exact path="/application/:id">
           <Application />
+        </Route>
+        <Route exact path="/my_applicants/:id" component={ViewApplicant} />
+        <Route exact path="/my_applicants">
+          <ViewApplicants />
         </Route>
         <Route path="/">
           <Welcome />

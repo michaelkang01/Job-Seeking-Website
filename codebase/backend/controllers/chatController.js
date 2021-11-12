@@ -37,8 +37,8 @@ const initChat = async (ws, data, authData, ChatInstance, User, connections) => 
                 });
                 return {
                     _id: userId,
-                    firstName: user[0].firstName || "None",
-                    lastName: user[0].lastName || "Set"
+                    firstName: user && user[0] && user[0].firstName || "None",
+                    lastName: user && user[0] && user[0].lastName || "Set"
                 };
             }));
 
@@ -61,31 +61,19 @@ const sendMessage = async (ws, data, authData, ChatInstance, User, connections) 
     let isValid = true;
 
     // Check if users are valid
-    User.find({ _id: from }, (err, user) => {
-        if (err || !user) {
-            ws.send(JSON.stringify({
-                type: 'send',
-                error: 'Invalid user'
-            }));
-            isValid = false;
-            return;
-        }
-        fromUser = user[0];
-    });
+    fromUser = await User.findOne({ _id: from });
 
-    User.find({ _id: to }, (err, user) => {
-        if (err || !user) {
-            ws.send(JSON.stringify({
-                type: 'send',
-                error: 'Invalid user'
-            }));
-            isValid = false;
-            return;
-        }
-        toUser = user[0];
-    });
+    toUser = await User.findOne({ _id: to });
 
-    if (!isValid) {
+    console.log(to);
+    console.log(fromUser, toUser);
+
+    if (!fromUser || !toUser) {
+        ws.send(JSON.stringify({
+            type: 'send',
+            error: 'Invalid user'
+        }));
+        isValid = false;
         return;
     }
 
@@ -103,7 +91,6 @@ const sendMessage = async (ws, data, authData, ChatInstance, User, connections) 
 
         let chat = chats && chats[0] || null;
         if (err) {
-            console.log(err);
             return;
         }
 
@@ -111,7 +98,6 @@ const sendMessage = async (ws, data, authData, ChatInstance, User, connections) 
         let saveChat;
 
         if (!chat) {
-            console.log("Creating new chat");
             if (from === to) {
                 return;
             }
@@ -162,9 +148,6 @@ const sendMessage = async (ws, data, authData, ChatInstance, User, connections) 
             status: 'success'
         }));
 
-        console.log(fromUser)
-        console.log(toUser)
-
         // Notify other clients
         connections.forEach(connection => {
             if (connection && connection.webSocket && (connection.userId === to || connection.userId === from)) {
@@ -181,8 +164,8 @@ const sendMessage = async (ws, data, authData, ChatInstance, User, connections) 
                         id: from
                     },
                     toUser: {
-                        firstName: toUser.firstName,
-                        lastName: toUser.lastName,
+                        firstName: toUser && toUser.firstName || "None",
+                        lastName: toUser && toUser.lastName || "Set",
                         id: to
                     },
                     message: message,
