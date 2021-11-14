@@ -36,9 +36,7 @@ const Summary = (props) => {
         .get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {
           params: { email: props.email },
         })
-        .then((res) => {
-          set_summary(res.data[0].summary);
-        });
+        .then((res) => set_summary(res.data[0].summary));
     };
     get_profile_summary();
   }, [props.email]);
@@ -51,9 +49,11 @@ const Summary = (props) => {
   const update_summary = async (event) => {
     event.preventDefault();
     return axios
-      .post(`${process.env.REACT_APP_API_URL}/api/updateprofilesummary`, {
-        email: props.email,
-        summary: event.target.summary.value,
+      .request({
+        url: `${process.env.REACT_APP_API_URL}/api/updateprofilesummary`,
+        method: "POST",
+        headers: { Authorization: props.authToken },
+        data: { summary: event.target.summary.value },
       })
       .then(() => set_is_editing(false));
   };

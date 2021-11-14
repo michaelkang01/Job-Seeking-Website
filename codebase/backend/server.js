@@ -287,9 +287,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   uploadVideoRoute(router, Pitch);
   updateProfileRoute(router, JobseekerProfile);
   
-  /**
-   * @api {post} /api/updateprofilesummary Update user summary
-   */
+  
   router.post(`/updateprofilejobsapplied`, (req, res) => {
     
     JobseekerProfile.updateOne(
@@ -300,14 +298,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-   router.post(`/updateprofilesummary`, (req, res) => {
-    JobseekerProfile.updateOne(
-      { email: req.body.email || "" },
-      { summary: req.body.summary }
-    ).then((ret) => {
-      res.json(ret);
-    });
-  });
+   
 
   /**
    * @api {post} /api/updateprofileskills Update user skills
