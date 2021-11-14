@@ -298,24 +298,5 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-  /**
-   * @api {post} /api/updatecontactinformation Update user contact information
-   */
-  router.post(`/updatecontactinformation`, (req, res) => {
-    JobseekerProfile.updateOne(
-      { email: req.body.email || "" },
-      {
-        firstName: req.body.profile.firstName,
-        lastName: req.body.profile.lastName,
-        email: req.body.profile.email,
-        address: req.body.profile.address,
-        githubID: req.body.profile.github,
-        facebookID: req.body.profile.facebook,
-      }
-    ).then((ret) => {
-      res.json(ret);
-    });
-  });
-
   uploadResumeRoute(router, JobseekerProfile);
 });

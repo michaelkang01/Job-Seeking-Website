@@ -128,6 +128,7 @@ const WorkExperiences = (props) => {
             )
           }
           onMouseLeave={() => set_display_remove_button(-1)}
+          key={JSON.stringify(work_experience)}
         >
           <div className="left rounded-full bg-gray-300 w-16 h-16"></div>
           <div className="left p-4">
