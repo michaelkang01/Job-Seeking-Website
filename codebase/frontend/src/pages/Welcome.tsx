@@ -13,7 +13,7 @@ const Welcome = () => {
       {authToken && authData ? (
         <>
           <h1 className="text-2xl">Welcome back, {JSON.parse(authData).payload.firstName}. (profile goes here)</h1>
-          <ProfilePage email={JSON.parse(authData).payload.email}/>
+          <ProfilePage email={JSON.parse(authData).payload.email} authToken={authToken}/>
         </>
       ) : (
         <h1 className="text-2xl">

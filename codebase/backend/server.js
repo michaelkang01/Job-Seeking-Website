@@ -14,7 +14,7 @@ const { verifyUser, signJwt, verifyUserWithoutResponse } = require("./middleware
 const uploadVideoRoute = require("./controllers/pitchVideoController");
 const websocketServer = require("./controllers/websocketController");
 const uploadResumeRoute = require("./controllers/resumeController")
-
+const updateProfileRoute = require("./controllers/profileController");
 const API_PORT = process.env.API_PORT || 3000;
 const BASE_URL = "/api";
 
@@ -285,7 +285,8 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   });
 
   uploadVideoRoute(router, Pitch);
-
+  updateProfileRoute(router, JobseekerProfile);
+  
   /**
    * @api {post} /api/updateprofilesummary Update user summary
    */

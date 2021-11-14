@@ -1,0 +1,20 @@
+const { verifyUser } = require("../middleware/auth");
+
+const updateProfileRoute = (router, JobseekerProfile) => {
+
+  /**
+   * @api {post} /api/updateprofileskills Update user skills
+   */
+  router.post(`/updateprofileskills`, [verifyUser], (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: res.locals.authData.email },
+      { skills: req.body.skills }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
+
+  
+};
+
+module.exports = updateProfileRoute;
