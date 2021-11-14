@@ -43,7 +43,7 @@ const Skills = (props) => {
   /**
    * Updates user profile skills
    *
-   * @param {String[]} skills of user skills
+   * @param {String[]} skills List of user skills
    * @returns Promise
    */
   const update_skills = async (skills) => {

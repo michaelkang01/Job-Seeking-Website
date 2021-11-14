@@ -298,32 +298,6 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-   
-
-  /**
-   * @api {post} /api/updateprofileskills Update user skills
-   */
-  router.post(`/updateprofileskills`, (req, res) => {
-    JobseekerProfile.updateOne(
-      { email: req.body.email || "" },
-      { skills: req.body.skills }
-    ).then((ret) => {
-      res.json(ret);
-    });
-  });
-
-  /**
-   * @api {post} /api/updateworkexperiences Update user work experiences
-   */
-  router.post(`/updateworkexperiences`, (req, res) => {
-    JobseekerProfile.updateOne(
-      { email: req.body.email || "" },
-      { workExperience: req.body.workExperience }
-    ).then((ret) => {
-      res.json(ret);
-    });
-  });
-
   /**
    * @api {post} /api/updatecontactinformation Update user contact information
    */

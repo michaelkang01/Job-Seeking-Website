@@ -19,7 +19,7 @@ const ProfilePage = (props) => {
       <div className="w-full float-left p-4 sm:w-3/4">
         <Summary email={props.email} authToken={props.authToken}/>
         <Skills email={props.email} authToken={props.authToken}/>
-        <WorkExperiences email={props.email}/>
+        <WorkExperiences email={props.email} authToken={props.authToken}/>
       </div>
     </div>
   );

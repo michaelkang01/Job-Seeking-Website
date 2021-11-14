@@ -17,6 +17,7 @@ module.exports = (mongoose) => {
       workExperience: [
         {
           title: String,
+          company: String,
           start: String,
           end: String,
           location: String,

@@ -20,6 +20,18 @@ const updateProfileRoute = (router, JobseekerProfile) => {
       { summary: req.body.summary }
     ).then((ret) => res.json(ret));
   });
+
+  /**
+   * @api {post} /api/updateworkexperiences Update user work experiences
+   */
+   router.post(`/updateworkexperiences`, [verifyUser], (req, res) => {
+    JobseekerProfile.updateOne(
+      { email: res.locals.authData.email },
+      { workExperience: req.body.workExperience }
+    ).then((ret) => {
+      res.json(ret);
+    });
+  });
 };
 
 module.exports = updateProfileRoute;
