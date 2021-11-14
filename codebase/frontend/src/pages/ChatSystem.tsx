@@ -3,15 +3,24 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
+/**
+ * UserTableRow is a row in UserTable
+ */
 type UserTableRow = {
   firstName: string;
   lastName: string;
 };
 
+/**
+ * UserTable is a table of users.
+ */
 type UserTable = {
   [id: string]: UserTableRow;
 };
 
+/**
+ * ChatInstance is a single chat instance between two users.
+ */
 type ChatInstance = {
   _id: string;
   personOne: string;
@@ -29,6 +38,12 @@ type ModalProps = {
   webSocket: WebSocket | undefined;
 };
 
+/**
+ * Renders the chat system
+ * 
+ * @param { match } route props
+ * @returns { JSX.Element }
+ */
 const ChatSystem = ({ match }: any) => {
   const auth = useAuth();
   const authToken = auth.getAuthData().authToken;
@@ -164,7 +179,6 @@ const ChatSystem = ({ match }: any) => {
       webSocket.readyState === webSocket.OPEN &&
       match.params.id &&
       match.params.id.length > 0 &&
-      chatSessions.length > 0 &&
       !loading
     ) {
       // Check if the user is already in a chat with the selected user
@@ -231,6 +245,12 @@ const ChatSystem = ({ match }: any) => {
     );
   }
 
+  /**
+   * Shows a (primitive) modal to the user so that they can begin a new chat with the inputted user
+   * 
+   * @param { webSocket } ModelProps: takes in the websocket connection
+   * @returns { JSX.Element }
+   */
   const ComposeModal = ({ webSocket }: ModalProps) => {
     const [recipient, setRecipient] = useState<string>("");
 
