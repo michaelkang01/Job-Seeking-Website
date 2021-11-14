@@ -77,7 +77,7 @@ const WorkExperiences = (props) => {
   const update_jobs = async (jobs) => {
     return axios
       .request({
-        url: `${process.env.REACT_APP_API_URL}/api/updateworkexperiences`,
+        url: `${process.env.REACT_APP_API_URL}/api/jobseeker/updateworkexperiences`,
         method: "POST",
         headers: { Authorization: props.authToken },
         data: { workExperience: jobs },

@@ -49,7 +49,7 @@ const Skills = (props) => {
   const update_skills = async (skills) => {
     return axios
       .request({
-        url: `${process.env.REACT_APP_API_URL}/api/updateprofileskills`,
+        url: `${process.env.REACT_APP_API_URL}/api/jobseeker/updateprofileskills`,
         method: "POST",
         headers: { Authorization: props.authToken },
         data: { skills: skills },

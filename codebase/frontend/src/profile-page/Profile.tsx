@@ -90,7 +90,7 @@ const Profile = (props) => {
     };
     return axios
       .request({
-        url: `${process.env.REACT_APP_API_URL}/api/updategeneralcontact`,
+        url: `${process.env.REACT_APP_API_URL}/api/jobseeker/updategeneralcontact`,
         method: "POST",
         headers: { Authorization: props.authToken },
         data: { profile },
@@ -115,7 +115,7 @@ const Profile = (props) => {
   const update_socials = async (socials) => {
     return axios
       .request({
-        url: `${process.env.REACT_APP_API_URL}/api/updatesocials`,
+        url: `${process.env.REACT_APP_API_URL}/api/jobseeker/updatesocials`,
         method: "POST",
         headers: { Authorization: props.authToken },
         data: { socials: socials },

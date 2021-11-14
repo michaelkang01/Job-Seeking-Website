@@ -14,7 +14,8 @@ const { verifyUser, signJwt, verifyUserWithoutResponse } = require("./middleware
 const uploadVideoRoute = require("./controllers/pitchVideoController");
 const websocketServer = require("./controllers/websocketController");
 const uploadResumeRoute = require("./controllers/resumeController")
-const updateProfileRoute = require("./controllers/profileController");
+const JobSeekerProfileRoute = require("./controllers/jobseekerProfileController");
+const RecruiterProfileRoute = require("./controllers/recruiterProfileController");
 const API_PORT = process.env.API_PORT || 3000;
 const BASE_URL = "/api";
 
@@ -39,6 +40,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   const User = require("./models/User")(db);
   const Joblisting = require("./models/Joblisting")(db);
   const JobseekerProfile = require("./models/JobseekerProfile")(db);
+  const RecruiterProfile = require("./models/RecruiterProfile")(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
 
@@ -285,8 +287,9 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   });
 
   uploadVideoRoute(router, Pitch);
-  updateProfileRoute(router, JobseekerProfile);
-  
+  JobSeekerProfileRoute(router, JobseekerProfile);
+  RecruiterProfileRoute(router, RecruiterProfile);
+  uploadResumeRoute(router, JobseekerProfile);
   
   router.post(`/updateprofilejobsapplied`, (req, res) => {
     
@@ -298,5 +301,5 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-  uploadResumeRoute(router, JobseekerProfile);
+  
 });

@@ -50,7 +50,7 @@ const Summary = (props) => {
     event.preventDefault();
     return axios
       .request({
-        url: `${process.env.REACT_APP_API_URL}/api/updateprofilesummary`,
+        url: `${process.env.REACT_APP_API_URL}/api/jobseeker/updateprofilesummary`,
         method: "POST",
         headers: { Authorization: props.authToken },
         data: { summary: event.target.summary.value },

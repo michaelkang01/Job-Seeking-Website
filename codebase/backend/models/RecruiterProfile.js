@@ -1,7 +1,6 @@
 module.exports = (mongoose) => {
   const RecruiterProfileSchema = new mongoose.Schema(
     {
-      user: { type: Schema.Types.ObjectId, ref: "User" },
       logo: String,
       email: String,
       phone: String,
