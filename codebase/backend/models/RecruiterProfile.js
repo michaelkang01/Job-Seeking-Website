@@ -1,6 +1,9 @@
+const { ObjectID } = require("bson");
+
 module.exports = (mongoose) => {
   const RecruiterProfileSchema = new mongoose.Schema(
     {
+      user: ObjectID,
       logo: String,
       email: String,
       phone: String,
