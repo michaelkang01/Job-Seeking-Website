@@ -16,7 +16,11 @@ const Navbar = () => {
   const signedIn = auth.getAuthData().authToken.length > 0;
 
   return (
-    <nav className="flex flex-wrap items-center justify-between p-5 bg-blue-200 absolute left-0 right-0 z-50">
+    <nav className="flex items-center justify-between flex-wrap bg-orange-peel p-6">
+      <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <svg className="fill-current h-8 w-8 mr-2" width="54" height="54" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+        <span className="font-semibold text-xl tracking-tight">EZApply</span>
+      </div>
       <div className="flex md:hidden">
         <button id="hamburger" onClick={navBarToggle}>
           <svg
@@ -36,82 +40,82 @@ const Navbar = () => {
       </div>
       <div
         className={`${mobileNavShown ? "block" : "hidden"
-          } md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-blue-900 md:border-none`}
+          } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
       >
         <Link
           to="/"
-          className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
         >
           Home
         </Link>
+        {signedIn && (
+          <>
+            <Link
+              to="/pitchvideo"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Pitch Video
+            </Link>
+            <Link
+              to="/messages"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Messaging
+            </Link>
+          </>
+        )}
+        {signedIn && (
+          <Link
+            to="/search"
+            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+          >
+            Job Search
+          </Link>
+        )}
+        {signedIn && (
+          <Link
+            to="/applied"
+            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+          >
+            Applied
+          </Link>
+        )}
+        {/**Will eventually change to signedIn and isRecruiter */}
+        {signedIn && (
+          <Link
+            to="/searchprofiles"
+            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+          >
+            Search Candidates
+          </Link>
+        )}
+        {!signedIn && (
+          <Link
+            to="/signup"
+            className={`${mobileNavShown ? "block" : "hidden"
+              } font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0`}
+          >
+            Create Account
+          </Link>
+        )}
+      </div>
+      <div>
         {(!signedIn && (
           <Link
             to="/signin"
-            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+            className="font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0"
           >
             Sign in
           </Link>
         )) || (
             <button
               onClick={auth.signOut}
-              className="block w-full text-right md:text-left md:w-auto md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+              className="font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0"
             >
               Sign out
             </button>
           )}
-        {signedIn && (
-          <>
-            <Link
-              to="/pitchvideo"
-              className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-            >
-              Pitch Video
-            </Link>
-            <Link
-              to="/messages"
-              className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-            >
-              Messaging
-            </Link>
-          </>
-        )}
       </div>
-      {!signedIn && (
-        <Link
-          to="/signup"
-          className={`${mobileNavShown ? "block" : "hidden"
-            } md:flex w-full md:w-auto px-4 py-2 text-right bg-blue-900 hover:bg-blue-500 text-white md:rounded-md`}
-        >
-          Create Account
-        </Link>
-      )}
-      {signedIn && (
-        <Link
-          to="/search"
-          className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-        >
-          Job Search
-        </Link>
-      )}
-      {signedIn && (
-        <Link
-          to="/applied"
-          className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-        >
-          Applied
-        </Link>
-      )}
-      {/**Will eventually change to signedIn and isRecruiter */}
-      {signedIn &&  (
-        <Link
-          to="/searchprofiles"
-          className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-        >
-          Search Candidates
-        </Link>
-      )}
-
-
     </nav>
   );
 };

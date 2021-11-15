@@ -11,7 +11,14 @@ module.exports = {
       xl: "16px",
       "3xl": "1.5rem",
     },
-    extend: {},
+    extend: {
+      colors: {
+        'orange-peel': '#FF9F1C',
+        'mellow-apricot': '#FFBF69',
+        'light-cyan': '#CBF3F0',
+        'tiffany-blue': '#2EC4B6',
+      },
+    },
   },
   variants: {
     extend: {
