@@ -15,7 +15,6 @@ const uploadVideoRoute = require("./controllers/pitchVideoController");
 const websocketServer = require("./controllers/websocketController");
 const uploadResumeRoute = require("./controllers/resumeController")
 const JobSeekerProfileRoute = require("./controllers/jobseekerProfileController");
-const RecruiterProfileRoute = require("./controllers/recruiterProfileController");
 const API_PORT = process.env.API_PORT || 3000;
 const BASE_URL = "/api";
 
@@ -39,8 +38,8 @@ const server = app.listen(API_PORT, () => {
 mongoose.connect(process.env.MONGO_URI).then((db) => {
   const User = require("./models/User")(db);
   const Joblisting = require("./models/Joblisting")(db);
-  const JobseekerProfile = require("./models/JobseekerProfile")(db);
-  const RecruiterProfile = require("./models/RecruiterProfile")(db);
+  const JobseekerProfile = require("./models/JobseekerProfile").JobseekerProfileSchema(db);
+  const RecruiterProfile = require("./models/RecruiterProfile").RecruiterProfileSchema(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
 
@@ -64,8 +63,8 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   app.use(passport.initialize());
 
   // Initialize passport strategies
-  require("./middleware/localStrategy")(User, passport);
-  require("./middleware/googleStrategy")(User, passport);
+  require("./middleware/localStrategy")(User, JobseekerProfile, RecruiterProfile, passport);
+  require("./middleware/googleStrategy")(User, JobseekerProfile, RecruiterProfile, passport);
 
   // Setup Router
   app.use(`${BASE_URL}`, router);
@@ -288,7 +287,6 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 
   uploadVideoRoute(router, Pitch);
   JobSeekerProfileRoute(router, JobseekerProfile);
-  RecruiterProfileRoute(router, RecruiterProfile);
   uploadResumeRoute(router, JobseekerProfile);
   
   router.post(`/updateprofilejobsapplied`, (req, res) => {

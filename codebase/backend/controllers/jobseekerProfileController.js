@@ -1,17 +1,6 @@
 const { verifyUser } = require("../middleware/auth");
 
 const JobSeekerProfileRoute = (router, JobseekerProfile) => {
-  
-  /**
-   * @api {post} /api/jobseeker/create Create a jobseeker profile
-   */
-  router.post(`/jobseeker/create`, (req, res) => {
-    JobseekerProfile.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-    }).then((ret) => res.json(ret));
-  });
 
   /**
    * @api {post} /api/jobseeker/updateprofileskills Update user skills

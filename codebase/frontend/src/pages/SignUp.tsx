@@ -36,25 +36,6 @@ const SignUp = () => {
         },
       })
         .then(() => {
-          if (role === "Jobseeker") {
-            axios({
-              method: "post",
-              url: `${process.env.REACT_APP_API_URL}/api/jobseeker/create`,
-              data: {
-                firstName: form.firstName.value,
-                lastName: form.lastName.value,
-                email: form.email.value
-              },
-            })
-          } else {
-            axios({
-              method: "post",
-              url: `${process.env.REACT_APP_API_URL}/api/recruiter/create`,
-              data: {
-                email: form.email.value
-              },
-            })
-          }
           setSignedUp(true);
           setTimeout(() => {
             history.push("/signin");
