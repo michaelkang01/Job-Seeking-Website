@@ -44,7 +44,7 @@ const SignUp = () => {
         .catch((err) => {
           setMessage(
             "Error signing up: " +
-            (err.response.data.message || "Unspecified error")
+              (err.response.data.message || "Unspecified error")
           );
           setSignUpButtonDisabled(false);
         });
@@ -103,9 +103,11 @@ const SignUp = () => {
             />
             <Spacer height={1.5} />
             <label className="pl-4">Account Type</label>
-            <select className="border border-gray-300 rounded-full text-black w-full h-10 pl-5 pr-10 bg-gray-200 hover:border-gray-400 focus:outline-none appearance-none"
+            <select
+              className="border border-gray-300 rounded-full text-black w-full h-10 pl-5 pr-10 bg-gray-200 hover:border-gray-400 focus:outline-none appearance-none"
               name="role"
-              required={true}>
+              required={true}
+            >
               <option value="Jobseeker">Jobseeker</option>
               <option value="Recruiter">Recruiter</option>
             </select>
@@ -117,8 +119,8 @@ const SignUp = () => {
                   signedUp // Set button state to 'success' if signup was successful
                     ? "success"
                     : signUpButtonDisabled // Set button state to 'loading' if signup is in progress
-                      ? "pending"
-                      : "default" // Set button state to 'default' in all other cases
+                    ? "pending"
+                    : "default" // Set button state to 'default' in all other cases
                 }
               />
             </div>

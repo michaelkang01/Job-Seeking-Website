@@ -1,6 +1,5 @@
 import "tailwindcss/tailwind.css";
 
-
 const ProfileSearchBar = () => {
   return (
     <div className="p-8 flex">

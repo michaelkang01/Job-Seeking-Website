@@ -1,7 +1,6 @@
 const { verifyUser } = require("../middleware/auth");
 
 const JobSeekerProfileRoute = (router, JobseekerProfile) => {
-
   /**
    * @api {post} /api/jobseeker/updateprofileskills Update user skills
    */

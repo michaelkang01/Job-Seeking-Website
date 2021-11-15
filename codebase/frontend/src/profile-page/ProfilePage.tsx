@@ -13,13 +13,13 @@ const ProfilePage = (props) => {
   return (
     <div className="w-11/12 m-auto">
       <div className="w-full float-left p-4 sm:w-1/4 ">
-        <Profile email={props.email} authToken={props.authToken}/>
+        <Profile email={props.email} authToken={props.authToken} />
         <ElevatorPitch />
       </div>
       <div className="w-full float-left p-4 sm:w-3/4">
-        <Summary email={props.email} authToken={props.authToken}/>
-        <Skills email={props.email} authToken={props.authToken}/>
-        <WorkExperiences email={props.email} authToken={props.authToken}/>
+        <Summary email={props.email} authToken={props.authToken} />
+        <Skills email={props.email} authToken={props.authToken} />
+        <WorkExperiences email={props.email} authToken={props.authToken} />
       </div>
     </div>
   );

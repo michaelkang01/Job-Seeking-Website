@@ -35,4 +35,4 @@ const CreateRecruiterProfile = async (User, RecruiterProfile) => {
   await newRecruiter.save();
 };
 
-module.exports = {RecruiterProfileSchema, CreateRecruiterProfile}
+module.exports = { RecruiterProfileSchema, CreateRecruiterProfile };

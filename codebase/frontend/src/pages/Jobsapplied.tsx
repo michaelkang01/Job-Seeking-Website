@@ -1,39 +1,34 @@
-
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useAuth } from '../context/AuthContext';
-import Joblisting from '../types/Joblisting';
-import getjobsappliedlist from './getjobsappliedlist';
-import JobListings from './JobListings';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import Joblisting from "../types/Joblisting";
+import getjobsappliedlist from "./getjobsappliedlist";
+import JobListings from "./JobListings";
 
 function Jobsapplied() {
   const auth = useAuth();
   const authToken = auth.getAuthData().authToken;
   const authData = auth.getAuthData().authData;
 
-
   const [isLoading, setIsLoading] = useState(true);
   const [applied, setApplied] = useState<Joblisting[]>([]);
 
   useEffect(() => {
-
-
-
-    const getJobsapplied = async (setIsLoading: any, setApplied: React.Dispatch<React.SetStateAction<Joblisting[]>>) => {
-      const listing_list = [] as Joblisting[]
+    const getJobsapplied = async (
+      setIsLoading: any,
+      setApplied: React.Dispatch<React.SetStateAction<Joblisting[]>>
+    ) => {
+      const listing_list = [] as Joblisting[];
       var job_list = await getjobsappliedlist(authData);
       await axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/api/joblistings/`
-
-        )
+        .get(`${process.env.REACT_APP_API_URL}/api/joblistings/`)
         .then((res) => {
           setIsLoading(false);
           for (const listing of res.data) {
-            console.log(listing)
+            console.log(listing);
             if (job_list.length !== 0 && job_list[0] !== -1) {
               if (job_list.includes(listing.listing_id)) {
-                console.log('applied')
+                console.log("applied");
                 listing_list.push({
                   listing_id: listing.listing_id,
                   employer_id: listing.employer_id,
@@ -50,48 +45,29 @@ function Jobsapplied() {
               }
             }
           }
-        }); await setApplied(listing_list)
-
-
-
-
-    }
+        });
+      await setApplied(listing_list);
+    };
 
     if (isLoading) {
-
-
       getJobsapplied(setIsLoading, setApplied).then(() => {
         setIsLoading(false);
       });
-   
-
     }
-
-
-
-
   }, [isLoading, authData, applied]);
-
-
 
   return (
     <div>
-      {authToken && authData ?
+      {authToken && authData ? (
         <div className="px-8 pt-28 h-screen bg-gray-100">
-
-          <h1 className="text-2xl">
-            Jobs Applied
-          </h1><JobListings jobs={applied} applied={true} />
-
-
+          <h1 className="text-2xl">Jobs Applied</h1>
+          <JobListings jobs={applied} applied={true} />
         </div>
-        :
+      ) : (
         <></>
-      }
-
-
+      )}
     </div>
   );
 }
 
-export default Jobsapplied
+export default Jobsapplied;

@@ -40,7 +40,7 @@ type ModalProps = {
 
 /**
  * Renders the chat system
- * 
+ *
  * @param { match } route props
  * @returns { JSX.Element }
  */
@@ -247,7 +247,7 @@ const ChatSystem = ({ match }: any) => {
 
   /**
    * Shows a (primitive) modal to the user so that they can begin a new chat with the inputted user
-   * 
+   *
    * @param { webSocket } ModelProps: takes in the websocket connection
    * @returns { JSX.Element }
    */

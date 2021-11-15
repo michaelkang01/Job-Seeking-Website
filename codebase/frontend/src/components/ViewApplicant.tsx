@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 /**
  * Applicant type
- * 
+ *
  * The fields in this type are the fields that are returned from the API
  */
 type Applicant = {

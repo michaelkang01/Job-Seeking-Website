@@ -6,7 +6,7 @@ import {
   FaCog,
   FaMapMarkerAlt,
   FaFileAlt,
-  FaLink
+  FaLink,
 } from "react-icons/fa";
 
 import Modal from "react-modal";

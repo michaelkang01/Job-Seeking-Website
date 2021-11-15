@@ -3,7 +3,7 @@
  */
 type SectionRequirements = {
   name: string;
-  headerHeight?: string,
+  headerHeight?: string;
   centerheader?: boolean;
   content: any;
 };
