@@ -1,8 +1,16 @@
 const LocalStrategy = require("passport-local").Strategy;
 const jwtSecret = require("../jwtConfig").secret;
 const bcrypt = require("bcrypt");
-
-module.exports = async (UserModel, passport) => {
+const CreateRecruiterProfile =
+  require("../models/RecruiterProfile").CreateRecruiterProfile;
+const CreateJobseekerProfile =
+  require("../models/JobseekerProfile").CreateJobseekerProfile;
+module.exports = async (
+  UserModel,
+  JobseekerProfile,
+  RecruiterProfile,
+  passport
+) => {
   // Sign in passport with username: email and password: password
   passport.use(
     "local-signin",
@@ -53,6 +61,9 @@ module.exports = async (UserModel, passport) => {
           req.body.password = bcrypt.hashSync(password, 10);
           const newUser = new UserModel(req.body);
           await newUser.save();
+          (await req.body.role) == "Recruiter"
+            ? CreateRecruiterProfile(newUser, RecruiterProfile)
+            : CreateJobseekerProfile(newUser, JobseekerProfile);
           return done(null, newUser);
         } catch (err) {
           return done(err);

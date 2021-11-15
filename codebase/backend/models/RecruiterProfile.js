@@ -1,18 +1,38 @@
-module.exports = (mongoose) => {
-  const RecruiterProfileSchema = new mongoose.Schema(
-    {
-      user: { type: Schema.Types.ObjectId, ref: "User" },
-      logo: String,
-      email: String,
-      phone: String,
-      city: String,
-      province: String,
-      zip: String,
-      companyName: String,
-      jobsPosted: [String],
-      metadata: Array,
-    },
-    { timestamps: true }
+const RecruiterProfileSchema = (mongoose) => {
+  return mongoose.model(
+    "RecruiterProfile",
+    new mongoose.Schema(
+      {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        logo: String,
+        email: String,
+        phone: String,
+        city: String,
+        province: String,
+        zip: String,
+        companyName: String,
+        jobsPosted: [String],
+        metadata: Array,
+      },
+      { timestamps: true }
+    )
   );
-  return mongoose.model("RecruiterProfile", RecruiterProfileSchema);
 };
+
+const CreateRecruiterProfile = async (User, RecruiterProfile) => {
+  const newRecruiter = new RecruiterProfile({
+    user: User._id,
+    logo: "",
+    email: User.email,
+    phone: "",
+    city: "",
+    province: "",
+    zip: "",
+    companyName: "",
+    jobsPosted: [],
+    metadata: [],
+  });
+  await newRecruiter.save();
+};
+
+module.exports = {RecruiterProfileSchema, CreateRecruiterProfile}

@@ -14,7 +14,7 @@ const { verifyUser, signJwt, verifyUserWithoutResponse } = require("./middleware
 const uploadVideoRoute = require("./controllers/pitchVideoController");
 const websocketServer = require("./controllers/websocketController");
 const uploadResumeRoute = require("./controllers/resumeController")
-
+const JobSeekerProfileRoute = require("./controllers/jobseekerProfileController");
 const API_PORT = process.env.API_PORT || 3000;
 const BASE_URL = "/api";
 
@@ -38,7 +38,8 @@ const server = app.listen(API_PORT, () => {
 mongoose.connect(process.env.MONGO_URI).then((db) => {
   const User = require("./models/User")(db);
   const Joblisting = require("./models/Joblisting")(db);
-  const JobseekerProfile = require("./models/JobseekerProfile")(db);
+  const JobseekerProfile = require("./models/JobseekerProfile").JobseekerProfileSchema(db);
+  const RecruiterProfile = require("./models/RecruiterProfile").RecruiterProfileSchema(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
 
@@ -62,8 +63,8 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   app.use(passport.initialize());
 
   // Initialize passport strategies
-  require("./middleware/localStrategy")(User, passport);
-  require("./middleware/googleStrategy")(User, passport);
+  require("./middleware/localStrategy")(User, JobseekerProfile, RecruiterProfile, passport);
+  require("./middleware/googleStrategy")(User, JobseekerProfile, RecruiterProfile, passport);
 
   // Setup Router
   app.use(`${BASE_URL}`, router);
@@ -285,10 +286,9 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   });
 
   uploadVideoRoute(router, Pitch);
-
-  /**
-   * @api {post} /api/updateprofilesummary Update user summary
-   */
+  JobSeekerProfileRoute(router, JobseekerProfile);
+  uploadResumeRoute(router, JobseekerProfile);
+  
   router.post(`/updateprofilejobsapplied`, (req, res) => {
     
     JobseekerProfile.updateOne(
@@ -299,57 +299,5 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-   router.post(`/updateprofilesummary`, (req, res) => {
-    JobseekerProfile.updateOne(
-      { email: req.body.email || "" },
-      { summary: req.body.summary }
-    ).then((ret) => {
-      res.json(ret);
-    });
-  });
-
-  /**
-   * @api {post} /api/updateprofileskills Update user skills
-   */
-  router.post(`/updateprofileskills`, (req, res) => {
-    JobseekerProfile.updateOne(
-      { email: req.body.email || "" },
-      { skills: req.body.skills }
-    ).then((ret) => {
-      res.json(ret);
-    });
-  });
-
-  /**
-   * @api {post} /api/updateworkexperiences Update user work experiences
-   */
-  router.post(`/updateworkexperiences`, (req, res) => {
-    JobseekerProfile.updateOne(
-      { email: req.body.email || "" },
-      { workExperience: req.body.workExperience }
-    ).then((ret) => {
-      res.json(ret);
-    });
-  });
-
-  /**
-   * @api {post} /api/updatecontactinformation Update user contact information
-   */
-  router.post(`/updatecontactinformation`, (req, res) => {
-    JobseekerProfile.updateOne(
-      { email: req.body.email || "" },
-      {
-        firstName: req.body.profile.firstName,
-        lastName: req.body.profile.lastName,
-        email: req.body.profile.email,
-        address: req.body.profile.address,
-        githubID: req.body.profile.github,
-        facebookID: req.body.profile.facebook,
-      }
-    ).then((ret) => {
-      res.json(ret);
-    });
-  });
-
-  uploadResumeRoute(router, JobseekerProfile);
+  
 });

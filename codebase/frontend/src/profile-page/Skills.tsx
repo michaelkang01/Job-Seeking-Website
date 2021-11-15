@@ -35,32 +35,41 @@ const Skills = (props) => {
         .get(`${process.env.REACT_APP_API_URL}/api/jobseekerprofile`, {
           params: { email: props.email },
         })
-        .then((res) => {
-          set_skill_list(res.data[0].skills);
-        });
+        .then((res) => set_skill_list(res.data[0].skills));
     };
     get_skills();
   }, [props.email]);
+
+  /**
+   * Updates user profile skills
+   *
+   * @param {String[]} skills List of user skills
+   * @returns Promise
+   */
+  const update_skills = async (skills) => {
+    return axios
+      .request({
+        url: `${process.env.REACT_APP_API_URL}/api/jobseeker/updateprofileskills`,
+        method: "POST",
+        headers: { Authorization: props.authToken },
+        data: { skills: skills },
+      })
+      .then(() => {
+        set_skill_list(skills);
+      });
+  };
 
   /**
    * Adds a new distinct skill based on insert skill form
    *
    * @param event Form input passed in by the insert skill form
    */
-  const add_skill = async (event) => {
+  const add_skill = (event) => {
     event.preventDefault();
     const new_skill = event.target.skill.value;
     if (skills_list.findIndex((skill) => skill === new_skill) === -1) {
-      const new_list = skills_list.concat(new_skill);
-      return axios
-        .post(`${process.env.REACT_APP_API_URL}/api/updateprofileskills`, {
-          email: props.email,
-          skills: new_list,
-        })
-        .then(() => {
-          set_skill_list(new_list);
-          event.target.reset();
-        });
+      update_skills(skills_list.concat(new_skill));
+      event.target.reset();
     }
   };
 
@@ -69,15 +78,8 @@ const Skills = (props) => {
    *
    * @param remove_skill Skill from skills_list to remove
    */
-  const delete_skill = (remove_skill) => {
-    const new_list = skills_list.filter((skill) => skill !== remove_skill);
-    return axios
-      .post(`${process.env.REACT_APP_API_URL}/api/updateprofileskills`, {
-        email: props.email,
-        skills: new_list,
-      })
-      .then(() => set_skill_list(new_list));
-  };
+  const delete_skill = (remove_skill) =>
+    update_skills(skills_list.filter((skill) => skill !== remove_skill));
 
   const skills = (
     <div className="flex flex-row w-full flex-wrap py-4">

@@ -2,10 +2,12 @@
  * Necessary attributes to showcase a work experience
  */
 type Job = {
-  position: string;
-  company: string;
-  time: string;
-  location: string;
+  title: String;
+  company: String;
+  start: String;
+  end: String;
+  location: String;
+  description: String;
 };
 
 export default Job;

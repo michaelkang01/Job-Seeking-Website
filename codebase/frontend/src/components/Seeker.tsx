@@ -7,6 +7,7 @@ import {
   FaBuilding,
   FaCalendarAlt,
   FaMapMarkerAlt,
+  FaPen
 } from "react-icons/fa";
 import Job from "../types/WorkExperience";
 
@@ -70,7 +71,7 @@ const Seeker = (props: jobseeker) => {
                 <div className="left p-4">
                   <p className="my-0">
                     <FaBriefcase className="inline mx-2" />
-                    {work_experience.position}
+                    {work_experience.title}
                   </p>
                   <p className="my-0">
                     <FaBuilding className="inline mx-2" />
@@ -78,11 +79,15 @@ const Seeker = (props: jobseeker) => {
                   </p>
                   <p className="my-0">
                     <FaCalendarAlt className="inline mx-2" />
-                    {work_experience.time}
+                    {work_experience.start}- {work_experience.end}
                   </p>
                   <p className="my-0">
                     <FaMapMarkerAlt className="inline mx-2" />
                     {work_experience.location}
+                  </p>
+                  <p className="my-0">
+                    <FaPen className="inline mx-2" />
+                    {work_experience.description}
                   </p>
                 </div>
               </div>

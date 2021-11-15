@@ -2,18 +2,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import {
   FaRegEnvelope,
-  FaGithub,
-  FaFacebookF,
   FaUserCircle,
   FaCog,
   FaMapMarkerAlt,
   FaFileAlt,
+  FaLink
 } from "react-icons/fa";
 
 import Modal from "react-modal";
-import { useAuth } from "../context/AuthContext";
-import ContactInformation from "../types/ContactInformation";
 import Section from "./Section";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 /**
  * Basic profile and contact information on profile page
@@ -21,9 +20,6 @@ import Section from "./Section";
  * @returns JSX.Element content to be displayed
  */
 const Profile = (props) => {
-  const auth = useAuth();
-  const authToken = auth.getAuthData().authToken;
-
   /**
    * Shows the editing modal for profile and contact information changes
    */
@@ -32,16 +28,12 @@ const Profile = (props) => {
   /**
    * Functions to update the various contact information iterms
    */
-
-  const [contact, set_contact] = useState<ContactInformation>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    github: "",
-    facebook: "",
-    resumeURL: "",
-  });
+  const [firstname, set_firstname] = useState("");
+  const [lastname, set_lastname] = useState("");
+  const [email, set_email] = useState("");
+  const [address, set_address] = useState("");
+  const [resume, set_resume] = useState("");
+  const [socials, set_socials] = useState<string[]>([]);
 
   useEffect(() => {
     /**
@@ -55,15 +47,13 @@ const Profile = (props) => {
           params: { email: props.email },
         })
         .then((res) => {
-          set_contact({
-            firstName: res.data[0].firstName,
-            lastName: res.data[0].lastName,
-            email: res.data[0].email,
-            address: res.data[0].address,
-            github: res.data[0].githubID,
-            facebook: res.data[0].facebookID,
-            resumeURL: res.data[0].resumeUrl,
-          });
+          const profile = res.data[0];
+          set_firstname(profile.firstName);
+          set_lastname(profile.lastName);
+          set_email(profile.email);
+          set_address(profile.address);
+          set_resume(profile.resumeUrl);
+          set_socials(profile.socials);
         });
     };
     get_profile();
@@ -74,9 +64,9 @@ const Profile = (props) => {
    *
    * @param event Form input from the editing modal
    */
-  const update_profile = async (event) => {
+  const update_general_profile = async (event) => {
     event.preventDefault();
-    let resumeURL = contact.resumeURL;
+    let resumeURL = resume;
     if (event.target.resume.files.length === 1) {
       const formdata = new FormData();
       formdata.append("resume", event.target.resume.files[0]);
@@ -85,32 +75,75 @@ const Profile = (props) => {
           url: `${process.env.REACT_APP_API_URL}/api/uploadresume`,
           method: "POST",
           headers: {
-            Authorization: authToken,
+            Authorization: props.authToken,
           },
           data: formdata,
         })
         .then((res) => (resumeURL = res.data.data));
     }
-    const profile: ContactInformation = {
+    const profile = {
       firstName: event.target.firstName.value,
       lastName: event.target.lastName.value,
       email: event.target.email.value,
       address: event.target.address.value,
-      github: event.target.github.value,
-      facebook: event.target.facebook.value,
       resumeURL: resumeURL,
     };
     return axios
-      .post(`${process.env.REACT_APP_API_URL}/api/updatecontactinformation`, {
-        email: props.email,
-        profile,
+      .request({
+        url: `${process.env.REACT_APP_API_URL}/api/jobseeker/updategeneralcontact`,
+        method: "POST",
+        headers: { Authorization: props.authToken },
+        data: { profile },
       })
       .then(() => {
-        set_contact(profile);
+        set_firstname(profile.firstName);
+        set_lastname(profile.lastName);
+        set_email(profile.email);
+        set_address(profile.address);
+        set_resume(profile.resumeURL);
         event.target.reset();
         set_show_editing_modal(false);
       });
   };
+
+  /**
+   * Updates user social urls
+   *
+   * @param {String[]} socials List of user socials
+   * @returns Promise
+   */
+  const update_socials = async (socials) => {
+    return axios
+      .request({
+        url: `${process.env.REACT_APP_API_URL}/api/jobseeker/updatesocials`,
+        method: "POST",
+        headers: { Authorization: props.authToken },
+        data: { socials: socials },
+      })
+      .then(() => set_socials(socials));
+  };
+
+  /**
+   * Adds a new social account
+   *
+   * @param event Form input passed in by the insert social form
+   */
+  const add_social = (event) => {
+    event.preventDefault();
+    const new_social = event.target.social.value;
+    if (socials.findIndex((social) => social === new_social) === -1) {
+      update_socials(socials.concat(new_social));
+      event.target.reset();
+    }
+  };
+
+  /**
+   * Removes a social
+   *
+   * @param social Social to remove
+   */
+  const delete_social = (remove_social) =>
+    update_socials(socials.filter((social) => social !== remove_social));
 
   /**
    * CSS for the editing modal
@@ -125,15 +158,77 @@ const Profile = (props) => {
     },
   };
 
-  const labels = {
-    firstName: "First Name",
-    lastName: "Last Name",
-    email: "Email",
-    address: "Address",
-    github: "Github Account (optional)",
-    facebook: "Facebook Account (optional",
-    resumeURL: "Resume",
-  };
+  const textinput = (name, defaultValue) => (
+    <input
+      type="text"
+      name={name}
+      defaultValue={defaultValue}
+      className="mx-4 mb-4 flex-auto"
+    />
+  );
+
+  const general_contact = (
+    <form onSubmit={update_general_profile}>
+      <div className="flex gap-8">
+        <div className="w-full flex flex-col">
+          <div className="flex flex-col">
+            <label htmlFor="firstName" className="mb-4 flex-1">
+              First Name {textinput("firstName", firstname)}
+            </label>
+            <label htmlFor="lastName" className="mb-4 flex-1">
+              Last Name {textinput("lastName", lastname)}
+            </label>
+            <label htmlFor="email" className="mb-4 flex-1">
+              Email {textinput("email", email)}
+            </label>
+            <label htmlFor="address" className="mb-4 flex-1">
+              Address {textinput("address", address)}
+            </label>
+            <label htmlFor="resume" className="flex-1">
+              Resume
+              <input type="file" name="resume" className="mx-4 flex-1" />
+            </label>
+          </div>
+        </div>
+      </div>
+      <input
+        type="submit"
+        value="Enter"
+        className="bg-gray-300 px-4 mt-4 w-20"
+      />
+    </form>
+  );
+
+  const social_links = (
+    <div className="flex flex-row w-full flex-wrap py-4">
+      {socials.map((social) => (
+        <div
+          className="flex items-center bg-gray-300 mx-4 mb-4 p-2"
+          key={social}
+        >
+          <button
+            className="hover:text-gray-500"
+            onClick={() => delete_social(social)}
+          >
+            &#10005;
+          </button>
+          <p className="my-0 mx-2">{social}</p>
+        </div>
+      ))}
+
+      <div className="flex items-center bg-gray-300 mx-4 p-2">
+        <form onSubmit={add_social}>
+          <input
+            className="bg-gray-200"
+            type="text"
+            name="social"
+            placeholder="Social URL"
+          />
+          <input type="submit" value="Enter" className="bg-gray-300 px-2" />
+        </form>
+      </div>
+    </div>
+  );
 
   const modal = (
     <Modal
@@ -141,36 +236,14 @@ const Profile = (props) => {
       onRequestClose={() => set_show_editing_modal(false)}
       style={customStyles}
     >
-      <form onSubmit={update_profile}>
-        <div className="flex gap-8">
-          <div className="w-full flex flex-col">
-            {Object.keys(contact).map((key, index) => (
-              <div className="flex flex-row">
-                <label htmlFor={key} className="mb-4 flex-1">
-                  {labels[key]}
-                </label>
-                <input
-                  type="text"
-                  name={key}
-                  defaultValue={contact[key]}
-                  className="mb-4 flex-auto"
-                />
-              </div>
-            ))}
-            <div className="flex flex-row">
-              <label htmlFor="resume" className="flex-1">
-                Resume
-              </label>
-              <input type="file" name="resume" className="flex-1" />
-            </div>
-          </div>
-        </div>
-        <input
-          type="submit"
-          value="Enter"
-          className="bg-gray-300 px-4 mt-4 w-20"
-        />
-      </form>
+      <Tabs>
+        <TabList>
+          <Tab>General Contact</Tab>
+          <Tab>Socials</Tab>
+        </TabList>
+        <TabPanel>{general_contact}</TabPanel>
+        <TabPanel>{social_links}</TabPanel>
+      </Tabs>
     </Modal>
   );
 
@@ -186,20 +259,18 @@ const Profile = (props) => {
             onClick={() => set_show_editing_modal(true)}
           />
         </div>
-        <p className="text-3xl mb-2">
-          {contact.firstName + " " + contact.lastName}
-        </p>
+        <p className="text-3xl mb-2">{firstname + " " + lastname}</p>
         <div>
           <p>
             <FaRegEnvelope className="inline mr-4" />
-            {contact.email}
+            {email}
           </p>
           <p>
             <FaMapMarkerAlt className="inline mr-4" />
-            {contact.address}
+            {address}
           </p>
           <a
-            href={contact.resumeURL}
+            href={resume}
             target="_blank"
             rel="noreferrer"
             title="Click Here to View My Resume"
@@ -209,22 +280,14 @@ const Profile = (props) => {
         </div>
         <hr className="w-1/3 mt-4" />
         <div className="mt-2 mb-2">
-          <a
-            href={contact.facebook}
-            target="_blank"
-            rel="noreferrer"
-            title="Facebook Profile"
-          >
-            <FaFacebookF className="inline mx-2 text-lg" />
-          </a>
-          <a
-            href={contact.github}
-            target="_blank"
-            rel="noreferrer"
-            title="Github Profile"
-          >
-            <FaGithub className="inline mx-2 text-lg" />
-          </a>
+          {socials.map((social) => (
+            <p key={social}>
+              <FaLink className="inline mr-4" />
+              <a href={social} target="_blank" rel="noreferrer">
+                {social}
+              </a>
+            </p>
+          ))}
         </div>
       </div>
     </div>

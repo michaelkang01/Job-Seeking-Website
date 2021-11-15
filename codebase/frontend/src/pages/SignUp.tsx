@@ -20,6 +20,7 @@ const SignUp = () => {
     setSignUpButtonDisabled(true);
     setTimeout(() => {
       const form = event.target as HTMLFormElement;
+      let role = form.role.value;
       axios({
         method: "post",
         url: `${process.env.REACT_APP_API_URL}/api/user/create`,
@@ -31,7 +32,7 @@ const SignUp = () => {
           lastName: form.lastName.value,
           email: form.email.value,
           password: form.password.value,
-          role: form.role.value,
+          role: role,
         },
       })
         .then(() => {

@@ -7,6 +7,7 @@ import {
   FaBuilding,
   FaCalendarAlt,
   FaMapMarkerAlt,
+  FaPen,
 } from "react-icons/fa";
 import Job from "../types/WorkExperience";
 import Section from "./Section";
@@ -25,8 +26,7 @@ const WorkExperiences = (props) => {
   /**
    * List containing user's work experiences
    */
-  const [work_experiences_list, set_work_experience_list] =
-    useState<Job[]>([]);
+  const [work_experiences_list, set_work_experience_list] = useState<Job[]>([]);
 
   /**
    * Display the insert work experience form
@@ -50,62 +50,59 @@ const WorkExperiences = (props) => {
           params: { email: props.email },
         })
         .then((res) => {
-          let new_list: Job[] = [];
+          let jobs: Job[] = [];
           for (const experience in res.data[0].workExperience) {
-            const new_work_experience: Job = {
-              position: res.data[0].workExperience[experience].position,
-              company: res.data[0].workExperience[experience].company,
-              time: res.data[0].workExperience[experience].time,
-              location: res.data[0].workExperience[experience].location,
-            };
-            new_list.push(new_work_experience);
+            const job = res.data[0].workExperience[experience];
+            jobs.push({
+              title: job.title,
+              company: job.company,
+              start: job.start,
+              end: job.end,
+              location: job.location,
+              description: job.description,
+            });
           }
-          set_work_experience_list(new_list);
+          set_work_experience_list(jobs);
         });
     };
     get_work_experiences();
   }, [props.email]);
 
   /**
+   * Updates user profile skills
+   *
+   * @param {Job[]} jobs List of user jobs
+   * @returns Promise
+   */
+  const update_jobs = async (jobs) => {
+    return axios
+      .request({
+        url: `${process.env.REACT_APP_API_URL}/api/jobseeker/updateworkexperiences`,
+        method: "POST",
+        headers: { Authorization: props.authToken },
+        data: { workExperience: jobs },
+      })
+      .then(() => set_work_experience_list(jobs));
+  };
+
+  /**
    * Adds a new work experience based on form input
    *
    * @param event Form input
    */
-  const add_work_experience = async (event) => {
+  const add_work_experience = (event) => {
     event.preventDefault();
-    const position = event.target.position.value;
-    const company = event.target.company.value;
-    const time = event.target.time.value;
-    const location = event.target.location.value;
 
-    for (let i = 0; i < work_experiences_list.length; i++) {
-      let work_experience = work_experiences_list[i];
-      if (
-        work_experience.position === position &&
-        work_experience.company === company &&
-        work_experience.time === time &&
-        work_experience.location === location
-      ) {
-        event.target.reset();
-        return;
-      }
-    }
     const new_work_experience: Job = {
-      position: position,
-      company: company,
-      time: time,
-      location: location,
+      title: event.target.title.value,
+      company: event.target.company.value,
+      start: event.target.start.value,
+      end: event.target.end.value,
+      location: event.target.location.value,
+      description: event.target.description.value,
     };
-    const new_list = work_experiences_list.concat(new_work_experience);
-    return axios
-      .post(`${process.env.REACT_APP_API_URL}/api/updateworkexperiences`, {
-        email: props.email,
-        workExperience: new_list,
-      })
-      .then(() => {
-        set_work_experience_list(new_list);
-        event.target.reset();
-      });
+    update_jobs(work_experiences_list.concat(new_work_experience));
+    event.target.reset();
   };
 
   /**
@@ -117,19 +114,12 @@ const WorkExperiences = (props) => {
     const new_list = work_experiences_list.filter(
       (work_experience) => work_experience !== remove_work_experience
     );
-    return axios
-      .post(`${process.env.REACT_APP_API_URL}/api/updateworkexperiences`, {
-        email: props.email,
-        workExperience: new_list,
-      })
-      .then(() => {
-        set_work_experience_list(new_list);
-      });
+    update_jobs(new_list);
   };
 
   const work_experiences = (
     <div className="flex flex-row w-full flex-wrap py-4 overflow-auto">
-      {work_experiences_list.map((work_experience: Job, i: number) => (
+      {work_experiences_list.map((work_experience: Job) => (
         <div
           className="relative flex items-center mx-4 mb-4 p-2"
           onMouseOver={() =>
@@ -138,18 +128,13 @@ const WorkExperiences = (props) => {
             )
           }
           onMouseLeave={() => set_display_remove_button(-1)}
-          key={
-            work_experience.position +
-            work_experience.company +
-            work_experience.time +
-            i
-          }
+          key={JSON.stringify(work_experience)}
         >
           <div className="left rounded-full bg-gray-300 w-16 h-16"></div>
           <div className="left p-4">
             <p className="my-0">
               <FaBriefcase className="inline mx-2" />
-              {work_experience.position}
+              {work_experience.title}
             </p>
             <p className="my-0">
               <FaBuilding className="inline mx-2" />
@@ -157,7 +142,7 @@ const WorkExperiences = (props) => {
             </p>
             <p className="my-0">
               <FaCalendarAlt className="inline mx-2" />
-              {work_experience.time}
+              {work_experience.start} - {work_experience.end}
             </p>
             <p className="my-0">
               <FaMapMarkerAlt className="inline mx-2" />
@@ -165,7 +150,8 @@ const WorkExperiences = (props) => {
             </p>
           </div>
           {(display_remove_button ===
-            work_experiences_list.indexOf(work_experience) || isMobile) && (
+            work_experiences_list.indexOf(work_experience) ||
+            isMobile) && (
             <button
               className="hover:text-gray-500 absolute top-4 left-0"
               onClick={() => delete_work_experience(work_experience)}
@@ -183,7 +169,7 @@ const WorkExperiences = (props) => {
               <FaBriefcase className="inline mx-2" />
               <input
                 type="text"
-                name="position"
+                name="title"
                 placeholder="Job Title"
                 required
               />
@@ -197,18 +183,22 @@ const WorkExperiences = (props) => {
               />
               <br />
               <FaCalendarAlt className="inline mx-2" />
-              <input
-                type="text"
-                name="time"
-                placeholder="Job Period"
-                required
-              />
+              <input type="date" name="start" required />
+              <input type="date" name="end" required />
               <br />
               <FaMapMarkerAlt className="inline mx-2" />
               <input
                 type="text"
                 name="location"
                 placeholder="Location"
+                required
+              />
+              <br />
+              <FaPen className="inline mx-2" />
+              <input
+                type="text"
+                name="description"
+                placeholder="Description"
                 required
               />
               <br />
