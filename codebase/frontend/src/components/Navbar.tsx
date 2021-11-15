@@ -44,7 +44,7 @@ const Navbar = () => {
       >
         <Link
           to="/"
-          className="block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+          className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
         >
           Home
         </Link>
@@ -52,13 +52,13 @@ const Navbar = () => {
           <>
             <Link
               to="/pitchvideo"
-              className="block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
             >
               Pitch Video
             </Link>
             <Link
               to="/messages"
-              className="block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
             >
               Messaging
             </Link>
@@ -67,7 +67,7 @@ const Navbar = () => {
         {signedIn && (
           <Link
             to="/search"
-            className="block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
           >
             Job Search
           </Link>
@@ -75,7 +75,7 @@ const Navbar = () => {
         {signedIn && (
           <Link
             to="/applied"
-            className="block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
           >
             Applied
           </Link>
@@ -84,7 +84,7 @@ const Navbar = () => {
         {signedIn && (
           <Link
             to="/searchprofiles"
-            className="block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
           >
             Search Candidates
           </Link>
@@ -93,7 +93,7 @@ const Navbar = () => {
           <Link
             to="/signup"
             className={`${mobileNavShown ? "block" : "hidden"
-              } inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0`}
+              } font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0`}
           >
             Create Account
           </Link>
@@ -103,14 +103,14 @@ const Navbar = () => {
         {(!signedIn && (
           <Link
             to="/signin"
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0"
+            className="font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0"
           >
             Sign in
           </Link>
         )) || (
             <button
               onClick={auth.signOut}
-              className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0"
+              className="font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0"
             >
               Sign out
             </button>
