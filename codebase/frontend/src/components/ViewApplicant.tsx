@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
+/**
+ * Applicant type
+ * 
+ * The fields in this type are the fields that are returned from the API
+ */
 type Applicant = {
   _id: string;
   city: string;
@@ -39,11 +44,91 @@ type Applicant = {
   };
 };
 
+type RenderHighlightedSkillsProps = {
+  skill: string;
+  index: number;
+  highlightedSkills: string[];
+};
+
+const RenderHighlightedSkills = ({
+  skill,
+  index,
+  highlightedSkills,
+}: RenderHighlightedSkillsProps) => {
+  return (
+    <span key={index} className={`pr-2`}>
+      {/* Highlight the skill where a match occurs */}
+      {highlightedRange(skill, highlightedSkills)[1] !== 0 ? (
+        <span>
+          <span>
+            {skill.substring(0, highlightedRange(skill, highlightedSkills)[0])}
+          </span>
+          <span
+            className={`${
+              highlightedRange(skill, highlightedSkills)[1] === skill.length
+                ? "text-green-600"
+                : "text-blue-500"
+            } font-bold`}
+            style={{
+              backgroundColor: "rgba(0,0,0,0.1)",
+              padding: "0.1rem 0.2rem 0.1rem 0.2rem",
+              borderRadius: "0.2rem",
+            }}
+          >
+            {skill.substring(
+              highlightedRange(skill, highlightedSkills)[0],
+              highlightedRange(skill, highlightedSkills)[1]
+            )}
+          </span>
+          <span>
+            {skill.substring(
+              highlightedRange(skill, highlightedSkills)[1],
+              skill.length
+            )}
+          </span>
+        </span>
+      ) : (
+        <span>{skill}</span>
+      )}
+    </span>
+  );
+};
+
+const highlightedRange = (
+  skill: string,
+  highlightedSkills: string[]
+): number[] => {
+  for (let i = 0; i < highlightedSkills.length; i++) {
+    let highlightedSkill = highlightedSkills[i].toLowerCase();
+    let formattedSkill = skill.toLowerCase();
+    if (highlightedSkill === formattedSkill) {
+      return [0, formattedSkill.length];
+    }
+    if (formattedSkill.indexOf(highlightedSkill) !== -1) {
+      return [
+        formattedSkill.indexOf(highlightedSkill),
+        formattedSkill.indexOf(highlightedSkill) + highlightedSkill.length,
+      ];
+    }
+  }
+  return [0, 0];
+};
+
 const ViewApplicant = ({ match }: any) => {
   const authToken = useAuth().getAuthData().authToken;
   const [applicant, setApplicant] = useState({} as Applicant);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showFilteringModal, setShowFilteringModal] = useState(false);
+  const [highlightedSkills, setHighlightedSkills] = useState([] as string[]);
+  const [skillInput, setSkillInput] = useState("");
+
+  /* Session storage variable storing highlighted skills */
+  const highlightedSkillsSessionStorage =
+    sessionStorage.getItem("highlightedSkills") || "[]";
+  const highlightedSkillsSessionStorageParsed = JSON.parse(
+    highlightedSkillsSessionStorage
+  );
 
   useEffect(() => {
     axios
@@ -62,6 +147,7 @@ const ViewApplicant = ({ match }: any) => {
       .then((response) => {
         if (response.status === 200) {
           setApplicant(response.data.application);
+          console.log(response.data.application);
         } else {
           setError(response.data.message);
         }
@@ -70,17 +156,83 @@ const ViewApplicant = ({ match }: any) => {
         setError(error.response.data.message);
       })
       .finally(() => {
+        setHighlightedSkills(highlightedSkillsSessionStorageParsed);
         setLoading(false);
       });
   }, [match, authToken]);
 
+  const renderFilteringModal = () => {
+    /* TailwindCSS */
+    return (
+      <div
+        className="fixed inset-0 flex items-center justify-center z-50"
+        style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+      >
+        <div className="fixed inset-0 h-full px-4 md:px-0 w-auto flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-xl px-6 py-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-semibold">Filter skills</h2>
+              <button
+                className=""
+                onClick={() => {
+                  setShowFilteringModal(false);
+                }}
+              >
+                Close
+              </button>
+            </div>
+            <div className="mt-4">
+              <p className="text-gray-600">
+                Enter the skills you want to highlight. They will be saved for
+                your current session (will be cleared when you close the
+                tab/window).
+              </p>
+              <p className="text-gray-600">
+                They should be inputted in a list separated by commas.
+              </p>
+              <div className="mt-4">
+                <form
+                  className="flex flex-col"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const skills = skillInput.split(",");
+                    sessionStorage.setItem(
+                      "highlightedSkills",
+                      JSON.stringify(skills)
+                    );
+                    setHighlightedSkills(skills);
+                    setShowFilteringModal(false);
+                  }}
+                >
+                  <input
+                    type="text"
+                    className="w-full bg-gray-100 py-2 px-3 rounded-md focus:outline-none focus:bg-gray-200"
+                    placeholder="Enter skills"
+                    onChange={(e) => setSkillInput(e.target.value)}
+                    defaultValue={highlightedSkills.join(",")}
+                  />
+                  <button className="mt-4 bg-blue-500 hover:bg-blue-600 transition transition-all px-4 py-1 text-white rounded-md">
+                    Update
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Display the applicant's information in cards (TailwindCSS 2.0)
   return (
     <div className="w-full">
-      {error && !loading && <h3 className="text-red-500 text-lg text-center">{error}</h3>}
+      {showFilteringModal && renderFilteringModal()}
+      {error && !loading && (
+        <h3 className="text-red-500 text-lg text-center">{error}</h3>
+      )}
       {!error && applicant && !loading && (
         <div className="md:flex md:flex-row">
-          <div className="w-full md:w-1/5 md:flex-shrink-0 pl-8 md:h-screen bg-gray-100 pt-28 pb-8 md:pb-0">
+          <div className="w-full md:w-1/5 md:flex-shrink-0 pl-8 md:h-screen bg-gray-100 pt-28 pb-8 md:pb-0  overflow-y-scroll h-full">
             <h1 className="text-2xl font-bold">Applicant Information</h1>
             <h2 className="text-xl text-gray-800 font-bold pt-4">
               {applicant.firstName} {applicant.lastName}
@@ -93,44 +245,106 @@ const ViewApplicant = ({ match }: any) => {
               <span className="font-bold">Location:</span> {applicant.city},{" "}
               {applicant.province} {applicant.zip}
             </p>
+            {/* Show actions (accept/reject) */}
+            <div className="mt-4 flex flex-row gap-2 pr-8">
+              <button className="bg-green-500 hover:bg-green-700 w-full rounded-md text-white font-bold py-2 px-4 rounded">
+                Accept
+              </button>
+              <button className="bg-red-500 hover:bg-red-700 w-full rounded-md text-white font-bold py-2 px-4 rounded">
+                Reject
+              </button>
+            </div>
+            {/* Show filtering modal */}
+            <div className="mt-4 flex flex-row gap-2 pr-8">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 w-full rounded-md text-white font-bold py-2 px-4 rounded"
+                onClick={() => {
+                  setShowFilteringModal(true);
+                }}
+              >
+                Filter
+              </button>
+            </div>
+            {/* Skills */}
+            <div className="mt-4 w-full pr-8 text-gray-600">
+              <span className="font-bold">Skills:</span>{" "}
+              <pre>
+                {applicant &&
+                  applicant.additionalData &&
+                  applicant.additionalData.profile.skills &&
+                  applicant.additionalData.profile.skills.map(
+                    (skill: string, index: number) => {
+                      // Check if the current skill matches (or is a substring) any of the highlighted skills
+
+                      return (
+                        <RenderHighlightedSkills
+                          index={index}
+                          skill={skill}
+                          highlightedSkills={highlightedSkills}
+                        />
+                      );
+                    }
+                  )}
+              </pre>
+            </div>
             {/* Pitch Video */}
-            <p className="text-gray-600 mt-8 w-full pr-8">
-              <span className="font-bold">Pitch Video:</span>{" "}
-              {applicant && applicant.additionalData && applicant.additionalData.pitchData.videoUrl && (
-                <video controls>
-                  <source src={applicant.additionalData.pitchData.videoUrl} />
-                </video>
-              )}
-            </p>
-            {/* Transcription of pitch video */}
-            <p className="text-gray-600 mt-8 w-full pr-8">
-              <span className="font-bold">Transcription:</span>{" "}
-              {applicant && applicant.additionalData && applicant.additionalData.pitchData &&
-                (
-                  <p className="" style={{
-                    backgroundColor: "white",
-                    borderRadius: "5px",
-                    padding: "10px",
-                    fontSize: "1rem",
-                    overflowWrap: "break-word",
-                    wordWrap: "break-word",
-                    lineBreak: "auto",
-                    maxWidth: "100%",
-                    overflowX: "auto",
-                    maxHeight: "200px",
-                  }}>{applicant.additionalData.pitchData.transcription && (JSON.parse(applicant.additionalData.pitchData.transcription).results.transcripts[0]
-                    .transcript) || "Transcription is being processed"}</p>
+            <p className="text-gray-600 mt-4 w-full pr-8 z-0">
+              {applicant &&
+                applicant.additionalData &&
+                applicant.additionalData.pitchData &&
+                applicant.additionalData.pitchData.videoUrl && (
+                  <div>
+                    <span className="font-bold">Pitch Video:</span>{" "}
+                    <video controls>
+                      <source
+                        src={applicant.additionalData.pitchData.videoUrl}
+                      />
+                    </video>
+                  </div>
                 )}
             </p>
-            {/* Show actions (accept/reject) */}
-            <div className="mt-8 flex flex-row gap-2 pr-8">
-                <button className="bg-green-500 hover:bg-green-700 w-full rounded-md text-white font-bold py-2 px-4 rounded">
-                    Accept
-                </button>
-                <button className="bg-red-500 hover:bg-red-700 w-full rounded-md text-white font-bold py-2 px-4 rounded">
-                    Reject
-                </button>
-            </div>
+            {/* Transcription of pitch video */}
+            <p className="text-gray-600 mt-4 w-full pr-8">
+              {applicant &&
+                applicant.additionalData &&
+                applicant.additionalData.pitchData && (
+                  <div>
+                    <span className="font-bold">Transcription:</span>{" "}
+                    <p
+                      className=""
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: "5px",
+                        padding: "10px",
+                        fontSize: "1rem",
+                        overflowWrap: "break-word",
+                        wordWrap: "break-word",
+                        lineBreak: "auto",
+                        maxWidth: "100%",
+                        overflowX: "auto",
+                        maxHeight: "200px",
+                      }}
+                    >
+                      {!applicant.additionalData.pitchData.transcription &&
+                        "Transcription is being processed or could not recognize any words"}
+                      {applicant.additionalData.pitchData.transcription &&
+                        JSON.parse(
+                          applicant.additionalData.pitchData.transcription
+                        )
+                          .results.transcripts[0].transcript.split(" ")
+                          .map((el, index) => {
+                            return (
+                              <RenderHighlightedSkills
+                                index={index}
+                                skill={el}
+                                highlightedSkills={highlightedSkills}
+                              />
+                            );
+                          })}
+                    </p>
+                  </div>
+                )}
+            </p>
           </div>
           <div
             className="w-full md:flex-grow pt-4 md:pt-28 bg-gray-200 md:h-screen md:flex md:flex-col"
@@ -139,17 +353,19 @@ const ViewApplicant = ({ match }: any) => {
             <h3 className="text-2xl px-8 pb-4 font-bold">Resume</h3>
             {/* iFrame for resume */}
 
-            {!loading && applicant.additionalData && applicant.additionalData.profile.resumeUrl && (
-              <iframe
-                src={applicant.additionalData.profile.resumeUrl}
-                width="100%"
-                height="100%"
-                title="resume"
-                style={{
-                  minHeight: "600px",
-                }}
-              />
-            )}
+            {!loading &&
+              applicant.additionalData &&
+              applicant.additionalData.profile.resumeUrl && (
+                <iframe
+                  src={applicant.additionalData.profile.resumeUrl}
+                  width="100%"
+                  height="100%"
+                  title="resume"
+                  style={{
+                    minHeight: "600px",
+                  }}
+                />
+              )}
           </div>
         </div>
       )}

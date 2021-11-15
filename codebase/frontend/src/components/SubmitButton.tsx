@@ -2,6 +2,9 @@ import React from "react";
 import PillButton from "./PillButton";
 import "../assets/SignIn.css";
 
+/**
+ * SubmitButton props
+ */
 type SubmitButtonProps = {
   children?: React.ReactNode;
   // Additional classes to be added to the button
@@ -20,6 +23,12 @@ type SubmitButtonProps = {
   defaultText?: string;
 };
 
+/**
+ * Renders a submit button
+ * 
+ * @param props SubmitButton props 
+ * @returns JSX.Element
+ */
 const SubmitButton = ({
   className = "",
   state = "default",

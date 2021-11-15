@@ -44,7 +44,6 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   const RecruiterProfile = require("./models/RecruiterProfile").RecruiterProfileSchema(db);
   const Pitch = require("./models/Pitch")(db);
   const Application = require('./models/Application')(db);
-  const RecruiterProfile = require("./models/RecruiterProfile")(db);
 
   websocketServer(server, User);
 

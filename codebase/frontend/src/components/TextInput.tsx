@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * TextInputProps
+ */
 type TextInputProps = {
   name: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,6 +15,12 @@ type TextInputProps = {
   autoComplete?: string;
 };
 
+/**
+ * Renders a text input field
+ * 
+ * @param props TextInputProps
+ * @returns JSX.Element
+ */
 const TextInput = ({
   name,
   role = "textbox",
