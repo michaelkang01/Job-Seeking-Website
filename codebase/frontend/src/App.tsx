@@ -15,6 +15,7 @@ import Jobsapplied from "./pages/Jobsapplied";
 import Application from "./pages/Application";
 import PitchVideo from "./pages/PitchVideo";
 import ChatSystem from "./pages/ChatSystem";
+import PostJob from "./pages/PostJob";
 
 
 const App = () => {
@@ -24,6 +25,9 @@ const App = () => {
       {/* A <Switch> looks through its children <Route>s and
         renders the first one that matches the current URL. */}
       <Switch>
+        <Route path="dashboard/postjob">
+          <PostJob />
+        </Route>
         <Route path="/pitchvideo">
           <PitchVideo />
         </Route>
