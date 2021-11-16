@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext';
 import Joblisting from '../types/Joblisting';
 import getjobsappliedlist from './getjobsappliedlist';
-import JobListings from './JobListings';
+import JobListings from '../components/JobListings';
 
 function Jobsapplied() {
   const auth = useAuth();
@@ -63,7 +63,7 @@ function Jobsapplied() {
       getJobsapplied(setIsLoading, setApplied).then(() => {
         setIsLoading(false);
       });
-   
+
 
     }
 
@@ -77,11 +77,8 @@ function Jobsapplied() {
   return (
     <div>
       {authToken && authData ?
-        <div className="px-8 pt-28 h-screen bg-gray-100">
-
-          <h1 className="text-2xl">
-            Jobs Applied
-          </h1><JobListings jobs={applied} applied={true} />
+        <div className="px-8 h-screen bg-gray-100">
+          <JobListings jobs={applied} applied={true} />
 
 
         </div>
