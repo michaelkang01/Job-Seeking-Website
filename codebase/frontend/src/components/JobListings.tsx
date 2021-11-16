@@ -3,18 +3,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "tailwindcss/tailwind.css";
 
-import Job from "../components/Job";
+import Job from "./Job";
 
 import Joblisting from "../types/Joblisting";
-
-import "./JobListings.css";
 
 import { useAuth } from "../context/AuthContext";
 
 
-interface prop{
-   jobs:Joblisting[]
-   applied:boolean
+interface prop {
+  jobs: Joblisting[]
+  applied: boolean
 
 }
 const JobListings = (props: prop) => {
@@ -50,8 +48,8 @@ const JobListings = (props: prop) => {
     Math.floor((a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24));
   return (
     <div className="bg-gray-100 ">
-      <div className="mx-auto grid grid-flow-col auto-cols-max max-w-screen-xl    bg-gray-100">
-        <div className="pt-24 pb-6 mx-0 ">
+      <div className="mx-auto grid grid-cols-20 min-w-screen-lg max-w-screen-xl bg-gray-100">
+        <div className="pt-24 pb-6 mx-0 w-full">
           {props.jobs !== undefined &&
             props.jobs.map((Posting) => {
               return (
@@ -64,11 +62,11 @@ const JobListings = (props: prop) => {
             })}
         </div>
 
-        <div className="pt-24  pb-6 w-full ">
+        <div className="pt-24 pb-6 w-full ">
           {moreDetails === -1 || jobSelected === undefined ? (
             <> </>
           ) : (
-            <div className="moredetails p-12 text-gray-900 w-full  pr-25  mx-2  bg-white border rounded flex-none">
+            <div className="moredetails p-12 text-gray-900 w-full pr-25 mx-2 bg-white border rounded flex-none">
               <button onClick={handleClick} className="cross ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -124,19 +122,19 @@ const JobListings = (props: prop) => {
                   Applied!
                 </button>
               ) : (
-                      <Link
-                to={{
-                  pathname: `/application/${jobSelected.listing_id}`,
+                <Link
+                  to={{
+                    pathname: `/application/${jobSelected.listing_id}`,
 
-                }}
-              >
+                  }}
+                >
 
 
 
-                <button className="button bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded ">
-                  Apply
-                </button>
-              </Link>
+                  <button className="button bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded ">
+                    Apply
+                  </button>
+                </Link>
               )}
 
               <div className="text-xl font-bold">
