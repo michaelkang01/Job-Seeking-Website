@@ -11,6 +11,8 @@ import WorkExperiences from "./WorkExperiences";
  */
 const ProfilePage = (props) => {
   return (
+    <div>
+    { props.role==="Jobseeker" ?(
     <div className="w-11/12 m-auto">
       <div className="w-full float-left p-4 sm:w-1/4 ">
         <Profile email={props.email} authToken={props.authToken}/>
@@ -21,6 +23,7 @@ const ProfilePage = (props) => {
         <Skills email={props.email} authToken={props.authToken}/>
         <WorkExperiences email={props.email} authToken={props.authToken}/>
       </div>
+    </div>): <div></div>}
     </div>
   );
 };
