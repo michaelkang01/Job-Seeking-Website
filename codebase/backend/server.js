@@ -16,6 +16,7 @@ const uploadVideoRoute = require("./controllers/pitchVideoController");
 const websocketServer = require("./controllers/websocketController");
 const uploadResumeRoute = require("./controllers/resumeController")
 const JobSeekerProfileRoute = require("./controllers/jobseekerProfileController");
+const { showApplicationsRoute, showApplicationRoute } = require("./controllers/applicantManageController");
 const API_PORT = process.env.API_PORT || 3000;
 const BASE_URL = "/api";
 
@@ -300,7 +301,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-  router.post(`/dashboard/postjob`, (req, res) => {
+  router.post(`recruiter/postjob`, (req, res) => {
 
     const { employer_id, job_title, job_location, job_description } = req.body;
     let currUser = res.locals.authData;
@@ -320,5 +321,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     console.log(req);
 
   });
+
+  showApplicationsRoute(router, Application, RecruiterProfile, JobseekerProfile, User, Pitch);
   
 });

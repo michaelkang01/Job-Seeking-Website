@@ -16,7 +16,7 @@ function PostJob(this: any) {
         const form = event.target as HTMLFormElement;
         axios({
             method: "post",
-            url: `${process.env.REACT_APP_API_URL}/api/dashboard/postjob`,
+            url: `${process.env.REACT_APP_API_URL}/api/recruiter/postjob`,
             headers: {
                 "Content-Type": "application/json",
             },

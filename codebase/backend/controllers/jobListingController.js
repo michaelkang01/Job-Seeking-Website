@@ -54,15 +54,3 @@ export const getJobListing = async (req, res, db) => {
         res.status(404).json({ message: error.message });
     }
 }
-
-
-// TODO: implement extra methods to handle job listings
-
-// export const updateJobListing = async (req, res) => {
-
-// }
-
-
-// export const deleteJobListing = async (req, res) => {
-
-// }
