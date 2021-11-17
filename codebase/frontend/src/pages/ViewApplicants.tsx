@@ -176,7 +176,7 @@ const ViewApplicants = () => {
                 <span
                   className="rounded-md bg-green-500 hover:bg-green-400 text-white px-3 py-1 cursor-pointer ml-2"
                   onClick={() => {
-                    alert("Accepted! (To be implemented)");
+                    alert("Accepted! (To be implemented)"); // use nodemailer method on TEA418-18 or built-in messaging system
                   }}
                 >
                   Accept
@@ -185,7 +185,7 @@ const ViewApplicants = () => {
                 <span
                   className="rounded-md bg-red-500 hover:bg-red-400 text-white px-3 py-1 cursor-pointer ml-2"
                   onClick={() => {
-                    alert("Declined! (To be implemented)");
+                    alert("Declined! (To be implemented)"); // use method on branch TEA418-18 utilizing nodemailer to use applicant.email to send generic rejection email
                   }}
                 >
                   Decline

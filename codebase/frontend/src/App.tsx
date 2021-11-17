@@ -25,7 +25,10 @@ const App = () => {
       {/* A <Switch> looks through its children <Route>s and
         renders the first one that matches the current URL. */}
       <Switch>
-        <Route path="recruiter/postjob">
+        <Route path="/recruiter/applications">
+          <PostJob />
+        </Route>
+        <Route path="/recruiter/postjob">
           <PostJob />
         </Route>
         <Route path="/pitchvideo">
@@ -47,7 +50,7 @@ const App = () => {
           <Jobsapplied />
         </Route>
         <Route path="/searchprofiles">
-          <SearchProfiles/>
+          <SearchProfiles />
         </Route>
         <Route path="/messages">
           <ChatSystem />
