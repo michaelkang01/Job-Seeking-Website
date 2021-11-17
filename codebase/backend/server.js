@@ -301,7 +301,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-  router.post(`recruiter/postjob`, (req, res) => {
+  router.post(`/recruiter/postjob`, (req, res) => {
 
     const { employer_id, job_title, job_location, job_description } = req.body;
     let currUser = res.locals.authData;
