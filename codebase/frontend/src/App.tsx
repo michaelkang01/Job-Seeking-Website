@@ -15,6 +15,7 @@ import Jobsapplied from "./pages/Jobsapplied";
 import Application from "./pages/Application";
 import ChatSystem from "./pages/ChatSystem";
 import PostJob from "./pages/PostJob";
+import { ViewApplicants } from "./pages/ViewApplicants";
 
 
 const App = () => {
@@ -25,7 +26,7 @@ const App = () => {
         renders the first one that matches the current URL. */}
       <Switch>
         <Route path="/recruiter/applications">
-          <PostJob />
+          <ViewApplicants/>
         </Route>
         <Route path="/recruiter/postjob">
           <PostJob />
@@ -54,8 +55,7 @@ const App = () => {
         <Route path="/messages">
           <ChatSystem />
         </Route>
-        <Route exact
-          path="/application/:id">
+        <Route exact path="/application/:id">
           <Application />
         </Route>
         <Route path="/">
