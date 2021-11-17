@@ -159,6 +159,7 @@ const ViewApplicant = ({ match }: any) => {
         setHighlightedSkills(highlightedSkillsSessionStorageParsed);
         setLoading(false);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match, authToken]);
 
   const renderFilteringModal = () => {
