@@ -41,7 +41,7 @@ const SearchBar = () => {
               workExperience: data.workExperience,
               education: data.education,
               skills: data.skills,
-              metadata: data.metadata,
+              metadata: data.metadata
             });
           }
           setProfileData(profileData);

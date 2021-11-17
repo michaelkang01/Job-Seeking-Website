@@ -1,35 +1,42 @@
-import React, { useEffect, useState } from "react";
-import TextInput from "../components/TextInput";
-import { useHistory, useLocation } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react'
+import TextInput from '../components/TextInput'
+import { useHistory, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import "tailwindcss/tailwind.css";
 import { useAuth } from "../context/AuthContext";
 import JobseekerProfile from "../types/JobseekerProfile";
 
+
 function Application(this: any) {
   const authToken = useAuth().getAuthData().authToken;
   const location = useLocation();
-  const listing_id = parseInt(location.pathname.replace("/application/", ""));
-  const history = useHistory();
+  const listing_id = parseInt(location.pathname.replace('/application/', ''))
+  const history = useHistory()
 
   const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+   
+   
+    
+    
     // var job_list = []
     event.preventDefault();
+   
+
 
     const form = event.target as HTMLFormElement;
-    await axios.post(
-      `${process.env.REACT_APP_API_URL}/api/updateprofilejobsapplied`,
-      {
-        email: form.email.value,
-        job: listing_id,
-      }
-    );
+   await axios.post(
+     `${process.env.REACT_APP_API_URL}/api/updateprofilejobsapplied`,
+     {
+       email: form.email.value,
+       job: listing_id
+     }
+   );
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}/api/jobs/apply`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${authToken}`,
+        Authorization: `${authToken}`
       },
       data: {
         listing_id: listing_id,
@@ -41,7 +48,7 @@ function Application(this: any) {
         zip: form.zip.value,
       },
     });
-    history.push("/search");
+    history.push('/search')
   };
   const [isLoadingp, profIsLoading] = useState(true);
   //Checking auth/login
@@ -51,6 +58,7 @@ function Application(this: any) {
   let authEmail: null = null;
   if (signedIn) {
     authEmail = JSON.parse(authData).payload.email;
+      
   }
   //Loading Profile data
 
@@ -79,7 +87,7 @@ function Application(this: any) {
               workExperience: data.workExperience,
               education: data.education,
               skills: data.skills,
-              metadata: data.metadata,
+              metadata: data.metadata
             });
           }
           setProfileData(profileData);
@@ -92,9 +100,9 @@ function Application(this: any) {
     }
   }, [authEmail, isLoadingp]);
 
-  let pfirst_name = "";
-  let plast_name = "";
-  let pemail = "";
+  let pfirst_name = '';
+  let plast_name = '';
+  let pemail = '';
   if (profileData[0]) {
     pfirst_name = profileData[0].firstName;
     plast_name = profileData[0].lastName;
@@ -103,13 +111,9 @@ function Application(this: any) {
   return (
     <div className="mx-auto max-w-screen-xl pt-96  ">
       <div className="text-xl font-bold pb-10">Apply To Company</div>
-      {signedIn ? (
-        <div className="text-l italic pb-10">
-          We have prefilled some data from your profile!
-        </div>
-      ) : (
-        <></>
-      )}
+      {signedIn
+        ? <div className="text-l italic pb-10">We have prefilled some data from your profile!</div>
+        : <></>}
       <form onSubmit={submitForm}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -119,23 +123,21 @@ function Application(this: any) {
             >
               First Name
             </label>
-            {signedIn ? (
-              <TextInput
+            {signedIn
+              ? <TextInput
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 value={pfirst_name}
                 name={"firstName"}
                 required={true}
               />
-            ) : (
-              <TextInput
+              : <TextInput
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 placeholder="Jane"
                 name={"firstName"}
                 required={true}
-              />
-            )}
+              />}
             <p className="text-red-500 text-xs italic">
               Please fill out this field.
             </p>
@@ -147,23 +149,21 @@ function Application(this: any) {
             >
               Last Name
             </label>
-            {signedIn ? (
-              <TextInput
+            {signedIn
+              ? <TextInput
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 name={"lastName"}
                 value={plast_name}
                 required={true}
               />
-            ) : (
-              <TextInput
+              : <TextInput
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 placeholder="Doe"
                 name={"lastName"}
                 required={true}
-              />
-            )}
+              />}
             <p className="text-red-500 text-xs italic">
               Please fill out this field.
             </p>
@@ -177,23 +177,21 @@ function Application(this: any) {
             >
               Email
             </label>
-            {signedIn ? (
-              <TextInput
+            {signedIn
+              ? <TextInput
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 type="email"
                 name={"email"}
                 value={pemail}
                 required={true}
               />
-            ) : (
-              <TextInput
+              : <TextInput
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 type="email"
                 placeholder="Example@gmail.com"
                 name={"email"}
                 required={true}
-              />
-            )}
+              />}
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-2">
@@ -254,4 +252,4 @@ function Application(this: any) {
   );
 }
 
-export default Application;
+export default Application

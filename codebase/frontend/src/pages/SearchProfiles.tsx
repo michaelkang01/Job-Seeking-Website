@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import JobseekerProfile from "../types/JobseekerProfile";
-import Seeker from "../components/Seeker";
+import Seeker from "../components/Seeker"
 import axios from "axios";
 import ProfileSearchBar from "../components/ProfileSearchBar";
 
@@ -12,11 +12,14 @@ const filterSeekerSkills = (seekers: JobseekerProfile[], query: any) => {
   }
 
   return seekers.filter((seeker: JobseekerProfile) => {
-    const lower = seeker.skills.map((skill) => skill.toLowerCase());
+    const lower = seeker.skills.map(skill => skill.toLowerCase())
     const keywords = query.toLowerCase().split(/[ ,]+/);
-    return keywords.some((x: string) => lower.includes(x));
+    return (
+      keywords.some((x: string) => lower.includes(x))
+    );
   });
 };
+
 
 const SearchProfiles = () => {
   //Aquire state and search parameters
@@ -46,7 +49,7 @@ const SearchProfiles = () => {
               workExperience: seeker.workExperience,
               education: seeker.education,
               skills: seeker.skills,
-              metadata: seeker.metadata,
+              metadata: seeker.metadata
             });
           }
           setlistings(seeker_list);
@@ -64,19 +67,13 @@ const SearchProfiles = () => {
   if (searchWordQuery !== "") {
     filteredSeekers = filterSeekerSkills(filteredSeekers, searchWordQuery);
   }
-  const listSeekers = filteredSeekers.map((s) => {
-    return <Seeker seeker={s} />;
-  });
+  const listSeekers = filteredSeekers.map((s) => {return (<Seeker seeker={s}/>)});
   return (
     <div className="px-8 pt-28 h-screen bg-gray-100">
       <header></header>
       <main className="p-8 top-0">
         <ProfileSearchBar />
-        {filteredSeekers ? (
-          <>{listSeekers}</>
-        ) : (
-          <>None matching criteria found.</>
-        )}
+        {filteredSeekers ? (<>{listSeekers}</>) : (<>None matching criteria found.</>)}
       </main>
     </div>
   );

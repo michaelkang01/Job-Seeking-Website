@@ -51,7 +51,7 @@ const Search = () => {
 
   useEffect(() => {
     const getAllJoblistings = async (setIsLoading: any, setlistings: any) => {
-      var job_list = await getjobsappliedlist(authData);
+        var job_list = await getjobsappliedlist(authData);
       return axios
         .get(`${process.env.REACT_APP_API_URL}/api/joblistings`)
         .then((res) => {
@@ -61,8 +61,7 @@ const Search = () => {
             if (job_list.length !== 0 && job_list[0] !== -1) {
               if (job_list.includes(listing.listing_id)) {
                 continue;
-              }
-            }
+              }}
             listing_list.push({
               listing_id: listing.listing_id,
               employer_id: listing.employer_id,
@@ -85,7 +84,7 @@ const Search = () => {
         setIsLoading(false);
       });
     }
-  }, [isLoading, authData]);
+  }, [isLoading,authData]);
 
   let filteredListings = joblistings;
   //Filtering Location
@@ -118,12 +117,9 @@ const Search = () => {
         )}
         <SearchBar />
 
-        <p>
-          Testing platform for Joblistings and Search functions.
-          Keyword/Location working to exact/inclusive and multi-parameter
-          seperated by comma or space
-        </p>
-        <JobListings jobs={filteredListings} applied={false} />
+        <p>Testing platform for Joblistings and Search functions. Keyword/Location working to exact/inclusive and multi-parameter seperated by comma or space</p>
+       <JobListings jobs={filteredListings} applied={false}/>
+
       </main>
     </div>
   );

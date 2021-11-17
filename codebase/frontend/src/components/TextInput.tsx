@@ -17,7 +17,7 @@ type TextInputProps = {
 
 /**
  * Renders a text input field
- *
+ * 
  * @param props TextInputProps
  * @returns JSX.Element
  */

@@ -41,10 +41,9 @@ const PitchVideo = () => {
                 (progressEvent.loaded * 100) / progressEvent.total
               );
               setUploadMessage(
-                `${
-                  percentCompleted > 95
-                    ? "Processing..."
-                    : percentCompleted + "% uploaded..."
+                `${percentCompleted > 95
+                  ? "Processing..."
+                  : percentCompleted + "% uploaded..."
                 }`
               );
             },
@@ -183,9 +182,8 @@ const PitchVideo = () => {
                 )}
                 {uploadMessage && (
                   <p
-                    className={`font-bold text-center p-2 mt-4 mx-4 rounded-md ${
-                      uploadError ? "bg-red-400" : "bg-blue-200"
-                    }`}
+                    className={`font-bold text-center p-2 mt-4 mx-4 rounded-md ${uploadError ? "bg-red-400" : "bg-blue-200"
+                      }`}
                   >
                     {uploadMessage}
                   </p>

@@ -15,8 +15,7 @@ const Navbar = () => {
 
   const signedIn = auth.getAuthData().authToken.length > 0;
   const authData = JSON.parse(auth.getAuthData().authData || "{}");
-  const role =
-    authData.payload && authData.payload.role ? authData.payload.role : "";
+  const role = authData.payload && authData.payload.role ? authData.payload.role : "";
 
   console.log(authData);
 

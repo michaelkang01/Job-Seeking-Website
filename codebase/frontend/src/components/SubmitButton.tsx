@@ -25,8 +25,8 @@ type SubmitButtonProps = {
 
 /**
  * Renders a submit button
- *
- * @param props SubmitButton props
+ * 
+ * @param props SubmitButton props 
  * @returns JSX.Element
  */
 const SubmitButton = ({

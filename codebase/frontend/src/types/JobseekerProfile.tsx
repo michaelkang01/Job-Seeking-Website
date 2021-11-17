@@ -1,8 +1,8 @@
 type JobseekerProfile = {
   user: any;
   profile_picture: string;
-  email: string;
-  firstName: string;
+  email: string,
+  firstName: string,
   lastName: string;
   socials: Array<string>;
   resumeUrl: string;
