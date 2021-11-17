@@ -86,8 +86,7 @@ const Navbar = () => {
         {!signedIn && (
           <Link
             to="/signup"
-            className={`${mobileNavShown ? "block" : "hidden"
-              } font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0`}
+            className="font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0"
           >
             Create Account
           </Link>
