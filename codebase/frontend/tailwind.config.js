@@ -16,7 +16,7 @@ module.exports = {
         'orange-peel': '#FF9F1C',
         'mellow-apricot': '#FFBF69',
         'light-cyan': '#CBF3F0',
-        'tiffany-blue': '#2EC4B6',
+        'tiffany-blue': '#1C7CFF',
       },
     },
   },
