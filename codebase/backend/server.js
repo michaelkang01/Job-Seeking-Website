@@ -323,5 +323,5 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   });
 
   showApplicationsRoute(router, Application, RecruiterProfile, JobseekerProfile, User, Pitch);
-  
+  showApplicationRoute(router, Application, RecruiterProfile, JobseekerProfile, User, Pitch);
 });
