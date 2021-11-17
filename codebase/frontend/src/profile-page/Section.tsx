@@ -1,23 +1,15 @@
-import SectionRequirements from "../types/SectionRequirements";
-
 /**
  *
  * @param props SectionRequirements to specify some useful styling
  * @returns JSX.Element content to be displayed
  */
-const Section = (props: SectionRequirements) => {
+const Section = (props) => {
   return (
-    <div className="relative rounded-3xl mb-16 grid shadow-xl">
-      <div
-        className={`flex relative rounded-t-3xl bg-green-600 w-full h-20 items-center ${
-          props.centerheader ? "justify-center" : ""
-        } ${props.headerHeight !== undefined ? props.headerHeight : "h-20"}`}
-      >
-        <p className="text-white font-semibold text-2xl my-0 ml-4">
-          {props.name}
-        </p>
+    <div className="relative mb-16 border-2 border-gray-100 grid shadow-xl">
+      <div className="bg-tiffany-blue opacity-75 w-full py-2 pl-4 text-white text-2xl">
+        {props.name}
       </div>
-      {props.content}
+      <div className="p-4">{props.content}</div>
     </div>
   );
 };

@@ -13,7 +13,6 @@ import SignInCallback from "./pages/SignInCallback";
 import Jobsapplied from "./pages/Jobsapplied";
 
 import Application from "./pages/Application";
-import PitchVideo from "./pages/PitchVideo";
 import ChatSystem from "./pages/ChatSystem";
 import PostJob from "./pages/PostJob";
 import { ViewApplicants } from "./pages/ViewApplicants";

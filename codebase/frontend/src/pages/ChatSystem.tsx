@@ -200,11 +200,9 @@ const ChatSystem = () => {
     return <>
         {showComposeModal && <ComposeModal webSocket={webSocket} />}
         <div className="flex h-screen gap-1 bg-gray-300">
-            <div className="col-span-3 md:w-1/6 flex-row overflow-y-scroll bg-white" style={{
-                paddingTop: "88px"
-            }}>
-                <h3 className="text-2xl text-center py-4 text-gray-900 font-bold" style={{ backgroundColor: "#9AC2C9" }}>Conversations</h3>
-                <p className="text-center pb-4 text-gray-900 font-bold underline cursor-pointer" onClick={() => { setShowComposeModal(true) }} style={{ backgroundColor: "#9AC2C9" }}>Compose</p>
+            <div className="col-span-3 md:w-1/6 flex-row overflow-y-scroll bg-white">
+                <h3 className="text-2xl text-center py-4 text-gray-900 font-bold bg-tiffany-blue">Conversations</h3>
+                <p className="text-center pb-4 text-gray-900 font-bold underline cursor-pointer bg-tiffany-blue" onClick={() => { setShowComposeModal(true) }} >Compose</p>
                 {chatSessions.map((chatSession) => {
                     const talkingTo = chatSession.personOne === JSON.parse(authData).payload.id ? chatSession.personTwo : chatSession.personOne;
                     const talkingToUser = (userTable && userTable[talkingTo]) || { firstName: talkingTo, lastName: "" };
@@ -212,16 +210,14 @@ const ChatSystem = () => {
                         <div onClick={() => {
                             // Set selected chat
                             setSelectedChat(chatSession);
-                        }} className={`w-full px-4 py-4 ${chatSession === selectedChat ? "bg-yellow-100" : "bg-gray-200"}`} key={JSON.parse(authData).payload.id + talkingTo + randomBytes(4).toString("hex")}>
+                        }} className={`w-full px-4 py-4 ${chatSession === selectedChat ? "bg-light-cyan" : "bg-gray-200"}`} key={JSON.parse(authData).payload.id + talkingTo + randomBytes(4).toString("hex")}>
                             <p className="font-bold">{talkingToUser.firstName + " " + talkingToUser.lastName}</p>
                             <p className="text-sm">Last message: {chatSession.messages[chatSession.messages.length - 1].message.substr(0, 36)}...</p>
                         </div>
                     )
                 })}
             </div>
-            <div className="col-span-9 bg-white md:w-5/6" style={{
-                paddingTop: "88px"
-            }}>
+            <div className="col-span-9 bg-white md:w-5/6">
                 {selectedChat && (
                     <div className="flex-row h-full">
                         <div className="border-t-4" style={{}}>
@@ -244,12 +240,12 @@ const ChatSystem = () => {
                         </div>
                         <div className="flex-grow overflow-y-scroll" style={{ height: "calc(100% - 53px)" }}>
                             <div className="flex-col">
-                                {selectedChat.messages.slice().reverse().map((messageObject, index) => {
+                                {selectedChat.messages.slice().map((messageObject, index) => {
                                     // From
                                     const from = (userTable && userTable[messageObject.sender]) || { firstName: messageObject.sender, lastName: "" };
                                     // If message is from current user, show message in green
-                                    const fromClass = messageObject.sender === JSON.parse(authData).payload.id ? "" : "text-right";
-                                    const bubbleClass = messageObject.sender === JSON.parse(authData).payload.id ? "bg-blue-600 text-white" : "bg-gray-300";
+                                    const fromClass = messageObject.sender === JSON.parse(authData).payload.id ? "text-right" : "";
+                                    const bubbleClass = messageObject.sender === JSON.parse(authData).payload.id ? "bg-light-cyan" : "bg-gray-300";
                                     return (
                                         <div className={`w-full px-4 py-4 ${fromClass}`} key={index}>
                                             <p className="">{from.firstName + " " + from.lastName} ({(new Date(messageObject.when)).toLocaleString()})</p>

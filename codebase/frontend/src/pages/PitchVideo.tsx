@@ -41,9 +41,10 @@ const PitchVideo = () => {
                 (progressEvent.loaded * 100) / progressEvent.total
               );
               setUploadMessage(
-                `${percentCompleted > 95
-                  ? "Processing..."
-                  : percentCompleted + "% uploaded..."
+                `${
+                  percentCompleted > 95
+                    ? "Processing..."
+                    : percentCompleted + "% uploaded..."
                 }`
               );
             },
@@ -133,97 +134,96 @@ const PitchVideo = () => {
   }
 
   return (
-    <div className="px-8 pt-28 h-screen">
-      <div className="flex justify-center">
-        <div className="w-full max-w-md mt-8">
-          <div className="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4">
-            <div className="mb-4">
-              <h1 className="text-2xl font-bold text-center pb-4">
-                Pitch Video Demo
-              </h1>
-              {loading && (
-                <div className="text-center">
-                  <div className="spinner-border text-primary" role="status">
-                    <span className="sr-only">Loading...</span>
-                  </div>
-                </div>
-              )}
-              {!loading && !error ? (
-                <div className="text-center">
-                  <video
-                    className="w-full"
-                    muted
-                    autoPlay={true}
-                    controls={true}
-                    src={videoUrl}
-                  />
-                </div>
-              ) : (
-                <div className="text-center">
-                  <p className="text-red-500 text-center">{error}</p>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4">
-            <div className="mb-4">
-              <h1 className="text-2xl font-bold text-center pb-4">
-                Upload pitch video
-              </h1>
-              <div
-                className="text-center bg-gray-100 py-8 px-4"
-                {...getRootProps()}
-              >
-                <input {...getInputProps()} />
-                {isDragActive ? (
-                  <p>Drop the files here ...</p>
-                ) : (
-                  <p>Drag your video here or select one to upload</p>
-                )}
-                {uploadMessage && (
-                  <p
-                    className={`font-bold text-center p-2 mt-4 mx-4 rounded-md ${uploadError ? "bg-red-400" : "bg-blue-200"
-                      }`}
-                  >
-                    {uploadMessage}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-16">
-            <div className="mb-4">
-              <h1 className="text-2xl font-bold text-center pb-4">
-                Transcription
-              </h1>
+    <div className="w-full h-screen flex justify-center">
+      <div>
+        <div className="bg-white shadow-md rounded pt-4 pb-4 mb-4">
+          <div className="mb-4">
+            <h1 className="text-2xl font-bold text-center pb-4">
+              Pitch Video Demo
+            </h1>
+            {loading && (
               <div className="text-center">
-                <div className="text-gray-600 text-center">
-                  {(error && (
-                    <p className="text-red-500 text-center">{error}</p>
-                  )) ||
-                    (!transcription ? (
-                      "Transcription is being processed..."
-                    ) : (
-                      <pre
-                        style={{
-                          maxWidth: "100%",
-                          width: "100%",
-                          height: "auto",
-                          maxHeight: 300,
-                          overflowX: "hidden",
-                          overflowY: "scroll",
-                          wordWrap: "break-word",
-                          whiteSpace: "pre-wrap",
-                        }}
-                        className="bg-gray-200 px-3 py-2 text-justify rounded-md"
-                      >
-                        {
-                          JSON.parse(transcription).results.transcripts[0]
-                            .transcript
-                        }
-                      </pre>
-                    ))}
+                <div className="spinner-border text-primary" role="status">
+                  <span className="sr-only">Loading...</span>
                 </div>
+              </div>
+            )}
+            {!loading && !error ? (
+              <div className="text-center">
+                <video
+                  className="w-full"
+                  muted
+                  autoPlay={true}
+                  controls={true}
+                  src={videoUrl}
+                />
+              </div>
+            ) : (
+              <div className="text-center">
+                <p className="text-red-500 text-center">{error}</p>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4">
+          <div className="mb-4">
+            <h1 className="text-2xl font-bold text-center pb-4">
+              Upload pitch video
+            </h1>
+            <div
+              className="text-center bg-gray-100 py-8 px-4"
+              {...getRootProps()}
+            >
+              <input {...getInputProps()} />
+              {isDragActive ? (
+                <p>Drop the files here ...</p>
+              ) : (
+                <p>Drag your video here or select one to upload</p>
+              )}
+              {uploadMessage && (
+                <p
+                  className={`font-bold text-center p-2 mt-4 mx-4 rounded-md ${
+                    uploadError ? "bg-red-400" : "bg-blue-200"
+                  }`}
+                >
+                  {uploadMessage}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-16">
+          <div className="mb-4">
+            <h1 className="text-2xl font-bold text-center pb-4">
+              Transcription
+            </h1>
+            <div className="text-center">
+              <div className="text-gray-600 text-center">
+                {(error && (
+                  <p className="text-red-500 text-center">{error}</p>
+                )) ||
+                  (!transcription ? (
+                    "Transcription is being processed..."
+                  ) : (
+                    <pre
+                      style={{
+                        maxWidth: "100%",
+                        width: "100%",
+                        height: "auto",
+                        maxHeight: 300,
+                        overflowX: "hidden",
+                        overflowY: "scroll",
+                        wordWrap: "break-word",
+                        whiteSpace: "pre-wrap",
+                      }}
+                      className="bg-gray-200 px-3 py-2 text-justify rounded-md"
+                    >
+                      {
+                        JSON.parse(transcription).results.transcripts[0]
+                          .transcript
+                      }
+                    </pre>
+                  ))}
               </div>
             </div>
           </div>
