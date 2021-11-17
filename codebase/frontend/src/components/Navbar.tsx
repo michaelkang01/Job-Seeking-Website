@@ -48,14 +48,14 @@ const Navbar = () => {
           mobileNavShown ? "block" : "hidden"
         } md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-blue-900 md:border-none`}
       >
-          {signedIn && role ==="Jobseeker" && (
-        <Link
-          to="/"
-          className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-        >
-          Home
-        </Link>
-          )}
+        {signedIn && role === "Jobseeker" && (
+          <Link
+            to="/"
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            Home
+          </Link>
+        )}
         {(!signedIn && (
           <Link
             to="/signin"
@@ -71,7 +71,7 @@ const Navbar = () => {
             Sign out
           </button>
         )}
-        {signedIn && role ==="Jobseeker" && (
+        {signedIn && role === "Jobseeker" && (
           <>
             <Link
               to="/pitchvideo"
@@ -117,18 +117,36 @@ const Navbar = () => {
       {/**Will eventually change to signedIn and isRecruiter */}
       {signedIn && role === "Recruiter" && (
         <div>
-        <Link
-          to="/searchprofiles"
-          className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-        >
-          Search Candidates
-        </Link>
-        <Link
-              to="/messages"
-              className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-            >
-              Messaging
-            </Link>
+          {/* <Link
+            to="/recruiter/profile" // TODO: create this route
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            My Profile
+          </Link> */}
+          <Link
+            to="/recruiter/applications"
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            Manage Applicants
+          </Link>
+          <Link
+            to="/recruiter/postjob"
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            Post New Job
+          </Link>
+          <Link
+            to="/searchprofiles"
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            Search Candidates
+          </Link>
+          <Link
+            to="/messages"
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            Messaging
+          </Link>
         </div>
       )}
     </nav>
