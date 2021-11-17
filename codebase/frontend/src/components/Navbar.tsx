@@ -21,7 +21,7 @@ const Navbar = () => {
         <svg className="fill-current h-8 w-8 mr-2" width="54" height="54" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
         <span className="font-semibold text-xl tracking-tight">EZApply</span>
       </div>
-      <div className="flex md:hidden">
+      <div className="flex lg:hidden">
         <button id="hamburger" onClick={navBarToggle}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
