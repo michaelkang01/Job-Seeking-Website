@@ -14,9 +14,15 @@ module.exports = {
     extend: {
       colors: {
         'orange-peel': '#FF9F1C',
-        'mellow-apricot': '#FFBF69',
+        'mellow-apricot': '#FEC77E',
         'light-cyan': '#CBF3F0',
         'tiffany-blue': '#1C7CFF',
+      },
+      gridTemplateColumns: {
+        '20': 'repeat(1, 1fr 2fr)',
+      },
+      gridTemplateColumns: {
+        '20': 'repeat(1, 1fr 2fr)',
       },
     },
   },
