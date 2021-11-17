@@ -14,10 +14,15 @@ const Navbar = () => {
   };
 
   const signedIn = auth.getAuthData().authToken.length > 0;
-  const authData = JSON.parse(auth.getAuthData().authData || "{}");
-  const role = authData.payload && authData.payload.role ? authData.payload.role : "";
+  var authData = auth.getAuthData().authData;
+  var role = ""
+  try{
+  role = JSON.parse(authData).payload.role;
 
-  console.log(authData);
+  }
+  catch{
+    console.log(role)
+  }
 
   return (
     <nav className="flex flex-wrap items-center justify-between p-5 bg-blue-200 absolute left-0 right-0 z-50">
@@ -43,12 +48,14 @@ const Navbar = () => {
           mobileNavShown ? "block" : "hidden"
         } md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-blue-900 md:border-none`}
       >
+          {signedIn && role ==="Jobseeker" && (
         <Link
           to="/"
           className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
         >
           Home
         </Link>
+          )}
         {(!signedIn && (
           <Link
             to="/signin"
@@ -64,7 +71,7 @@ const Navbar = () => {
             Sign out
           </button>
         )}
-        {signedIn && (
+        {signedIn && role ==="Jobseeker" && (
           <>
             <Link
               to="/pitchvideo"
@@ -78,14 +85,6 @@ const Navbar = () => {
             >
               Messaging
             </Link>
-            {role === "Recruiter" && (
-              <Link
-                to="/my_applicants"
-                className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-              >
-                View applicants
-              </Link>
-            )}
           </>
         )}
       </div>
@@ -99,7 +98,7 @@ const Navbar = () => {
           Create Account
         </Link>
       )}
-      {signedIn && (
+      {signedIn && role === "Jobseeker" && (
         <Link
           to="/search"
           className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
@@ -107,7 +106,7 @@ const Navbar = () => {
           Job Search
         </Link>
       )}
-      {signedIn && (
+      {signedIn && role === "Jobseeker" && (
         <Link
           to="/applied"
           className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
@@ -116,13 +115,27 @@ const Navbar = () => {
         </Link>
       )}
       {/**Will eventually change to signedIn and isRecruiter */}
-      {signedIn && (
-        <Link
-          to="/searchprofiles"
-          className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-        >
-          Search Candidates
-        </Link>
+      {signedIn && role === "Recruiter" && (
+        <div>
+          <Link
+            to="/searchprofiles"
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            Search Candidates
+          </Link>
+          <Link
+            to="/messages"
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            Messaging
+          </Link>
+          <Link
+            to="/my_applicants"
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+          >
+            View applicants
+          </Link>
+        </div>
       )}
     </nav>
   );

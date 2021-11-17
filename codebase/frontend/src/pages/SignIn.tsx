@@ -52,6 +52,17 @@ const SignIn = () => {
   };
 
   if (authToken) {
+    var authData = auth.getAuthData().authData;
+    var role = "";
+    try {
+      role = JSON.parse(authData).payload.role;
+    } catch {
+      console.log(role);
+    }
+   
+    if (role === "Recruiter"){
+      return <Redirect to="/searchprofiles"/>
+    }
     return <Redirect to="/" />;
   }
 
