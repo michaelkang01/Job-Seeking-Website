@@ -10,16 +10,16 @@ export const createJobListing = async (req, res, db) => {
     const { employer_id, job_title, job_location, job_description } = req.body;
 
     let currUser = res.locals.authData;
-    const _id = uuid();
+    const job_id = uuid();
     const date_posted = new Date().toISOString().slice(0, 10);  
     const contact_name = `${currUser.firstName} ${currUser.lastName}`;
     const contact_address = `${currUser.email}`;
     const number_applied = 0;
-    const newJobListing = new Joblisting({ _id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" });
+    const newJobListing = new Joblisting({ job_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" });
 
     // TODO: uncomment once recruiter profile is set up
     var recruiterProfiles = db.collection("recruiterprofiles");
-    recruiterProfiles.updateOne({"email": contact_address}, {$push: { "jobsPosted": _id }});
+    recruiterProfiles.updateOne({"email": contact_address}, {$push: { "jobsPosted": job_id }});
 
     try {
         await newJobListing.save();
@@ -54,15 +54,3 @@ export const getJobListing = async (req, res, db) => {
         res.status(404).json({ message: error.message });
     }
 }
-
-
-// TODO: implement extra methods to handle job listings
-
-// export const updateJobListing = async (req, res) => {
-
-// }
-
-
-// export const deleteJobListing = async (req, res) => {
-
-// }

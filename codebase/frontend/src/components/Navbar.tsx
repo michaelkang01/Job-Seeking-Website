@@ -14,6 +14,15 @@ const Navbar = () => {
   };
 
   const signedIn = auth.getAuthData().authToken.length > 0;
+  var authData = auth.getAuthData().authData;
+  var role = ""
+  try{
+  role = JSON.parse(authData).payload.role;
+
+  }
+  catch{
+    console.log(role)
+  }
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-orange-peel p-6">
@@ -42,6 +51,7 @@ const Navbar = () => {
         className={`${mobileNavShown ? "block" : "hidden"
           } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
       >
+          {signedIn && role ==="Jobseeker" && (
         <Link
           to="/"
           className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
@@ -58,7 +68,7 @@ const Navbar = () => {
             </Link>
           </>
         )}
-        {signedIn && (
+        {signedIn && role === "Jobseeker" && (
           <Link
             to="/search"
             className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
@@ -66,7 +76,7 @@ const Navbar = () => {
             Job Search
           </Link>
         )}
-        {signedIn && (
+        {signedIn && role === "Jobseeker" && (
           <Link
             to="/applied"
             className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
@@ -75,7 +85,7 @@ const Navbar = () => {
           </Link>
         )}
         {/**Will eventually change to signedIn and isRecruiter */}
-        {signedIn && (
+        {signedIn && role === "Recruiter" && (
           <Link
             to="/searchprofiles"
             className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
@@ -93,6 +103,7 @@ const Navbar = () => {
         )}
       </div>
       <div>
+          )}
         {(!signedIn && (
           <Link
             to="/signin"
