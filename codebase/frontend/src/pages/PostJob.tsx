@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import TextInput from '../components/TextInput'
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import "tailwindcss/tailwind.css";
 import { useAuth } from "../context/AuthContext";
 
 function PostJob(this: any) {
