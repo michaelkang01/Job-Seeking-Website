@@ -44,9 +44,9 @@ const Profile = (props) => {
         <ElevatorPitch authToken={props.authToken} />
       </div>
       <div>
-        <div className="grid justify-items-center mt-16 pb-4">
+        <div className="grid justify-items-center mt-16 pb-4 text-lg">
           <FaUserCircle className="absolute p-2 top-48 rounded-full bg-white w-32 h-32" />
-          <p className="text-3xl text-tiffany-blue mb-2">
+          <p className="text-center text-3xl text-tiffany-blue mb-2">
             {firstname + " " + lastname}
           </p>
           <div>
