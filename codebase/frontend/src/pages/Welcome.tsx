@@ -9,7 +9,7 @@ const Welcome = () => {
   const authData = auth.getAuthData().authData;
   
   return (
-    <div className="px-8 pt-28 h-screen">
+    <div className="px-8 pt-4 h-screen">
       {authToken && authData ? (
         <>
           <h1 className="text-2xl">Welcome back, {JSON.parse(authData).payload.firstName}. (profile goes here)</h1>
