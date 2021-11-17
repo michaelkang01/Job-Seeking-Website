@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 const app = express();
 const { WebSocket } = require("ws");
 const { parse } = require("url");
-import { v4 as uuid } from 'uuid';
 const passport = require("passport");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
@@ -198,25 +197,26 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     });
   });
 
-	router.get(`/joblistings/:id`, (req, res) => {
-		Joblisting.find({listing_id:req.params.id}).then(ret => {
-			res.json(ret);
-		});
-	});
-	router.get(`/joblistings`, (req, res) => {
-		Joblisting.find().then(ret => {
-			res.json(ret);
-		});
-	});
+  router.get(`/joblistings/:id`, (req, res) => {
+    Joblisting.find({ listing_id: req.params.id }).then(ret => {
+      res.json(ret);
+    });
+  });
+  router.get(`/joblistings`, (req, res) => {
+    Joblisting.find().then(ret => {
+      res.json(ret);
+    });
+  });
 
-	router.get(`/jobseekerprofile/`, (req, res) => {
-		const authEmail = req.query.email || "";
-		JobseekerProfile.find({email : authEmail}).then(ret => {
-			res.json(ret);
-		})});
-  
+  router.get(`/jobseekerprofile/`, (req, res) => {
+    const authEmail = req.query.email || "";
+    JobseekerProfile.find({ email: authEmail }).then(ret => {
+      res.json(ret);
+    })
+  });
+
   router.get(`/allseekerprofiles`, (req, res) => {
-    JobseekerProfile.find().then(ret=> {
+    JobseekerProfile.find().then(ret => {
       res.json(ret);
     });
   });
@@ -290,12 +290,12 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
   uploadVideoRoute(router, Pitch);
   JobSeekerProfileRoute(router, JobseekerProfile);
   uploadResumeRoute(router, JobseekerProfile);
-  
+
   router.post(`/updateprofilejobsapplied`, (req, res) => {
-    
+
     JobseekerProfile.updateOne(
       { email: req.body.email || "" },
-      {$push: {jobsApplied: req.body.job} }
+      { $push: { jobsApplied: req.body.job } }
     ).then((ret) => {
       res.json(ret);
     });
@@ -306,12 +306,12 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     const { employer_id, job_title, job_location, job_description } = req.body;
     let currUser = res.locals.authData;
     const job_id = uuid();
-    const date_posted = new Date().toISOString().slice(0, 10);  
+    const date_posted = new Date().toISOString().slice(0, 10);
     const contact_name = `${currUser.firstName} ${currUser.lastName}`;
     const contact_address = `${currUser.email}`;
     const number_applied = 0;
-    const newJobListing = new Joblisting({ job_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" }); 
-    RecruiterProfile.updateOne({"email": contact_address}, {$push: { "jobsPosted": job_id }});
+    const newJobListing = new Joblisting({ job_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" });
+    RecruiterProfile.updateOne({ "email": contact_address }, { $push: { "jobsPosted": job_id } });
     try {
       newJobListing.save();
       res.status(201).json(newJobListing);
