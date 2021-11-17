@@ -3,9 +3,9 @@ import "tailwindcss/tailwind.css";
 
 const ProfileSearchBar = () => {
   return (
-    <div className="p-8 flex">
+    <div className="bg-gray-100 pb-6">
       <form
-        className="bg-white flex items-center rounded-sm w-full shadow-xl"
+        className="bg-white flex items-center rounded-sm w-full"
         method="get"
       >
         <input

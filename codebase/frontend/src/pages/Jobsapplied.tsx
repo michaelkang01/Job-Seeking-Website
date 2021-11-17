@@ -77,7 +77,7 @@ function Jobsapplied() {
   return (
     <div>
       {authToken && authData ?
-        <div className="px-8 h-screen bg-gray-100">
+        <div className="px-8 h-full min-h-screen bg-gray-100">
           <JobListings jobs={applied} applied={true} />
 
 

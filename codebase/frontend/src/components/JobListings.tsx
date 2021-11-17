@@ -49,7 +49,7 @@ const JobListings = (props: prop) => {
   return (
     <div className="bg-gray-100 ">
       <div className="mx-auto grid grid-cols-20 min-w-screen-lg max-w-screen-xl bg-gray-100">
-        <div className="pt-24 pb-6 mx-0 w-full">
+        <div className="pt-12 pb-6 mx-0 w-full">
           {props.jobs !== undefined &&
             props.jobs.map((Posting) => {
               return (
@@ -62,12 +62,12 @@ const JobListings = (props: prop) => {
             })}
         </div>
 
-        <div className="pt-24 pb-6 w-full ">
+        <div className="pt-12 pb-6 w-full ">
           {moreDetails === -1 || jobSelected === undefined ? (
             <> </>
           ) : (
             <div className="moredetails p-12 text-gray-900 w-full pr-25 mx-2 bg-white border rounded flex-none">
-              <button onClick={handleClick} className="cross ">
+              <button onClick={handleClick} className="cross float-right">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"

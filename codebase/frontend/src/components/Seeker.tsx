@@ -17,8 +17,8 @@ interface jobseeker {
 
 const Seeker = (props: jobseeker) => {
   return (
-    <div>
-      <div className=" p-8 text-gray-900 leading-normal bg-white border rounded">
+    <div className="pb-4 bg-gray-100">
+      <div className="px-4 py-4 text-gray-900 leading-normal bg-white border rounded">
         <img
           className="object-scale-down h-9 place-items-start"
           alt="Profile Pic Here"
