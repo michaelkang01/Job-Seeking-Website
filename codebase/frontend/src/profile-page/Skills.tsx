@@ -28,7 +28,13 @@ const Skills = (props) => {
     </div>
   );
 
-  return <Section name="Skills" content={skillsDisplay} />;
+  return (
+    <Section
+      name="Skills"
+      content={skillsDisplay}
+      openEditModal={props.openEditModal}
+    />
+  );
 };
 
 export default Skills;

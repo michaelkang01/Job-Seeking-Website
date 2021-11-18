@@ -11,7 +11,13 @@ const Summary = (props) => {
 
   useEffect(() => setSummary(props.summary), [props.summary]);
 
-  return <Section name="Summary" content={<p>{summary}</p>} />;
+  return (
+    <Section
+      name="Summary"
+      content={<p>{summary}</p>}
+      openEditModal={props.openEditModal}
+    />
+  );
 };
 
 export default Summary;
