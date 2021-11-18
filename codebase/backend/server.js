@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const app = express();
 const { WebSocket } = require("ws");
 const { parse } = require("url");
-import { v4 as uuid } from 'uuid';
+const v4  = require('uuid');
 const passport = require("passport");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
@@ -305,7 +305,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 
     const { employer_id, job_title, job_location, job_description } = req.body;
     let currUser = res.locals.authData;
-    const job_id = uuid();
+    const job_id = v4();
     const date_posted = new Date().toISOString().slice(0, 10);  
     const contact_name = `${currUser.firstName} ${currUser.lastName}`;
     const contact_address = `${currUser.email}`;
