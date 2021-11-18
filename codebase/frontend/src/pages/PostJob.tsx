@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 function PostJob(this: any) {
-   
+
 
     const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
 
@@ -27,17 +27,16 @@ function PostJob(this: any) {
     };
 
     //Checking auth/login
-   
-    
+
+
 
     return (
-        <div className="mx-auto max-w-screen-xl pt-96  ">
-            <div className="text-xl font-bold pb-10">Create a new job listing</div>
+        <div className="mx-auto max-w-screen-xl pt-8">
             <form onSubmit={submitForm}>
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label
-                            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
                             htmlFor="grid-first-name"
                         >
                             Company Name
@@ -52,7 +51,7 @@ function PostJob(this: any) {
                     </div>
                     <div className="w-full md:w-1/2 px-3">
                         <label
-                            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
                             htmlFor="grid-last-name"
                         >
                             Job Title
@@ -69,7 +68,7 @@ function PostJob(this: any) {
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
                         <label
-                            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
                             htmlFor="grid-password"
                         >
                             Job Location
@@ -86,7 +85,7 @@ function PostJob(this: any) {
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                         <label
-                            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
                             htmlFor="grid-city"
                         >
                             Job Description
@@ -101,7 +100,7 @@ function PostJob(this: any) {
                     </div>
                 </div>
                 <button
-                    className="h-12 px-6  text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+                    className="h-12 px-6  text-lg text-white transition-colors duration-150 bg-tiffany-blue rounded-lg focus:shadow-outline hover:bg-indigo-800"
                     type="submit"
                 >
                     Submit
