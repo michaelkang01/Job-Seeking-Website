@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCog } from "react-icons/fa";
 import Modal from "react-modal";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -10,7 +10,7 @@ import UpdateSummary from "./UpdateSummary";
 import UpdateWorkExperiences from "./UpdateWorkExperiences";
 
 const SettingsModal = (props) => {
-  const [showModal, setShowModal] = useState(false);
+  const [modalTab, setModalTab] = useState(0);
   /**
    * CSS for the modal
    */
@@ -24,17 +24,24 @@ const SettingsModal = (props) => {
       transform: "translate(-50%, -50%)",
     },
   };
-  const updatedProfile = () => setShowModal(false)
+
+  const updatedProfile = () => props.closeModal();
+
+  useEffect(() => setModalTab(props.tab), [props.isOpen, props.tab]);
+
   return (
     <>
-      <FaCog className="cursor-pointer text-3xl text-tiffany-blue" onClick={() => setShowModal(true)} />
+      <FaCog
+        className="cursor-pointer text-3xl text-tiffany-blue"
+        onClick={() => props.openEditModal()}
+      />
       <Modal
-        isOpen={showModal}
+        isOpen={props.isOpen}
         ariaHideApp={false}
-        onRequestClose={() => setShowModal(false)}
+        onRequestClose={() => props.closeModal()}
         style={customStyles}
       >
-        <Tabs>
+        <Tabs defaultIndex={modalTab}>
           <TabList className="text-tiffany-blue text-lg">
             <Tab>General Contact</Tab>
             <Tab>Pitch Video</Tab>

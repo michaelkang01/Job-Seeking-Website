@@ -40,7 +40,13 @@ const WorkExperiences = (props) => {
         ))}
     </div>
   );
-  return <Section name="Work Experiences" content={work_experiences} />;
+  return (
+    <Section
+      name="Work Experiences"
+      content={work_experiences}
+      openEditModal={props.openEditModal}
+    />
+  );
 };
 
 export default WorkExperiences;
