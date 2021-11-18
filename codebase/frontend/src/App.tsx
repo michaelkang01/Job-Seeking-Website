@@ -31,9 +31,6 @@ const App = () => {
         <Route path="/recruiter/postjob">
           <PostJob />
         </Route>
-        <Route path="/pitchvideo">
-          <PitchVideo />
-        </Route>
         <Route path="/signin/callback">
           <SignInCallback />
         </Route>

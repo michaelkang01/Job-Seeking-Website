@@ -83,7 +83,6 @@ const ProfilePage = (props) => {
           openEditModal={updateWorkExperiences}
         />
       </div>
-    </div>): <div></div>}
     </div>
   );
 };
