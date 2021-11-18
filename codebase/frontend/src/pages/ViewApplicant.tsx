@@ -233,7 +233,7 @@ const ViewApplicant = ({ match }: any) => {
       )}
       {!error && applicant && !loading && (
         <div className="md:flex md:flex-row">
-          <div className="w-full md:w-1/5 md:flex-shrink-0 pl-8 md:h-screen bg-gray-100 pt-28 pb-8 md:pb-0  overflow-y-scroll h-full">
+          <div className="w-full md:w-1/5 md:flex-shrink-0 pl-8 md:h-screen pt-4 bg-gray-100 pb-8 md:pb-0  overflow-y-scroll h-full">
             <h1 className="text-2xl font-bold">Applicant Information</h1>
             <h2 className="text-xl text-gray-800 font-bold pt-4">
               {applicant.firstName} {applicant.lastName}
@@ -348,7 +348,7 @@ const ViewApplicant = ({ match }: any) => {
             </p>
           </div>
           <div
-            className="w-full md:flex-grow pt-4 md:pt-28 bg-gray-200 md:h-screen md:flex md:flex-col"
+            className="w-full md:flex-grow pt-4 bg-gray-200 md:h-screen md:flex md:flex-col"
             style={{ minHeight: "300px" }}
           >
             <h3 className="text-2xl px-8 pb-4 font-bold">Resume</h3>

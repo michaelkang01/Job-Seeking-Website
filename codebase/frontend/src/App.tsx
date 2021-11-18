@@ -16,8 +16,6 @@ import Application from "./pages/Application";
 import ChatSystem from "./pages/ChatSystem";
 import PostJob from "./pages/PostJob";
 import { ViewApplicants } from "./pages/ViewApplicants";
-
-import { ViewApplicants } from "./pages/ViewApplicants";
 import ViewApplicant from "./pages/ViewApplicant";
 
 const App = () => {
@@ -32,9 +30,6 @@ const App = () => {
         </Route>
         <Route path="/recruiter/postjob">
           <PostJob />
-        </Route>
-        <Route path="/pitchvideo">
-          <PitchVideo />
         </Route>
         <Route path="/signin/callback">
           <SignInCallback />
