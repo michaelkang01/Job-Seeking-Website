@@ -1,7 +1,7 @@
 module.exports = (mongoose) => {
   const ApplicationSchema = new mongoose.Schema(
     {
-      user_id: Number,
+      user_id: String,
       listing_id: Number,
       firstName: String,
       lastName: String,

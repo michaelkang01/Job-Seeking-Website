@@ -44,9 +44,7 @@ const ProfilePage = (props) => {
           authToken={props.authToken}
         />
       </div>
-    </div>): <div></div>}
-    </div>
-  );
+    </div>)
 };
 
 export default ProfilePage;
