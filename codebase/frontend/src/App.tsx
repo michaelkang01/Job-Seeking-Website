@@ -13,9 +13,9 @@ import SignInCallback from "./pages/SignInCallback";
 import Jobsapplied from "./pages/Jobsapplied";
 
 import Application from "./pages/Application";
-import PitchVideo from "./pages/PitchVideo";
 import ChatSystem from "./pages/ChatSystem";
 import PostJob from "./pages/PostJob";
+import { ViewApplicants } from "./pages/ViewApplicants";
 
 import { ViewApplicants } from "./pages/ViewApplicants";
 import ViewApplicant from "./pages/ViewApplicant";
@@ -28,7 +28,7 @@ const App = () => {
         renders the first one that matches the current URL. */}
       <Switch>
         <Route path="/recruiter/applications">
-          <PostJob />
+          <ViewApplicants/>
         </Route>
         <Route path="/recruiter/postjob">
           <PostJob />

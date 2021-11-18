@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import TextInput from '../components/TextInput'
-import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from "../context/AuthContext";
+
 
 function PostJob(this: any) {
-    const location = useLocation();
-    const history = useHistory()
+   
 
     const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
 
@@ -29,8 +27,8 @@ function PostJob(this: any) {
     };
 
     //Checking auth/login
-    const auth = useAuth();
-    const signedIn = auth.getAuthData().authToken.length > 0;
+   
+    
 
     return (
         <div className="mx-auto max-w-screen-xl pt-96  ">

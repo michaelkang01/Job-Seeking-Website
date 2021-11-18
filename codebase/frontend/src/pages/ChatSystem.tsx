@@ -240,215 +240,69 @@ const ChatSystem = ({ match }: any) => {
 
   const ComposeModal = ({ webSocket }: ModalProps) => {
     const [recipient, setRecipient] = useState<string>("");
-
-    return (
-      <div className="fixed inset-0 z-10 flex justify-center items-center">
-        <div className="fixed inset-0 z-20 bg-gray-900 opacity-75"></div>
-        <div
-          className="fixed inset-0 z-30 bg-white rounded-lg shadow-xl p-8 h-60 my-28"
-          style={{ marginLeft: "30%", marginRight: "30%" }}
-        >
-          <div className="flex justify-between">
-            <h1 className="text-2xl">Compose Message</h1>
-            <button
-              className="text-gray-600"
-              onClick={() => {
-                setRecipient("");
-                setShowComposeModal(false);
-              }}
-            >
-              Close
-            </button>
-          </div>
-          <div className="mt-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="recipient"
-            >
-              Recipient
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="recipient"
-              type="text"
-              placeholder="Enter recepient's ID"
-              value={recipient}
-              onChange={(event) => setRecipient(event.target.value)}
-            />
-            {/* Submit */}
-            <button
-              className="mt-4 bg-blue-500 hover:bg-blue-700 rounded-md text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={() => {
-                if (recipient.length > 0 && webSocket) {
-                  webSocket.send(
-                    JSON.stringify({
-                      type: "send",
-                      token: authToken,
-                      to: recipient,
-                      message: "Hello, there!",
-                    })
-                  );
-                  setRecipient("");
-                  setShowComposeModal(false);
-                }
-              }}
-            >
-              Start chat
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // Messages interface (show sidebar with messages, tailwindcss)
-  return (
-    <>
-      {showComposeModal && <ComposeModal webSocket={webSocket} />}
-      <div className="flex h-screen gap-1 bg-gray-300">
-        <div
-          className="col-span-3 md:w-1/6 flex-row overflow-y-scroll bg-white"
-          style={{
-            paddingTop: "88px",
-          }}
-        >
-          <h3
-            className="text-2xl text-center py-4 text-gray-900 font-bold"
-            style={{ backgroundColor: "#9AC2C9" }}
-          >
-            Conversations
-          </h3>
-          <p
-            className="text-center pb-4 text-gray-900 font-bold underline cursor-pointer"
-            onClick={() => {
-              setShowComposeModal(true);
-            }}
-            style={{ backgroundColor: "#9AC2C9" }}
-          >
-            Compose
-          </p>
-          {chatSessions.map((chatSession) => {
-            const talkingTo =
-              chatSession.personOne === JSON.parse(authData).payload.id
-                ? chatSession.personTwo
-                : chatSession.personOne;
-            const talkingToUser = (userTable && userTable[talkingTo]) || {
-              firstName: talkingTo,
-              lastName: "",
-            };
-            return (
-              <div
-                onClick={() => {
-                  // Set selected chat
-                  setSelectedChat(chatSession);
-                }}
-                className={`w-full px-4 py-4 ${
-                  chatSession === selectedChat ? "bg-yellow-100" : "bg-gray-200"
-                }`}
-                key={
-                  JSON.parse(authData).payload.id +
-                  talkingTo +
-                  randomBytes(4).toString("hex")
-                }
-              >
-                <p className="font-bold">
-                  {talkingToUser.firstName + " " + talkingToUser.lastName}
-                </p>
-                <p className="text-sm">
-                  Last message:{" "}
-                  {chatSession.messages[
-                    chatSession.messages.length - 1
-                  ].message.substr(0, 36)}
-                  ...
-                </p>
-              </div>
-            );
-          })}
-        </div>
-        <div
-          className="col-span-9 bg-white md:w-5/6"
-          style={{
-            paddingTop: "88px",
-          }}
-        >
-          {selectedChat && (
-            <div className="flex-row h-full">
-              <div className="border-t-4" style={{}}>
-                <form
-                  className=""
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    const message = (event.target as any).elements.message
-                      .value;
-                    if (message && message.length > 0 && webSocket) {
-                      // Send message to server
-                      webSocket.send(
-                        JSON.stringify({
-                          type: "send",
-                          token: authToken,
-                          message: message,
-                          to:
-                            selectedChat.personOne ===
-                            JSON.parse(authData).payload.id
-                              ? selectedChat.personTwo
-                              : selectedChat.personOne,
-                        })
-                      );
-                      (event.target as any).elements.message.value = "";
-                    }
-                  }}
-                >
-                  <input
-                    className="w-full px-4 py-2 bg-gray-200 mb-1 focus:outline-none"
-                    type="text"
-                    name="message"
-                    placeholder="Type a message..."
-                  />
-                </form>
-              </div>
-              <div
-                className="flex-grow overflow-y-scroll"
-                style={{ height: "calc(100% - 53px)" }}
-              >
-                <div className="flex-col">
-                  {selectedChat.messages
-                    .slice()
-                    .reverse()
-                    .map((messageObject, index) => {
-                      // From
-                      const from = (userTable &&
-                        userTable[messageObject.sender]) || {
-                        firstName: messageObject.sender,
-                        lastName: "",
-                      };
-                      // If message is from current user, show message in green
-                      const fromClass =
-                        messageObject.sender === JSON.parse(authData).payload.id
-                          ? ""
-                          : "text-right";
-                      const bubbleClass =
-                        messageObject.sender === JSON.parse(authData).payload.id
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-300";
-                      return (
-                        <div
-                          className={`w-full px-4 py-4 ${fromClass}`}
-                          key={index}
-                        >
-                          <p className="">
-                            {from.firstName + " " + from.lastName} (
-                            {new Date(messageObject.when).toLocaleString()})
-                          </p>
-                          <div
-                            className="inline-block break-all"
-                            style={{ maxWidth: "40%" }}
-                          >
-                            <p
-                              className={`text-sm rounded-md px-4 py-2 ${bubbleClass}`}
-                            >
-                              {messageObject.message}
-                            </p>
-                          </div>
+    // Messages interface (show sidebar with messages, tailwindcss)
+    return <>
+        {showComposeModal && <ComposeModal webSocket={webSocket} />}
+        <div className="flex h-screen gap-1 bg-gray-300">
+            <div className="col-span-3 md:w-1/6 flex-row overflow-y-scroll bg-white">
+                <h3 className="text-2xl text-center py-4 text-gray-900 font-bold bg-tiffany-blue">Conversations</h3>
+                <p className="text-center pb-4 text-gray-900 font-bold underline cursor-pointer bg-tiffany-blue" onClick={() => { setShowComposeModal(true) }} >Compose</p>
+                {chatSessions.map((chatSession) => {
+                    const talkingTo = chatSession.personOne === JSON.parse(authData).payload.id ? chatSession.personTwo : chatSession.personOne;
+                    const talkingToUser = (userTable && userTable[talkingTo]) || { firstName: talkingTo, lastName: "" };
+                    return (
+                        <div onClick={() => {
+                            // Set selected chat
+                            setSelectedChat(chatSession);
+                        }} className={`w-full px-4 py-4 ${chatSession === selectedChat ? "bg-light-cyan" : "bg-gray-200"}`} key={JSON.parse(authData).payload.id + talkingTo + randomBytes(4).toString("hex")}>
+                            <p className="font-bold">{talkingToUser.firstName + " " + talkingToUser.lastName}</p>
+                            <p className="text-sm">Last message: {chatSession.messages[chatSession.messages.length - 1].message.substr(0, 36)}...</p>
+                        </div>
+                    )
+                })}
+            </div>
+            <div className="col-span-9 bg-white md:w-5/6">
+                {selectedChat && (
+                    <div className="flex-row h-full">
+                        <div className="border-t-4" style={{}}>
+                            <form className="" onSubmit={(event) => {
+                                event.preventDefault();
+                                const message = (event.target as any).elements.message.value;
+                                if (message && message.length > 0 && webSocket) {
+                                    // Send message to server
+                                    webSocket.send(JSON.stringify({
+                                        type: "send",
+                                        token: authToken,
+                                        message: message,
+                                        to: selectedChat.personOne === JSON.parse(authData).payload.id ? selectedChat.personTwo : selectedChat.personOne,
+                                    }));
+                                    (event.target as any).elements.message.value = "";
+                                }
+                            }}>
+                                <input className="w-full px-4 py-2 bg-gray-200 mb-1 focus:outline-none" type="text" name="message" placeholder="Type a message..." />
+                            </form>
+                        </div>
+                        <div className="flex-grow overflow-y-scroll" style={{ height: "calc(100% - 53px)" }}>
+                            <div className="flex-col">
+                                {selectedChat.messages.slice().map((messageObject, index) => {
+                                    // From
+                                    const from = (userTable && userTable[messageObject.sender]) || { firstName: messageObject.sender, lastName: "" };
+                                    // If message is from current user, show message in green
+                                    const fromClass = messageObject.sender === JSON.parse(authData).payload.id ? "text-right" : "";
+                                    const bubbleClass = messageObject.sender === JSON.parse(authData).payload.id ? "bg-light-cyan" : "bg-gray-300";
+                                    return (
+                                        <div className={`w-full px-4 py-4 ${fromClass}`} key={index}>
+                                            <p className="">{from.firstName + " " + from.lastName} ({(new Date(messageObject.when)).toLocaleString()})</p>
+                                            <div className="inline-block break-all" style={{ maxWidth: "40%" }}>
+                                                <p className={`text-sm rounded-md px-4 py-2 ${bubbleClass}`}>{messageObject.message}</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                                <p className="w-full text-center italic py-4">
+                                    End of conversation
+                                </p>
+                            </div>
                         </div>
                       );
                     })}

@@ -61,9 +61,9 @@ const SearchBar = () => {
     profSkills = profileData[0].skills.toString();
   }
   return (
-    <div className="p-8 flex">
+    <div>
       <form
-        className="bg-white flex items-center rounded-full w-full shadow-xl"
+        className="bg-white flex flex-row items-center rounded-sm w-full"
         method="get"
       >
         <input
@@ -82,7 +82,7 @@ const SearchBar = () => {
         ></input>
         <div className="p-4">
           <button
-            className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center"
+            className="bg-tiffany-blue text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center"
             type="submit"
           >
             Go
@@ -90,8 +90,9 @@ const SearchBar = () => {
         </div>
       </form>
       {signedIn ? (
-        <>
-          <form method="get">
+        <div className="flex flex-row w-full bg-gray-100">
+          <form method="get"
+            className="flex-grow p-1">
             <input
               id="ser-keywords-auto"
               type="hidden"
@@ -105,13 +106,14 @@ const SearchBar = () => {
               value={profLoc}
             ></input>
             <button
-              className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-24 h-12 flex items-center justify-center"
+              className="bg-tiffany-blue text-white rounded-sm p-1 hover:bg-blue-400 focus:outline-none w-full h-8 items-center justify-center"
               type="submit"
             >
               Auto All
             </button>
           </form>
-          <form method="get">
+          <form method="get"
+            className="flex-grow p-1">
             <input
               id="ser-keywords-auto"
               type="hidden"
@@ -119,13 +121,14 @@ const SearchBar = () => {
               value={profSkills}
             ></input>
             <button
-              className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-24 h-12 flex items-center justify-center"
+              className="bg-tiffany-blue text-white rounded-sm p-1 hover:bg-blue-400 focus:outline-none w-full h-8 items-center justify-center"
               type="submit"
             >
               Auto Skills
             </button>
           </form>
-          <form method="get">
+          <form method="get"
+            className="flex-grow p-1">
             <input
               id="ser-location-auto"
               type="hidden"
@@ -133,16 +136,16 @@ const SearchBar = () => {
               value={profLoc}
             ></input>
             <button
-              className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-24 h-12 flex items-center justify-center"
+              className="bg-tiffany-blue text-white rounded-sm p-1 hover:bg-blue-400 focus:outline-none w-full h-8 items-center justify-center"
               type="submit"
             >
               Auto Location
             </button>
           </form>
-        </>
+        </div>
       ) : (
-        <p>Please sign in to use auto-detect features</p>
-      )}
+        <>
+        </>)}
     </div>
   );
 };

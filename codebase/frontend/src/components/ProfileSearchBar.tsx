@@ -3,9 +3,9 @@ import "tailwindcss/tailwind.css";
 
 const ProfileSearchBar = () => {
   return (
-    <div className="p-8 flex">
+    <div className="bg-gray-100 pb-6">
       <form
-        className="bg-white flex items-center rounded-full w-full shadow-xl"
+        className="bg-white flex items-center rounded-sm w-full"
         method="get"
       >
         <input
@@ -17,7 +17,7 @@ const ProfileSearchBar = () => {
         ></input>
         <div className="p-4">
           <button
-            className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center"
+            className="bg-tiffany-blue text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center"
             type="submit"
           >
             Go
