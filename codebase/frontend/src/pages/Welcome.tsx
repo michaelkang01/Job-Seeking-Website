@@ -10,7 +10,7 @@ const Welcome = () => {
 
   return (
     <div className="px-8 pt-4 h-screen">
-      {authToken && authData ? (
+      {authToken && authData && JSON.parse(authData).payload.role === "Jobseeker" ? (
         <>
           <ProfilePage email={JSON.parse(authData).payload.email} authToken={authToken} />
         </>

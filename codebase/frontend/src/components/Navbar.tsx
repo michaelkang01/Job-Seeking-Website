@@ -61,9 +61,8 @@ const Navbar = () => {
         </button>
       </div>
       <div
-        className={`${
-          mobileNavShown ? "block" : "hidden"
-        } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
+        className={`${mobileNavShown ? "block" : "hidden"
+          } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
       >
         {signedIn && role === "Jobseeker" && (
           <Link
@@ -99,14 +98,33 @@ const Navbar = () => {
             Applied
           </Link>
         )}
-        {/**Will eventually change to signedIn and isRecruiter */}
         {signedIn && role === "Recruiter" && (
-          <Link
-            to="/searchprofiles"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+          <div>
+            {/* <Link
+            to="/recruiter/profile" // TODO: create this route
+            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
           >
-            Search Candidates
-          </Link>
+            My Profile
+          </Link> */}
+            <Link
+              to="/recruiter/applications"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Manage Applicants
+            </Link>
+            <Link
+              to="/recruiter/postjob"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Post New Job
+            </Link>
+            <Link
+              to="/searchprofiles"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Search Candidates
+            </Link>
+          </div>
         )}
         {!signedIn && (
           <Link
@@ -126,42 +144,14 @@ const Navbar = () => {
             Sign in
           </Link>
         )) || (
-          <button
-            onClick={auth.signOut}
-            className="font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0"
-          >
-            Sign out
-          </button>
-        )}
+            <button
+              onClick={auth.signOut}
+              className="font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-mellow-apricot hover:bg-white mt-4 lg:mt-0"
+            >
+              Sign out
+            </button>
+          )}
       </div>
-      {signedIn && role === "Recruiter" && (
-        <div>
-          {/* <Link
-            to="/recruiter/profile" // TODO: create this route
-            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-          >
-            My Profile
-          </Link> */}
-          <Link
-            to="/recruiter/applications"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Manage Applicants
-          </Link>
-          <Link
-            to="/recruiter/postjob"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Post New Job
-          </Link>
-          <Link
-            to="/searchprofiles"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Search Candidates
-          </Link>
-        </div>
-      )}
     </nav>
   );
 };

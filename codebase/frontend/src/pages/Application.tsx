@@ -107,8 +107,7 @@ function Application(this: any) {
     pemail = profileData[0].email;
   }
   return (
-    <div className="mx-auto max-w-screen-xl pt-96  ">
-      <div className="text-xl font-bold pb-10">Apply To Company</div>
+    <div className="mx-auto max-w-screen-xl py-8">
       {signedIn
         ? <div className="text-l italic pb-10">We have prefilled some data from your profile!</div>
         : <></>}
@@ -116,7 +115,7 @@ function Application(this: any) {
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
               htmlFor="grid-first-name"
             >
               First Name
@@ -142,7 +141,7 @@ function Application(this: any) {
           </div>
           <div className="w-full md:w-1/2 px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
               htmlFor="grid-last-name"
             >
               Last Name
@@ -170,7 +169,7 @@ function Application(this: any) {
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
               htmlFor="grid-password"
             >
               Email
@@ -195,7 +194,7 @@ function Application(this: any) {
         <div className="flex flex-wrap -mx-3 mb-2">
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
               htmlFor="grid-city"
             >
               City
@@ -211,7 +210,7 @@ function Application(this: any) {
         </div>
         <div className="w-full md:w-1/2  ">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
             htmlFor="grid-city"
           >
             Province
@@ -225,10 +224,10 @@ function Application(this: any) {
           />
           <div className="flex flex-wrap  mb-2">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-white text-xs font-bold p-1 bg-tiffany-blue opacity-75 rounded-sm"
               htmlFor="grid-zip"
             >
-              Zip
+              ZIP/Postal Code
             </label>
             <TextInput
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
@@ -240,7 +239,7 @@ function Application(this: any) {
           </div>
         </div>
         <button
-          className="h-12 px-6  text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+          className="h-12 px-6  text-lg text-white transition-colors duration-150 bg-tiffany-blue rounded-lg focus:shadow-outline hover:bg-indigo-800"
           type="submit"
         >
           Submit
