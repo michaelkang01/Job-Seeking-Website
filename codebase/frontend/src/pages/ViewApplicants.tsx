@@ -109,14 +109,14 @@ const ViewApplicants = () => {
                 <h3 className="text-xl mb-2">Quick Info</h3>
                 {/* Show contact email */}
                 <button
-                  className="rounded-full w-full md:w-auto mt-2 md:mt-0 px-4 py-1 bg-blue-600 text-white cursor-pointer"
+                  className="rounded-sm w-full md:w-auto mt-2 md:mt-0 px-4 py-1 bg-tiffany-blue text-white cursor-pointer"
                   onClick={() => {
                     window.open(`mailto:${applicant.email}`, "_blank");
                   }}
                 >
                   Contact email: {applicant.email}
                 </button>
-                <button className="rounded-full w-full md:w-auto mt-2 md:mt-0 px-4 py-1 md:ml-2 bg-blue-600 text-white cursor-default">
+                <button className="rounded-sm w-full md:w-auto mt-2 md:mt-0 px-4 py-1 md:ml-2 bg-tiffany-blue text-white cursor-default">
                   Location:{" "}
                   {applicant.city +
                     ", " +
@@ -128,7 +128,7 @@ const ViewApplicants = () => {
                 {applicant.additionalData.pitchData &&
                   applicant.additionalData.pitchData.videoUrl && (
                     <button
-                      className="rounded-full w-full md:w-auto mt-2 md:mt-0 px-4 py-1 md:ml-2 bg-blue-600 text-white cursor-pointer"
+                      className="rounded-sm w-full md:w-auto mt-2 md:mt-0 px-4 py-1 md:ml-2 bg-tiffany-blue text-white cursor-pointer"
                       onClick={(e) => {
                         setShowVideoUrl(
                           applicant.additionalData.pitchData.videoUrl
@@ -140,7 +140,7 @@ const ViewApplicants = () => {
                   )}
               </div>
               {/* Show applicant's summary */}
-              <div className="mb-3 rounded-md bg-gray-200 pt-3 pb-4 px-4">
+              <div className="mb-3 rounded-sm bg-gray-200 pt-3 pb-4 px-4">
                 <h3 className="text-xl mb-2">Summary</h3>
                 {applicant.additionalData.profile.summary && (
                   <pre
@@ -161,20 +161,20 @@ const ViewApplicants = () => {
                 <h3 className="text-xl mb-2">Actions</h3>
                 <Link
                   to={`/messages/start/${applicant.user_id}`}
-                  className="rounded-md bg-blue-600 hover:bg-blue-500 text-white px-3 py-1"
+                  className="rounded-sm bg-tiffany-blue hover:bg-blue-400 text-white px-3 py-1"
                 >
                   Quick message
                 </Link>
                 {/* Show 'more info' button */}
                 <Link
-                  className="rounded-md bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 cursor-pointer ml-2"
+                  className="rounded-sm bg-tiffany-blue hover:bg-blue-400 text-white px-3 py-1 cursor-pointer ml-2"
                   to={`/my_applicants/${applicant._id}`}
                 >
                   More info
                 </Link>
                 {/* Show accept button */}
                 <span
-                  className="rounded-md bg-green-500 hover:bg-green-400 text-white px-3 py-1 cursor-pointer ml-2"
+                  className="rounded-sm bg-green-500 hover:bg-green-400 text-white px-3 py-1 cursor-pointer ml-2"
                   onClick={() => {
                     alert("Accepted! (To be implemented)"); // use nodemailer method on TEA418-18 or built-in messaging system
                   }}
@@ -183,7 +183,7 @@ const ViewApplicants = () => {
                 </span>
                 {/* Show decline button */}
                 <span
-                  className="rounded-md bg-red-500 hover:bg-red-400 text-white px-3 py-1 cursor-pointer ml-2"
+                  className="rounded-sm bg-red-500 hover:bg-red-400 text-white px-3 py-1 cursor-pointer ml-2"
                   onClick={() => {
                     alert("Declined! (To be implemented)"); // use method on branch TEA418-18 utilizing nodemailer to use applicant.email to send generic rejection email
                   }}

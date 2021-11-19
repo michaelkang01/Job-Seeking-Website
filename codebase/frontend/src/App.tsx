@@ -9,9 +9,8 @@ import Search from "./pages/Search";
 import SearchProfiles from "./pages/SearchProfiles";
 import { AuthProvider } from "./context/AuthContext";
 import SignInCallback from "./pages/SignInCallback";
-
 import Jobsapplied from "./pages/Jobsapplied";
-
+import ProfileRedirect from "./pages/ProfileRedirect";
 import Application from "./pages/Application";
 import ChatSystem from "./pages/ChatSystem";
 import PostJob from "./pages/PostJob";
@@ -26,7 +25,7 @@ const App = () => {
         renders the first one that matches the current URL. */}
       <Switch>
         <Route path="/recruiter/applications">
-          <ViewApplicants/>
+          <ViewApplicants />
         </Route>
         <Route path="/recruiter/postjob">
           <PostJob />
@@ -54,6 +53,8 @@ const App = () => {
         <Route exact path="/application/:id">
           <Application />
         </Route>
+        <Route path="/profile">
+          <ProfileRedirect />
         <Route exact path="/my_applicants/:id" component={ViewApplicant} />
         <Route exact path="/my_applicants">
           <ViewApplicants />

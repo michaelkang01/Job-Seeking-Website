@@ -30,10 +30,8 @@ function Jobsapplied() {
         .then((res) => {
           setIsLoading(false);
           for (const listing of res.data) {
-            console.log(listing)
             if (job_list.length !== 0 && job_list[0] !== -1) {
               if (job_list.includes(listing.listing_id)) {
-                console.log('applied')
                 listing_list.push({
                   listing_id: listing.listing_id,
                   employer_id: listing.employer_id,

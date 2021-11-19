@@ -58,10 +58,10 @@ const UpdateSkills = (props) => {
             </div>
           ))}
       </div>
-      <div className="flex items-center mx-4 p-2">
-        <form onSubmit={add_skill}>
+      <div className="flex w-full mx-4 p-2">
+        <form onSubmit={add_skill} className="flex w-full items-center justify-center mb-4">
           <input
-            className="w-96 border-2 border-tiffany-blue border-opacity-50 outline-none rounded-full text-tiffany-blue bg-gray-50 mx-4 mb-4 p-2"
+            className="w-96 border-2 border-tiffany-blue border-opacity-50 outline-none rounded-full text-tiffany-blue bg-gray-50 mx-4 p-2"
             type="text"
             name="skill"
             placeholder="Enter in a new skill"
