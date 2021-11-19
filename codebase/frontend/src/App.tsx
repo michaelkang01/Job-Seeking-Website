@@ -55,6 +55,7 @@ const App = () => {
         </Route>
         <Route path="/profile">
           <ProfileRedirect />
+        </Route>
         <Route exact path="/my_applicants/:id" component={ViewApplicant} />
         <Route exact path="/my_applicants">
           <ViewApplicants />
