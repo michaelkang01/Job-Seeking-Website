@@ -28,6 +28,10 @@ const ProfilePage = (props) => {
     getProfile();
   }, [props.email, profile]);
 
+  if (profile === undefined) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
     {props.role ==="Jobseeker"?

@@ -58,7 +58,7 @@ const ChatSystem = ({ match }: any) => {
   useEffect(() => {
     if (webSocket === undefined && authToken !== "") {
       console.log("Attempting to establish websocket connection...");
-      const newWebSocket = new WebSocket("ws://localhost:8001/api/ws/connect");
+      const newWebSocket = new WebSocket(`${process.env.REACT_APP_API_WSS}/api/ws/connect`);
       setWebSocket(newWebSocket);
 
       newWebSocket.onmessage = (event) => {
