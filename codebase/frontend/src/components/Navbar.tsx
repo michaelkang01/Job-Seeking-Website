@@ -65,44 +65,44 @@ const Navbar = () => {
           } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
       >
         {signedIn && role === "Jobseeker" && (
-          <Link
-            to="/"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Home
-          </Link>
-        )}
-        {signedIn && (
-          <>
+          <div>
             <Link
-              to="/messages"
+              to="/"
               className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
             >
-              Messaging
+              Home
             </Link>
-          </>
-        )}
-        {signedIn && role === "Jobseeker" && (
-          <Link
-            to="/search"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Job Search
-          </Link>
-        )}
-        {signedIn && role === "Jobseeker" && (
-          <Link
-            to="/applied"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Applied
-          </Link>
+            <Link
+              to="/profile"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              My Profile
+            </Link>
+            <Link
+              to="/search"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Job Search
+            </Link>
+            <Link
+              to="/applied"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Applied
+            </Link>
+          </div>
         )}
         {signedIn && role === "Recruiter" && (
           <div>
+            <Link
+              to="/"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Home
+            </Link>
             {/* <Link
-            to="/recruiter/profile" // TODO: create this route
-            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
+            to="/profile" // TODO: create this route
+            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
           >
             My Profile
           </Link> */}
@@ -125,6 +125,16 @@ const Navbar = () => {
               Search Candidates
             </Link>
           </div>
+        )}
+        {signedIn && (
+          <>
+            <Link
+              to="/messages"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Messaging
+            </Link>
+          </>
         )}
         {!signedIn && (
           <Link

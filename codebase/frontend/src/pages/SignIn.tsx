@@ -59,9 +59,9 @@ const SignIn = () => {
     } catch {
       console.log(role);
     }
-   
-    if (role === "Recruiter"){
-      return <Redirect to="/searchprofiles"/>
+
+    if (role === "Recruiter") {
+      return <Redirect to="/searchprofiles" />
     }
     return <Redirect to="/" />;
   }
