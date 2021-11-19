@@ -9,7 +9,7 @@ const Welcome = () => {
   const authData = auth.getAuthData().authData;
 
   return (
-    <div className="px-8 pt-4 h-screen">
+    <div className="md:px-8 pt-4 h-screen">
       {authToken && authData && JSON.parse(authData).payload.role === "Jobseeker" ? (
         <>
           <ProfilePage email={JSON.parse(authData).payload.email} authToken={authToken} />

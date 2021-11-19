@@ -93,10 +93,10 @@ const UpdateWorkExperiences = (props) => {
         <div className="left rounded-full bg-tiffany-blue opacity-50 w-16 h-16"></div>
         <div className="left p-4">
           <form onSubmit={add_work_experience}>
-            <FaBriefcase className="inline mx-2 text-tiffany-blue" />
+            <FaBriefcase className="inline mb-2 mx-2 text-tiffany-blue" />
             <input type="text" name="title" placeholder="Job Title" required />
             <br />
-            <FaBuilding className="inline mx-2 text-tiffany-blue" />
+            <FaBuilding className="inline mb-2 mx-2 text-tiffany-blue" />
             <input
               type="text"
               name="company"
@@ -104,11 +104,11 @@ const UpdateWorkExperiences = (props) => {
               required
             />
             <br />
-            <FaCalendarAlt className="inline mx-2 text-tiffany-blue" />
+            <FaCalendarAlt className="inline mb-2 mx-2 text-tiffany-blue" />
             <input type="month" name="start" required />
             <input type="month" name="end" required />
             <br />
-            <FaMapMarkerAlt className="inline mx-2 text-tiffany-blue" />
+            <FaMapMarkerAlt className="inline mb-2 mx-2 text-tiffany-blue" />
             <input
               type="text"
               name="location"
@@ -116,7 +116,7 @@ const UpdateWorkExperiences = (props) => {
               required
             />
             <br />
-            <FaPen className="inline mx-2 text-tiffany-blue" />
+            <FaPen className="inline mb-2 mx-2 text-tiffany-blue" />
             <input
               type="text"
               name="description"

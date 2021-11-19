@@ -8,20 +8,23 @@ import UpdateSkills from "./UpdateSkills";
 import UpdateSocials from "./UpdateSocials";
 import UpdateSummary from "./UpdateSummary";
 import UpdateWorkExperiences from "./UpdateWorkExperiences";
+import { isMobile } from "react-device-detect";
 
 const SettingsModal = (props) => {
   const [modalTab, setModalTab] = useState(0);
   /**
    * CSS for the modal
    */
+  const width = isMobile ? "90vw" : "50vw"
   const customStyles = {
     content: {
       top: "50%",
       left: "50%",
-      width: "50vw",
+      width: width,
       height: "50vh",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      overflow: "auto"
     },
   };
 
