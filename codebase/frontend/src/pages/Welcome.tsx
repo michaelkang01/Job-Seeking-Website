@@ -8,7 +8,7 @@ const Welcome = () => {
   const authData = auth.getAuthData().authData;
 
   return (
-    <div className="px-8 bg-gray-100 h-screen signin-background items-center">
+    <div className="px-8 bg-gray-100 overflow-hidden h-screen signin-background items-center">
       <main className="md:p-8 top-0">
         {authToken && authData && JSON.parse(authData).payload.role ? (
           <>
