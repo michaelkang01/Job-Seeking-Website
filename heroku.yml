@@ -1,0 +1,4 @@
+build:
+  docker:
+    api: codebase/backend/Dockerfile
+    backend: codebase/frontend/Dockerfile
