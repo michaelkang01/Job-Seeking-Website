@@ -22,7 +22,7 @@ module.exports = {
         '20': 'repeat(1, 1fr 2fr)',
       },
       backgroundImage: {
-        'home-bg': "url('/frontend/src/assets/backdrop.jpg'",
+        'home-bg': "url('/src/assets/backdrop.jpg')",
       },
     },
   },
