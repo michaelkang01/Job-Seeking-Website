@@ -12,8 +12,8 @@ interface jobseeker {
 const Seeker = (props: jobseeker) => {
   return (
     <div>
-      <div className="flex gap-x-20 p-8 text-gray-900 leading-normal bg-white border rounded">
-        <div className="flex items-center gap-x-2">
+      <div className="flex flex-col lg:flex-row gap-x-20 p-8 text-gray-900 leading-normal bg-white border rounded">
+        <div className="flex flex-auto flex-col items-center justify-center text-center gap-x-2">
           <FaUserCircle className="p-2 rounded-full bg-white w-32 h-32" />{" "}
           <div>
             <p className="text-2xl text-tiffany-blue font-semibold">
@@ -29,7 +29,7 @@ const Seeker = (props: jobseeker) => {
           </div>
         </div>
 
-        <section>
+        <section className="flex flex-auto flex-col items-center justify-center text-center">
           <div className="my-4">
             <p className="text-xl text-tiffany-blue font-bold">Summary</p>
             <p className="text-lg pt-2">{props?.seeker.summary}</p>
