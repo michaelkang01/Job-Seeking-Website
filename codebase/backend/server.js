@@ -25,7 +25,7 @@ const { getSystemErrorMap } = require("util");
 
 app.use(
   cors({
-    origin: `${process.env.BASE_URL}:${process.env.FRONTEND_PORT}`,
+    origin: '*',
   })
 );
 
