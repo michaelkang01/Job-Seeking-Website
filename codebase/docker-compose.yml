@@ -31,7 +31,7 @@ services:
     networks:
       - default
     ports:
-      - "8000"
+      - "8000:${FRONTEND_PORT}"
   api:
     env_file: .env.prod
     build:
@@ -48,4 +48,4 @@ services:
     networks:
       - default
     ports:
-      - "8001"
+      - "8001:${API_PORT}"
