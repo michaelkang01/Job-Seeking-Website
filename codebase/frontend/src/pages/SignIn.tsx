@@ -60,9 +60,8 @@ const SignIn = () => {
       console.log(role);
     }
     return <Redirect to="/" />;
-    }
-  
   }
+
 
   return (
     <div className="px-8 bg-gray-100 md:bg-none pt-32 md:pt-56 h-screen md:bg-none signin-background">
