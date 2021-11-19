@@ -101,12 +101,26 @@ const Navbar = () => {
         )}
         {/**Will eventually change to signedIn and isRecruiter */}
         {signedIn && role === "Recruiter" && (
-          <Link
-            to="/searchprofiles"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Search Candidates
-          </Link>
+          <>
+            <Link
+              to="/recruiter/applications"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Manage Applicants
+            </Link>
+            <Link
+              to="/recruiter/postjob"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Post New Job
+            </Link>
+            <Link
+              to="/searchprofiles"
+              className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
+            >
+              Search Candidates
+            </Link>
+          </>
         )}
         {!signedIn && (
           <Link
@@ -134,34 +148,6 @@ const Navbar = () => {
           </button>
         )}
       </div>
-      {signedIn && role === "Recruiter" && (
-        <div>
-          {/* <Link
-            to="/recruiter/profile" // TODO: create this route
-            className="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none"
-          >
-            My Profile
-          </Link> */}
-          <Link
-            to="/recruiter/applications"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Manage Applicants
-          </Link>
-          <Link
-            to="/recruiter/postjob"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Post New Job
-          </Link>
-          <Link
-            to="/searchprofiles"
-            className="font-bold block mt-4 lg:inline-block lg:mt-0 text-mellow-apricot hover:text-white mr-4"
-          >
-            Search Candidates
-          </Link>
-        </div>
-      )}
     </nav>
   );
 };

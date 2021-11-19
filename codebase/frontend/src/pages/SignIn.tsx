@@ -62,8 +62,10 @@ const SignIn = () => {
    
     if (role === "Recruiter"){
       return <Redirect to="/searchprofiles"/>
+    } if (role === "Jobseeker") {
+      return <Redirect to="/" />;
     }
-    return <Redirect to="/" />;
+  
   }
 
   return (

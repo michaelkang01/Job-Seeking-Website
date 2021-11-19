@@ -29,7 +29,9 @@ const ProfilePage = (props) => {
   }, [props.email, profile]);
 
   return (
-    <div className="w-3/4 m-auto bg-gray-100">
+    <div>
+    {props.role ==="Jobseeker"?
+    (<div className="w-3/4 m-auto bg-gray-100">
       <div className="w-full float-left p-4 sm:w-1/3">
         <Profile profile={profile} authToken={props.authToken} />
         <div className="w-full flex flex-col items-center">
@@ -44,7 +46,13 @@ const ProfilePage = (props) => {
           authToken={props.authToken}
         />
       </div>
-    </div>)
+    </div>):
+    <div/>
+} 
+    </div>
+    
+    )
+   
 };
 
 export default ProfilePage;
