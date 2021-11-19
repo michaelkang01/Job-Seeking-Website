@@ -21,9 +21,6 @@ module.exports = {
       gridTemplateColumns: {
         '20': 'repeat(1, 1fr 2fr)',
       },
-      gridTemplateColumns: {
-        '20': 'repeat(1, 1fr 2fr)',
-      },
     },
   },
   variants: {

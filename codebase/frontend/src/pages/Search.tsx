@@ -101,9 +101,9 @@ const Search = () => {
     filteredListings = filterListingKeywords(filteredListings, searchWordQuery);
   }
   return (
-    <div className="px-8 h-full min-h-screen bg-gray-100">
+    <div className="px-4 md:px-8 h-full min-h-screen bg-gray-100">
       <header></header>
-      <main className="p-8 top-0">
+      <main className="md:p-8 top-0">
         {authToken && authData ? (
           <>
             <div className="flex items-center bg-tiffany-blue opacity-75 text-white text-sm font-bold px-4 py-3 rounded-sm">
