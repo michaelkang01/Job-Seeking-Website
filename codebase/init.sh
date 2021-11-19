@@ -1,7 +1,8 @@
 #!/bin/bash
-cp .env frontend/.env
-cp .env backend/.env
-cp .env backend/postprocessing/.env
-if [ -f .env ]; then
-    export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
+ENV_FILE=".env.prod"
+cp $ENV_FILE frontend/.env
+cp $ENV_FILE backend/.env
+cp $ENV_FILE backend/postprocessing/.env
+if [ -f $ENV_FILE ]; then
+    export $(echo $(cat $ENV_FILE | sed 's/#.*//g'| xargs) | envsubst)
 fi

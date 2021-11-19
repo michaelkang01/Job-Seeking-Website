@@ -28,6 +28,10 @@ const ProfilePage = (props) => {
     getProfile();
   }, [props.email, profile]);
 
+  if (profile === undefined) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="w-3/4 m-auto bg-gray-100">
       <div className="w-full float-left p-4 sm:w-1/3">
