@@ -1,6 +1,6 @@
 #!/bin/bash
 ENV_FILE=".env"
-if [ -f "$1" ]; then
+if [ ! -z "$1" ]; then
     # Look for --prod flag
     if [ "$1" == "--prod" ]; then
         ENV_FILE=".env.prod"
