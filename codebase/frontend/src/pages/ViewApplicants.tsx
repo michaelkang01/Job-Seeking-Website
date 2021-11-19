@@ -86,7 +86,7 @@ const ViewApplicants = () => {
           </video>
         </div>
       )}
-      <div className="pt-28 mx-auto w-full px-4 md:px-0 md:w-1/2">
+      <div className="pt-8 mx-auto w-full px-4 md:px-0 md:w-1/2">
         {/* Show applicant table (Tailwindcss) */}
         {/* No applicants */}
         {applicants.length === 0 && (

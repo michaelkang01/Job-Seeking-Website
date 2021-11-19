@@ -61,8 +61,9 @@ const Navbar = () => {
         </button>
       </div>
       <div
-        className={`${mobileNavShown ? "block" : "hidden"
-          } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
+        className={`${
+          mobileNavShown ? "block" : "hidden"
+        } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
       >
         {signedIn && role === "Jobseeker" && (
           <div>

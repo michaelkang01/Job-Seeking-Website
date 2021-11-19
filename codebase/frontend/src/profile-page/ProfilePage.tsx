@@ -50,6 +50,10 @@ const ProfilePage = (props) => {
     showEditModalTab(5);
   };
 
+  if (profile === undefined) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="lg:w-3/4 m-auto bg-gray-100">
       <div className="w-full float-left p-4 xl:w-1/3">
@@ -84,7 +88,9 @@ const ProfilePage = (props) => {
         />
       </div>
     </div>
-  );
+    
+    )
+   
 };
 
 export default ProfilePage;

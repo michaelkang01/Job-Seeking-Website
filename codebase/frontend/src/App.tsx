@@ -15,7 +15,7 @@ import Application from "./pages/Application";
 import ChatSystem from "./pages/ChatSystem";
 import PostJob from "./pages/PostJob";
 import { ViewApplicants } from "./pages/ViewApplicants";
-
+import ViewApplicant from "./pages/ViewApplicant";
 
 const App = () => {
   const main = (
@@ -48,14 +48,16 @@ const App = () => {
         <Route path="/searchprofiles">
           <SearchProfiles />
         </Route>
-        <Route path="/messages">
-          <ChatSystem />
-        </Route>
+        <Route exact path="/messages" component={ChatSystem} />
+        <Route exact path="/messages/start/:id" component={ChatSystem} />
         <Route exact path="/application/:id">
           <Application />
         </Route>
         <Route path="/profile">
           <ProfileRedirect />
+        <Route exact path="/my_applicants/:id" component={ViewApplicant} />
+        <Route exact path="/my_applicants">
+          <ViewApplicants />
         </Route>
         <Route path="/">
           <Welcome />

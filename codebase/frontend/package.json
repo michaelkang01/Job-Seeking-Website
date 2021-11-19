@@ -33,7 +33,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "set PORT=8000 && craco start",
+    "start": "export PORT=8000 && craco start",
     "build": "craco build",
     "test": "craco test",
     "serve": "node server.js",
