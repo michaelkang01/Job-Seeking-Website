@@ -69,7 +69,7 @@ const UpdateGeneralContact = (props) => {
               <input
                 type="file"
                 name="resume"
-                className="mx-4 flex-1 text-black"
+                className="mx-4 mb-4 flex-1 text-black"
               />
             </label>
           </div>

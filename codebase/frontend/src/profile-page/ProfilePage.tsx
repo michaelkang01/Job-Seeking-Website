@@ -51,8 +51,8 @@ const ProfilePage = (props) => {
   };
 
   return (
-    <div className="w-3/4 m-auto bg-gray-100">
-      <div className="w-full float-left p-4 sm:w-1/3">
+    <div className="lg:w-3/4 m-auto bg-gray-100">
+      <div className="w-full float-left p-4 xl:w-1/3">
         <Profile profile={profile} authToken={props.authToken} />
         <div className="w-full flex flex-col items-center">
           <SettingsModal
@@ -66,7 +66,7 @@ const ProfilePage = (props) => {
           />
         </div>
       </div>
-      <div className="w-full float-left p-4 sm:w-2/3">
+      <div className="w-full float-left p-4 xl:w-2/3">
         <Summary
           summary={profile["summary"]}
           authToken={props.authToken}
