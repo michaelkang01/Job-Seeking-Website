@@ -7,10 +7,12 @@ import { useHistory, useLocation } from 'react-router-dom';
 function PostJob(this: any) {
 
     const history = useHistory();
+    const auth = useAuth();
+    const authToken = auth.getAuthData().authToken;
+    const authData = auth.getAuthData().authData;
+    
     const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
-        const auth = useAuth();
-        const authToken = auth.getAuthData().authToken;
-        const authData = auth.getAuthData().authData;
+
         event.preventDefault();
 
         const form = event.target as HTMLFormElement;
