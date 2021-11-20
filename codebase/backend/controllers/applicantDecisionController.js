@@ -61,9 +61,9 @@ const rejectApplicantRoute = (router, Application) => {
         const { applicantEmail } = req.body;
         var authData = res.locals.authData;
         
-            htmlBody = `<h1>Application Decision</h1> <body>We regret to inform you that you have not been selected for an interview at ${companyName}. 
+            htmlBody = `<h1>Application Decision</h1> <body>We regret to inform you that you have not been selected for an interview. 
                            You are encouraged to apply again in the future.</body>`;
-        subject = `An update regarding your application to ${companyName}`;
+        subject = `An update regarding your application`;
         try {
             sendemail(applicantEmail, subject, htmlBody);
             Application.deleteOne({ email: applicantEmail });
