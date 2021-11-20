@@ -18,9 +18,13 @@ const uploadVideoRoute = require("./controllers/pitchVideoController");
 const websocketServer = require("./controllers/websocketController");
 const uploadResumeRoute = require("./controllers/resumeController")
 const JobSeekerProfileRoute = require("./controllers/jobseekerProfileController");
+const { rejectApplicantRoute, acceptApplicantRoute } = require("./controllers/applicantDecisionController");
 const { showApplicationsRoute, showApplicationRoute } = require("./controllers/applicantManageController");
+
+
 const API_PORT = process.env.API_PORT || 3000;
 const BASE_URL = "/api";
+
 
 // Handle CORS
 const cors = require("cors");
@@ -327,4 +331,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 
   showApplicationsRoute(router, Application, RecruiterProfile, JobseekerProfile, User, Pitch);
   showApplicationRoute(router, Application, RecruiterProfile, JobseekerProfile, User, Pitch);
+
+  rejectApplicantRoute(router, Application);
+  acceptApplicantRoute(router, Application);
 });

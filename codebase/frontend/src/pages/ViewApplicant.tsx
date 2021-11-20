@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-
+import DateTimePicker from "react-datetime-picker";
 /**
  * Applicant type
  *
@@ -122,13 +122,17 @@ const ViewApplicant = ({ match }: any) => {
   const [showFilteringModal, setShowFilteringModal] = useState(false);
   const [highlightedSkills, setHighlightedSkills] = useState([] as string[]);
   const [skillInput, setSkillInput] = useState("");
-
+  const [showCalModal, setShowCalModal] = useState(false);
+  const [value, onChange] = useState(new Date());
   /* Session storage variable storing highlighted skills */
   const highlightedSkillsSessionStorage =
     sessionStorage.getItem("highlightedSkills") || "[]";
   const highlightedSkillsSessionStorageParsed = JSON.parse(
     highlightedSkillsSessionStorage
-  );
+  );  
+  const auth = useAuth();
+    
+  const authData = auth.getAuthData().authData;
 
   useEffect(() => {
     axios
@@ -223,11 +227,84 @@ const ViewApplicant = ({ match }: any) => {
       </div>
     );
   };
+  const rejectApplicant = async () => {
+  
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}/api/recruiter/reject`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        applicantEmail: applicant.email,
+      },
+    });
+  };
+
+  const acceptApplicant = async (start) => {
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}/api/recruiter/accept`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        applicantEmail: applicant.email,
+        start: start,
+      },
+    });
+  };
+  const renderCalModal = () => {
+    /* TailwindCSS */
+    return (
+      <div
+        className="fixed inset-0 flex items-center justify-center z-50"
+        style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+      >
+        <div className="fixed inset-0 h-full px-4 md:px-0 w-auto flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-xl px-6 py-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-semibold">Schedule Interview</h2>
+              <button
+                className=""
+                onClick={() => {
+                  setShowCalModal(false);
+                }}
+              >
+                Close
+              </button>
+            </div>
+            <div className="mt-4">
+              <div className="mt-4">
+                <form
+                  className="flex flex-col"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    acceptApplicant(value.toDateString())
+                    setShowCalModal(false);
+                  }}
+                >
+                  <DateTimePicker onChange={onChange} value={value} />
+
+                  <button className="mt-4 bg-blue-500 hover:bg-blue-600 transition transition-all px-4 py-1 text-white rounded-md">
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+
 
   // Display the applicant's information in cards (TailwindCSS 2.0)
   return (
     <div className="w-full">
       {showFilteringModal && renderFilteringModal()}
+      {showCalModal && renderCalModal()}
       {error && !loading && (
         <h3 className="text-red-500 text-lg text-center">{error}</h3>
       )}
@@ -248,10 +325,20 @@ const ViewApplicant = ({ match }: any) => {
             </p>
             {/* Show actions (accept/reject) */}
             <div className="mt-4 flex flex-row gap-2 pr-8">
-              <button className="bg-green-500 hover:bg-green-700 w-full rounded-md text-white font-bold py-2 px-4 rounded">
+              <button
+                className="bg-green-500 hover:bg-green-700 w-full rounded-md text-white font-bold py-2 px-4 rounded"
+                onClick={() => {
+                  setShowCalModal(true);
+                }}
+              >
                 Accept
               </button>
-              <button className="bg-red-500 hover:bg-red-700 w-full rounded-md text-white font-bold py-2 px-4 rounded">
+              <button
+                className="bg-red-500 hover:bg-red-700 w-full rounded-md text-white font-bold py-2 px-4 rounded"
+                onClick={() => {
+                  rejectApplicant();
+                }}
+              >
                 Reject
               </button>
             </div>
