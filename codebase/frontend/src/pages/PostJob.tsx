@@ -1,13 +1,16 @@
 import React from 'react'
 import TextInput from '../components/TextInput'
 import axios from 'axios';
-
+import { useAuth } from '../context/AuthContext';
+import { useHistory, useLocation } from 'react-router-dom';
 
 function PostJob(this: any) {
 
-
+    const history = useHistory();
     const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
-
+        const auth = useAuth();
+        const authToken = auth.getAuthData().authToken;
+        const authData = auth.getAuthData().authData;
         event.preventDefault();
 
         const form = event.target as HTMLFormElement;
@@ -16,14 +19,16 @@ function PostJob(this: any) {
             url: `${process.env.REACT_APP_API_URL}/api/recruiter/postjob`,
             headers: {
                 "Content-Type": "application/json",
+                "authorization": authToken
             },
             data: {
                 employer_id: form.employer_id.value,
                 job_title: form.job_title.value,
-                job_location: form.email.value,
+                job_location: form.job_location.value,
                 job_description: form.job_description.value,
             },
         });
+        history.push("/recruiter/applications")
     };
 
     //Checking auth/login
