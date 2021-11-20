@@ -1,4 +1,5 @@
 Attendees: Seyon Kuganesan, Andrew Hong, Kiryl Kul, Michael Kang, Daniel Zhang (Everyone)
+Participation: All members provided meaningful insights into what went well in Sprint 3, and what we could do to improve in Sprint 4. This is detailed below.
 
 # Sprint 3 Retrospective
 
