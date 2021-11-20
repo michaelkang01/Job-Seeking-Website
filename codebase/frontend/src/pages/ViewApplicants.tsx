@@ -173,23 +173,7 @@ const ViewApplicants = () => {
                   More info
                 </Link>
                 {/* Show accept button */}
-                <span
-                  className="rounded-sm bg-green-500 hover:bg-green-400 text-white px-3 py-1 cursor-pointer ml-2"
-                  onClick={() => {
-                    alert("Accepted! (To be implemented)"); // use nodemailer method on TEA418-18 or built-in messaging system
-                  }}
-                >
-                  Accept
-                </span>
-                {/* Show decline button */}
-                <span
-                  className="rounded-sm bg-red-500 hover:bg-red-400 text-white px-3 py-1 cursor-pointer ml-2"
-                  onClick={() => {
-                    alert("Declined! (To be implemented)"); // use method on branch TEA418-18 utilizing nodemailer to use applicant.email to send generic rejection email
-                  }}
-                >
-                  Decline
-                </span>
+               
               </div>
             </div>
           );

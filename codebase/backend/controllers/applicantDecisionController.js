@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const ical = require('ical-generator');
 const Application = require("../models/Application");
-import { useAuth } from '../context/AuthContext';
+
 
 var smtpTransport = nodemailer.createTransport({
     service: "Gmail",
@@ -13,7 +13,7 @@ var smtpTransport = nodemailer.createTransport({
 
 function getIcalObjectInstance(starttime, endtime, summary, description, location, url, name, email) {
     const cal = ical({ domain: "localhost", name: 'Interview invite' });
-    cal.domain("localhost");
+  
     cal.createEvent({
         start: starttime,         // eg : moment([2021,10,28]).add(10, 'hours');
         end: endtime,             // eg : moment([2021,10,28]).add(11, 'hours');
@@ -57,9 +57,9 @@ async function sendemail(sendto, subject, htmlbody, calendarObj = null) {
 }
 
 const rejectApplicantRoute = (router, Application) => {
-    router.post("/recruiter/reject", [verifyUser], function (req, res) {
+    router.post("/recruiter/reject", function (req, res) {
         const { applicantEmail } = req.body;
-        var authData = res.locals.authData;
+        
         
             htmlBody = `<h1>Application Decision</h1> <body>We regret to inform you that you have not been selected for an interview. 
                            You are encouraged to apply again in the future.</body>`;
@@ -77,21 +77,23 @@ const rejectApplicantRoute = (router, Application) => {
 };
 
 const acceptApplicantRoute = (router, Application) => {
-    router.post("/recruiter/accept", [verifyUser], function (req, res) {
-        const { applicantEmail, companyName, start } = req.body;
-        subject = `Congratulations, you have been invited to an interview at ${companyName}`;
-        const htmlBody = `<h1>Interview Invite</h1> <body>We are pleased to inform you that you have been selected for an interview at ${companyName}. 
+    router.post("/recruiter/accept",  function (req, res) {
+        const { applicantEmail, start } = req.body;
+        subject = `Congratulations, you have been invited to an interview `;
+        const htmlBody = `<h1>Interview Invite</h1> <body>We are pleased to inform you that you have been selected for an interview. 
                            Please find all relevant details regarding the interview in the ics file attached.</body>`;
 
         // initialize params for ics file generation
-        starttime = start;
-        endtime = moment([2021, 10, 28]).add(11, 'hours'); // to be changed
-        summary = `This is a calendar invite for an online interview at ${companyName}`; // use authdata/ form data in es6 expression
+        starttime = new Date(start);
+
+        endtime = starttime
+        summary = `This is a calendar invite for an online interview`; // use authdata/ form data in es6 expression
         description = "Please arrive at the time specified in the invite";
         location = "Zoom";
         email = "ezapplyrecruiter@gmail.com";
+        url = "Zoom.us"
         icsObj = getIcalObjectInstance(starttime, endtime, summary, description, location, url, email);
-
+        
         try {
             sendemail(applicantEmail, subject, htmlBody, icsObj);
             Application.deleteOne({ email: applicantEmail }); // should applicant record be kept until after the interview so unsuccessful interviewees can be rejected?
