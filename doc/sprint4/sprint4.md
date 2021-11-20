@@ -1,4 +1,14 @@
-Sprint Planning Meeting Spring Goal: Start on features for the recruiter, connect all implemented frontend features to backend Number of members: 5 Members: Andrew, Kiryl, Michael, Daniel, Seyon Team capacity: 43 points
+Sprint Planning Meeting 
+
+Sprint Goal: Start on and finish all features for the recruiter, connect all implemented frontend features to backend 
+
+Meeting Goal: Indentify user stories to complete and create the neccessary documents relating to agile processes for this sprint.
+
+Number of members: 5 
+
+Members: Andrew, Kiryl, Michael, Daniel, Seyon 
+
+Team capacity: 43 points
 
 Features to Implement In this sprint, we are tackling the following user stories for job seekers:
 
@@ -24,4 +34,4 @@ As a recruiter, I want to be able to sort candidates by their pitch videos (the 
 
 Spikes There are no spikes in particular to document; these tasks are not critically complicated.
 
-Participants Everyone was in attendance.
+Participants: Everyone was in attendance, and everyone participated and helped compile the list of tasks to complete in this final sprint.
