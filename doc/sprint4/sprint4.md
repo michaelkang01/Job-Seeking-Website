@@ -26,6 +26,8 @@ Normalize the UI/UX for the web app. (Michael) (Daniel)
 
 Divide Jobseeker and Recruiter views of the web app. (Kiryl)
 
+As a recruiter, I want to be able to schedule interviews to successful applicants so that I can conduct an interview with them. (Kiryl)
+
 Automatically create Recruiter/Jobseeker profiles on account creation. (Daniel)
 
 As a recruiter, I want to be able to easily read key elements of a pitch video and resume. (Andrew)
