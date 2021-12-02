@@ -356,7 +356,7 @@ const ViewApplicant = ({ match }: any) => {
             {/* Skills */}
             <div className="mt-4 w-full pr-8 text-gray-600">
               <span className="font-bold">Skills:</span>{" "}
-              <pre className="w-full overflow-x-scroll">
+              <pre className="w-full overflow-x-auto">
                 {applicant &&
                   applicant.additionalData &&
                   applicant.additionalData.profile.skills &&

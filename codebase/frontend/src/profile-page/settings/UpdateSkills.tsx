@@ -25,7 +25,7 @@ const UpdateSkills = (props) => {
   const add_skill = (event) => {
     event.preventDefault();
     const new_skill = event.target.skill.value;
-    if (props.skills.findIndex((skill) => skill === new_skill) === -1) {
+    if (props.skills.findIndex((skill) => skill === new_skill.toLowerCase().trim()) === -1) {
       update_skills(props.skills.concat(new_skill));
       event.target.reset();
     }
