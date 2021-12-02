@@ -312,13 +312,13 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 
     const { employer_id, job_title, job_location, job_description } = req.body;
     let currUser = res.locals.authData;
-    const job_id = v4();
+    const listing_id = v4();
     const date_posted = new Date().toISOString().slice(0, 10);
     const contact_name = `${currUser.firstName} ${currUser.lastName}`;
     const contact_address = `${currUser.email}`;
     const number_applied = 0;
-    const newJobListing = new Joblisting({ _id: new mongoose.Types.ObjectId().toHexString(), job_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" });
-    RecruiterProfile.updateOne({ "email": contact_address }, { $push: { "jobsPosted": job_id } });
+    const newJobListing = new Joblisting({ _id: new mongoose.Types.ObjectId().toHexString(), listing_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" });
+    RecruiterProfile.updateOne({ "email": contact_address }, { $push: { "jobsPosted": listing_id } });
     try {
       newJobListing.save();
       res.status(201).json(newJobListing);
