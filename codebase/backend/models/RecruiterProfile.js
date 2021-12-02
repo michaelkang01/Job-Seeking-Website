@@ -11,7 +11,7 @@ const RecruiterProfileSchema = (mongoose) => {
         province: String,
         zip: String,
         companyName: String,
-        jobsPosted: [String],
+        jobsPosted: [Number],
         metadata: Array,
       },
       { timestamps: true }

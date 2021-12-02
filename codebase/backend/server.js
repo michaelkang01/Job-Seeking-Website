@@ -83,8 +83,8 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
     res.status(200).json({ status: "Authorized", data: decoded });
   });
 
-  router.post(`/jobs/apply`, (req, res) => {
-
+  router.post(`/jobs/apply`, [verifyUser], (req, res) => {
+    let currUser = res.locals.authData;
     const { listing_id,
       firstName,
       lastName,
@@ -92,7 +92,7 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
       city,
       province,
       zip } = req.body;
-    const app = new Application({ _id: new mongoose.Types.ObjectId().toHexString(), listing_id, firstName, lastName, email, city, province, zip }, { collection: "application" });
+    const app = new Application({ _id: new mongoose.Types.ObjectId().toHexString(), listing_id, user_id: currUser.id, firstName, lastName, email, city, province, zip }, { collection: "application" });
     //change _id later 
     try {
       app.save();
@@ -312,20 +312,31 @@ mongoose.connect(process.env.MONGO_URI).then((db) => {
 
     const { employer_id, job_title, job_location, job_description } = req.body;
     let currUser = res.locals.authData;
-    const listing_id = v4();
+    const listing_id = Math.floor(Math.random() * 100000000000);
+
+    console.log(currUser);
+
     const date_posted = new Date().toISOString().slice(0, 10);
     const contact_name = `${currUser.firstName} ${currUser.lastName}`;
     const contact_address = `${currUser.email}`;
     const number_applied = 0;
     const newJobListing = new Joblisting({ _id: new mongoose.Types.ObjectId().toHexString(), listing_id, employer_id, job_description, job_location, job_title, date_posted, contact_name, contact_address, number_applied }, { collection: "joblistings" });
-    RecruiterProfile.updateOne({ "email": contact_address }, { $push: { "jobsPosted": listing_id } });
+    RecruiterProfile.updateOne(
+      { email: currUser.email },
+      { $push: { "jobsPosted": listing_id } },
+      (err, ret) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+
     try {
       newJobListing.save();
       res.status(201).json(newJobListing);
     } catch (error) {
       res.status(409).json({ message: error.message });
     }
-    console.log(req);
 
   });
 

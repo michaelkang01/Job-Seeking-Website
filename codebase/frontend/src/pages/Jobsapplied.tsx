@@ -18,19 +18,18 @@ function Jobsapplied() {
   useEffect(() => {
 
 
-
     const getJobsapplied = async (setIsLoading: any, setApplied: React.Dispatch<React.SetStateAction<Joblisting[]>>) => {
       const listing_list = [] as Joblisting[]
       var job_list = await getjobsappliedlist(authData);
       await axios
         .get(
           `${process.env.REACT_APP_API_URL}/api/joblistings/`
-
         )
         .then((res) => {
           setIsLoading(false);
           for (const listing of res.data) {
             if (job_list.length !== 0 && job_list[0] !== -1) {
+              
               if (job_list.includes(listing.listing_id)) {
                 listing_list.push({
                   listing_id: listing.listing_id,
@@ -55,7 +54,7 @@ function Jobsapplied() {
 
     }
 
-    if (isLoading) {
+    if (isLoading && authData) {
 
 
       getJobsapplied(setIsLoading, setApplied).then(() => {
