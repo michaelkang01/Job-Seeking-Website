@@ -13,7 +13,7 @@ const Seeker = (props: jobseeker) => {
   return (
     <div>
       <div className="flex flex-col lg:flex-row gap-x-20 p-8 text-gray-900 leading-normal bg-white border rounded">
-        <div className="flex flex-auto flex-col items-center justify-center text-center gap-x-2">
+        <div className="flex md:flex-shrink-0 w-1/3 flex-col items-center justify-center text-center gap-x-2">
           <FaUserCircle className="p-2 rounded-full bg-white w-32 h-32" />{" "}
           <div>
             <p className="text-2xl text-tiffany-blue font-semibold">
@@ -34,9 +34,9 @@ const Seeker = (props: jobseeker) => {
             <p className="text-xl text-tiffany-blue font-bold">Summary</p>
             <p className="text-lg pt-2">{props?.seeker.summary}</p>
           </div>
-          <div className="my-4">
+          <div className="my-4 md:w-2/3">
             <p className="text-xl text-tiffany-blue font-bold">Skills</p>
-            <div className="flex flex-row w-full flex-wrap pt-4">
+            <div className="flex flex-row pt-4 md:overflow-x-auto md:w-auto">
               {props?.seeker.skills.map((skill) => (
                 <div key={skill} className="mx-4 mb-4">
                   <PillButton
