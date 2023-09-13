@@ -13,7 +13,7 @@ Requirements:
 Building/running: See README.md in codebase/.
 
 ## Contributions
-  We will be using a Git flow here: https://github.com/UTSCCSCC01/projectf21-Steadfast-Solutions
+  We will be using a Git flow here:
   
   Branches are: /main, where we will push our production versions at end of sprints.
                 /dev, where we will work on our development versions.
